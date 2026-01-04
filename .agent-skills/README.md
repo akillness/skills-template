@@ -1,369 +1,316 @@
-# Agent Skills Repository
+# Agent Skills Developer Guide
 
-범용 AI 에이전트를 위한 Agent Skills 모음입니다. Claude, ChatGPT, Gemini 등 모든 AI 플랫폼에서 사용 가능한 오픈 표준을 따릅니다.
+이 문서는 `.agent-skills/` 저장소의 **개발자 종합 가이드**입니다. 루트 `README.md`보다 상세하며, 스킬 사용/설치/통합/확장/기여 전 과정을 다룹니다.
 
-## 개요
+## 목적
+- Agent Skills의 구조, 사용법, 확장 방법을 한 문서에서 제공
+- Claude Code, ChatGPT, Gemini 각각의 통합 방법을 명확히 안내
+- 팀 단위 운영(멀티 모델 워크플로우)을 위한 실전 가이드 제공
 
-Agent Skills는 AI 에이전트의 기능을 확장하는 모듈식 기능입니다. 각 Skill은 특정 작업을 수행하는 방법에 대한 지침, 스크립트, 참고 자료를 포함합니다.
+---
 
-**특징**:
-- 📦 **모듈화**: 각 Skill은 독립적으로 작동
-- 🔄 **재사용 가능**: 다양한 프로젝트에서 사용
-- 🌐 **플랫폼 독립적**: Claude, ChatGPT, Gemini 모두 지원
-- 📝 **자체 문서화**: SKILL.md만 읽어도 이해 가능
-- 🔍 **점진적 공개**: 필요할 때만 컨텍스트 로드
-- 🤝 **멀티 에이전트 지원**: 개선 작업 시 여러 AI 에이전트를 협업하여 품질 향상
+## 구현된 Skills (총 30개, 전부 ✅)
 
-## 폴더 구조
+아래 목록은 **모든 스킬이 구현됨(✅)** 상태이며, **8개 카테고리**로 정리되어 있습니다.
 
-```
-.agent-skills/
-├── README.md                          # 이 파일
-├── CONTRIBUTING.md                    # 기여 가이드
-├── setup.sh                           # 설정 스크립트
-├── skill_loader.py                    # Python 유틸리티
-├── templates/                         # Skills 작성 템플릿
-│   ├── basic-skill-template/         # 기본 템플릿
-│   ├── advanced-skill-template/       # 고급 템플릿
-│   ├── multiplatform-skill-template/ # 멀티 플랫폼 템플릿
-│   └── chatgpt-skill-template/       # ChatGPT 전용 템플릿 ✅
-├── infrastructure/                    # 인프라 Skills
-│   ├── system-setup/
-│   ├── deployment/
-│   ├── monitoring/
-│   └── security/
-├── backend/                           # 백엔드 Skills
-│   ├── api-design/                   ✅ 구현됨
-│   ├── database/
-│   ├── authentication/
-│   └── testing/
-├── frontend/                          # 프론트엔드 Skills
-│   ├── ui-components/
-│   ├── state-management/
-│   ├── responsive-design/
-│   └── accessibility/
-├── documentation/                     # 문서 Skills
-│   ├── technical-writing/            ✅ 구현됨
-│   ├── api-documentation/
-│   ├── user-guides/
-│   └── changelog/
-├── code-quality/                      # 코드 품질 Skills
-│   ├── code-review/                  ✅ 구현됨
-│   ├── refactoring/
-│   ├── testing-strategies/
-│   └── performance-optimization/
-├── search-analysis/                   # 검색/분석 Skills
-│   ├── codebase-search/              ✅ 구현됨
-│   ├── log-analysis/
-│   ├── data-analysis/
-│   └── pattern-detection/
-├── project-management/                # 프로젝트 관리 Skills
-│   ├── task-planning/
-│   ├── estimation/
-│   ├── retrospective/
-│   └── standup-helper/
-└── utilities/                         # 유틸리티 Skills
-    ├── git-workflow/                 ✅ 구현됨
-    ├── environment-setup/
-    ├── file-organization/
-    └── automation/
-```
+### Backend (5)
+- ✅ api-design
+- ✅ authentication-setup
+- ✅ backend-testing
+- ✅ database-schema-design
+- ✅ toon-demo
 
-## 사용 방법
+### Frontend (4)
+- ✅ responsive-design
+- ✅ state-management
+- ✅ ui-component-patterns
+- ✅ web-accessibility
 
-### Claude (Cursor, Claude.ai, Claude Code)
+### Code Quality (4)
+- ✅ code-refactoring
+- ✅ code-review
+- ✅ performance-optimization
+- ✅ testing-strategies
 
-**자동 발견**:
-Claude는 `.agent-skills/` 또는 `~/.claude/skills/` 폴더의 Skills를 자동으로 발견하고 로드합니다.
+### Infrastructure (4)
+- ✅ deployment-automation
+- ✅ monitoring-observability
+- ✅ security-best-practices
+- ✅ system-environment-setup
 
+### Documentation (4)
+- ✅ api-documentation
+- ✅ changelog-maintenance
+- ✅ technical-writing
+- ✅ user-guide-writing
+
+### Project Management (4)
+- ✅ sprint-retrospective
+- ✅ standup-meeting
+- ✅ task-estimation
+- ✅ task-planning
+
+### Search & Analysis (1)
+- ✅ codebase-search
+
+### Utilities (4)
+- ✅ environment-setup
+- ✅ file-organization
+- ✅ git-workflow
+- ✅ workflow-automation
+
+---
+
+## 플랫폼별 상세 사용법
+
+### 1) Claude Code (자동 발견)
+
+Claude Code는 `.claude/skills/` 또는 `~/.claude/skills/` 아래의 스킬을 **자동 발견**합니다.
+`.agent-skills/`에서 스킬을 복사해 두면 Claude가 자동으로 스킬을 사용합니다.
+
+**설정 방법 (권장: setup.sh 사용):**
 ```bash
-# 프로젝트 Skills (팀과 공유)
-cp -r .agent-skills/.claude/skills/
-
-# 개인 Skills
-cp -r .agent-skills/* ~/.claude/skills/
+chmod +x setup.sh
+./setup.sh
+# 메뉴에서 1) Claude 선택
 ```
 
-**사용 예시**:
+**수동 설정 예시:**
+```bash
+mkdir -p ../.claude/skills
+cp -r backend frontend code-quality infrastructure documentation project-management search-analysis utilities ../.claude/skills/
 ```
-사용자: "REST API를 설계해줘"
-→ Claude가 자동으로 'api-design' Skill 활성화
-→ API 설계 베스트 프랙티스를 따라 설계
+
+**Claude 사용 예시:**
+```
+"REST API 설계해줘"
+"이 PR 코드 리뷰 해줘"
+"접근성 기준에 맞게 컴포넌트 개선해줘"
 ```
 
-### ChatGPT (Custom GPTs)
+---
 
-ChatGPT에는 공식적인 `skills.md` 포맷이 없고, 대신 **Custom GPT 설명서**를 Instructions 탭에 작성하는 방식입니다. 따라서 `skills.md`는 내부용 설계 문서로 사용하고, 그 내용을 Instructions·Actions에 옮기는 방식을 권장합니다.
+### 2) ChatGPT (Custom GPT + 템플릿)
 
-**권장 방법: ChatGPT 전용 템플릿 사용**
+ChatGPT는 Claude처럼 자동 스킬 로딩이 없으므로, **Custom GPT + 템플릿** 접근이 표준입니다.
 
-1. **템플릿 복사**:
+**권장 워크플로우:**
+1. 템플릿 복사
    ```bash
    cp -r templates/chatgpt-skill-template chatgpt/my-skill
    ```
 
-2. **skills.md 작성**:
-   - `chatgpt/my-skill/skills.md` 파일 편집
-   - 스킬의 목적, 사용 방법, 예시 등을 상세히 작성
-   - Instructions 탭에 넣을 압축 버전 포함
+2. `chatgpt/my-skill/skills.md` 편집
+   - 스킬 목적/트리거/절차/예시/출력 포맷 작성
+   - "Instructions 탭에 넣을 압축 버전" 섹션 필수 작성
 
-3. **Custom GPT 생성**:
-   - ChatGPT Builder에서 Custom GPT 생성
-   - Instructions 탭에 `skills.md`의 "7. Instructions 탭에 넣을 압축 버전" 복사
-   - 실제 값으로 교체하여 붙여넣기
+3. Custom GPT Builder에서:
+   - Instructions 탭에 압축 버전 붙여넣기
+   - 필요 시 Knowledge 업로드
 
-4. **Knowledge 설정** (선택사항):
-   - `skills.md`의 "2.2 Knowledge" 섹션 참고
-   - 필요한 문서를 Knowledge에 업로드
+**템플릿 위치:** `templates/chatgpt-skill-template/`
 
-5. **Actions 설정** (선택사항):
-   - `skills.md`의 "3. GPT Actions" 섹션 참고
-   - OpenAPI 스키마 작성 및 연결
-
-**템플릿 위치**: `templates/chatgpt-skill-template/`
-
-**기존 방법 (레거시)**:
-
-**방법 1: Knowledge Base 업로드**
-1. `.agent-skills/` 폴더를 zip으로 압축
-2. Custom GPT의 Knowledge에 업로드
-3. Instructions에 기본 가이드 추가 (위 템플릿 방식 권장)
-
-**방법 2: 직접 프롬프트 포함**
-```
-I'm using Agent Skills. Here's the skill:
-
-[SKILL.md 내용 붙여넣기]
-
-Now help me with: [작업 요청]
+**Quick Example (요약형 Instructions):**
+```text
+You use Agent Skills. When a request matches a skill description:
+1) find the matching SKILL.md
+2) follow its steps precisely
+3) output in the specified format
 ```
 
-### Gemini (Gemini Advanced, API)
+---
 
-**Python 스크립트 사용**:
+### 3) Gemini (Python 통합)
+
+Gemini는 Python 통합 방식이 가장 효율적입니다.
+`skill_loader.py`로 스킬을 로드해 프롬프트에 포함합니다.
+
+**기본 예시:**
 ```python
 from skill_loader import SkillLoader
+import google.generativeai as genai
 
-# Skills 로드
 loader = SkillLoader('.agent-skills')
+skill = loader.get_skill('api-design')
 
-# 특정 Skill 가져오기
-api_skill = loader.get_skill('api-design')
+prompt = f"""{skill['full_content']}
 
-# 프롬프트 생성
-prompt = f"""
-{api_skill['body']}
-
-Now help me design an API for user management.
+Now help me design a REST API for user management.
 """
 
-# Gemini API 호출
-import google.generativeai as genai
-model = genai.GenerativeModel('gemini-pro')
+genai.configure(api_key='YOUR_API_KEY')
+model = genai.GenerativeModel('gemini-2.0-flash-exp')
 response = model.generate_content(prompt)
+print(response.text)
 ```
 
-## 빠른 시작
-
-### 1. 설정
+**setup.sh로 GEMINI.md 생성:**
 ```bash
-# 스크립트 실행 권한 부여
-chmod +x setup.sh
+./setup.sh
+# 메뉴에서 3) Gemini 선택
+```
 
-# 기본 설정 실행
+---
+
+## setup.sh 상세 설명
+
+`setup.sh`는 플랫폼별 설치 및 구성 자동화를 담당합니다.
+
+**실행:**
+```bash
+chmod +x setup.sh
 ./setup.sh
 ```
 
-### 2. 첫 번째 Skill 사용
+**메뉴 설명:**
+1) **Claude**
+   - `.claude/skills/` 및 `~/.claude/skills/`에 스킬 복사
+   - 스킬 검증(가능 시) 수행
+2) **ChatGPT**
+   - 스킬 폴더를 ZIP으로 압축하여 Knowledge 업로드 용 파일 생성
+3) **Gemini**
+   - `GEMINI.md` 생성 (표준 컨텍스트)
+   - 옵션으로 CLI Extension 스캐폴드 생성
+4) **All**
+   - Claude + ChatGPT + Gemini를 한 번에 구성
+5) **Validate**
+   - `validate_claude_skills.py`로 스킬 포맷 검증
+6) **Exit**
 
-**Claude 사용자**:
-```
-"REST API를 설계해줘"
-```
+---
 
-**ChatGPT 사용자**:
+## skill_loader.py 사용법
+
+`skill_loader.py`는 스킬 로딩/검색/검증/프롬프트 생성에 사용합니다.
+
+### CLI 사용
+
+**스킬 목록:**
 ```bash
-# ChatGPT 전용 템플릿 사용 (권장)
-cp -r templates/chatgpt-skill-template chatgpt/my-skill
-# chatgpt/my-skill/skills.md 편집 후 Instructions 탭에 복사
-
-# 또는 기존 방법
-python skill_loader.py --skill api-design --output prompt.txt
-# prompt.txt 내용을 ChatGPT에 붙여넣기
+python3 skill_loader.py list
 ```
 
-**Gemini 사용자**:
+**스킬 검색:**
+```bash
+python3 skill_loader.py search api
+```
+
+**스킬 보기:**
+```bash
+python3 skill_loader.py show api-design
+```
+
+**프롬프트 생성 (Markdown/XML/JSON/TOON):**
+```bash
+python3 skill_loader.py prompt --skills api-design code-review --format markdown
+python3 skill_loader.py prompt --skills api-design --format toon
+```
+
+**검증:**
+```bash
+python3 skill_loader.py validate
+python3 skill_loader.py validate api-design
+```
+
+### Python 사용
+
 ```python
-# Python 스크립트로 통합
-python -c "
 from skill_loader import SkillLoader
+
 loader = SkillLoader('.agent-skills')
-print(loader.format_for_prompt(['api-design']))
-"
+print(loader.list_skills())
+print(loader.format_for_prompt(['api-design', 'code-review'], format_type='markdown'))
 ```
 
-### 3. 새 Skill 추가
+---
 
-**일반 Skills (Claude, Gemini용)**:
+## 새 Skill 추가 방법 (상세 단계)
+
+1) **카테고리 선택**
+   - `backend/`, `frontend/`, `code-quality/`, `infrastructure/`, `documentation/`, `project-management/`, `search-analysis/`, `utilities/`
+
+2) **폴더 생성 (kebab-case)**
 ```bash
-# 새 Skill 폴더 생성
 mkdir -p .agent-skills/backend/new-skill
+```
 
-# SKILL.md 생성
-cat > .agent-skills/backend/new-skill/SKILL.md << 'EOF'
+3) **SKILL.md 작성 (YAML frontmatter 포함)**
+```markdown
 ---
 name: new-skill
-description: What this skill does and when to use it
+description: Describe what this skill does and when to use it
+allowed-tools: [python, bash]
 ---
 
 # New Skill
 
-## Instructions
-1. Step 1
-2. Step 2
+## Purpose
+- ...
 
-## Examples
-...
-EOF
+## When to Trigger
+- ...
 
-# Git에 커밋
-git add .agent-skills/backend/new-skill/
-git commit -m "Add new-skill"
+## Procedure
+1. ...
+2. ...
+
+## Output Format
+- ...
+
+## Constraints
+- ...
 ```
 
-**ChatGPT Custom GPT용**:
+4) **지원 파일 추가 (선택)**
+- `references/`, `templates/`, `examples/` 등
+- 스킬 문서에서 직접 참조
+
+5) **검증**
 ```bash
-# ChatGPT 전용 템플릿 복사
-cp -r templates/chatgpt-skill-template chatgpt/my-skill
-
-# skills.md 편집
-# - 플레이스홀더를 실제 내용으로 교체
-# - Instructions 탭에 넣을 압축 버전 작성
-
-# Custom GPT 생성 시
-# - ChatGPT Builder의 Instructions 탭에 skills.md의 "7. Instructions 탭에 넣을 압축 버전" 복사
+python3 skill_loader.py validate new-skill
 ```
 
-## 사용 가능한 Skills
+6) **문서 업데이트**
+- 이 README의 스킬 목록에 추가
+- 필요 시 `CONTRIBUTING.md` 절차 준수
 
-### Infrastructure (인프라)
-- 🏗️ **system-setup**: 시스템 환경 설정
-- 🚀 **deployment**: 배포 자동화
-- 📊 **monitoring**: 모니터링 설정
-- 🔒 **security**: 보안 구성
-
-### Backend (백엔드)
-- ✅ **api-design**: REST/GraphQL API 설계 (구현됨)
-- 🗄️ **database**: 데이터베이스 스키마 설계
-- 🔐 **authentication**: 인증/인가 구현
-- 🧪 **testing**: 백엔드 테스트 전략
-
-### Frontend (프론트엔드)
-- 🎨 **ui-components**: UI 컴포넌트 개발
-- 🔄 **state-management**: 상태 관리
-- 📱 **responsive-design**: 반응형 디자인
-- ♿ **accessibility**: 접근성 구현
-
-### Documentation (문서)
-- ✅ **technical-writing**: 기술 문서 작성 (구현됨)
-- 📚 **api-documentation**: API 문서화
-- 📖 **user-guides**: 사용자 가이드
-- 📝 **changelog**: 변경 이력 관리
-
-### Code Quality (코드 품질)
-- ✅ **code-review**: 코드 리뷰 (구현됨)
-- 🔧 **refactoring**: 리팩토링 전략
-- 🧪 **testing-strategies**: 테스트 전략
-- ⚡ **performance-optimization**: 성능 최적화
-
-### Search & Analysis (검색/분석)
-- ✅ **codebase-search**: 코드베이스 검색 (구현됨)
-- 📋 **log-analysis**: 로그 분석
-- 📊 **data-analysis**: 데이터 분석
-- 🔍 **pattern-detection**: 패턴 감지
-
-### Project Management (프로젝트 관리)
-- 📋 **task-planning**: 작업 계획
-- ⏱️ **estimation**: 개발 시간 추정
-- 🔄 **retrospective**: 회고 진행
-- 📢 **standup-helper**: 스탠드업 준비
-
-### Utilities (유틸리티)
-- ✅ **git-workflow**: Git 워크플로우 (구현됨)
-- ⚙️ **environment-setup**: 환경 설정
-- 📁 **file-organization**: 파일 정리
-- 🤖 **automation**: 자동화 스크립트
-
-## 기여하기
-
-새로운 Skill을 추가하거나 기존 Skill을 개선하려면 [CONTRIBUTING.md](CONTRIBUTING.md)를 참조하세요.
-
-### 기여 단계
-1. 새 Skill 폴더 생성
-2. `SKILL.md` 파일 작성 (템플릿 참조)
-3. 지원 파일 추가 (선택사항)
-4. 테스트
-5. Pull Request 생성
-
-### 🤝 멀티 에이전트 기여 방식
-
-이 프로젝트는 개선 작업 시 **멀티 에이전트 접근 방식**을 권장합니다. 여러 AI 에이전트가 각자의 전문 Skill을 활용하여 협업하면 더 높은 품질의 결과를 얻을 수 있습니다.
-
-**멀티 에이전트 워크플로우 예시**:
-
-```
-1. 에이전트 A (구현): 새 Skill 작성
-   → api-design Skill을 참고하여 REST API 설계
-
-2. 에이전트 B (검토): 코드 리뷰 수행
-   → code-review Skill을 활용하여 품질 검증
-   → 보안, 성능, 테스트 커버리지 확인
-
-3. 에이전트 C (문서화): 문서 작성
-   → technical-writing Skill을 사용하여 문서화
-   → README, 예제, Best practices 작성
-
-4. 에이전트 D (검색/분석): 관련 코드 찾기
-   → codebase-search Skill을 활용하여 유사 구현 탐색
-   → 일관성 및 패턴 분석
-```
-
-**멀티 에이전트의 장점**:
-- ✅ 각 에이전트가 전문 Skill에 집중하여 더 정확한 결과
-- ✅ 다양한 관점에서 검토하여 품질 향상
-- ✅ 병렬 작업으로 효율성 증대
-- ✅ 각 Skill의 활용도 증가
-
-**실전 활용**:
-- 새 Skill 개발 시: 구현 → 리뷰 → 문서화 → 검증의 파이프라인 구성
-- 기존 Skill 개선 시: 검색 → 분석 → 개선 → 리뷰 → 문서 업데이트
-- 버그 수정 시: 문제 탐색 → 원인 분석 → 수정 → 테스트 → 문서화
-
-## 참고 자료
-
-### 공식 문서
-- [Agent Skills 공식 사이트](https://agentskills.io/)
-- [Agent Skills 사양](https://agentskills.io/specification)
-- [Agent Skills GitHub](https://github.com/agentskills/agentskills)
-- [Claude Code Skills](https://code.claude.com/docs/ko/skills)
-
-### 가이드 문서
-- [Skills 작성 템플릿](/Skills/claude_skill_template_guide.md)
-- [범용 Skills 아키텍처](/Skills/universal_agent_skills_architecture.md)
-
-## 라이선스
-
-이 프로젝트는 Agent Skills 오픈 표준을 따르며, 자유롭게 사용, 수정, 배포할 수 있습니다.
-
-## 문의
-
-- Issue: GitHub Issues
-- Email: [your-email]
-- Slack: [your-slack-channel]
+7) **(ChatGPT 전용) 템플릿 기반 스킬 설계**
+- `templates/chatgpt-skill-template/` 참고
 
 ---
 
-**버전**: 1.0.0  
-**최종 업데이트**: 2024-01-15  
-**관리자**: [Your Name]
+## 멀티 모델 워크플로우
 
+여러 모델의 강점을 결합해 품질과 속도를 높이는 방식입니다.
+
+**예시 파이프라인:**
+1. **Claude Code**: 자동 스킬 탐지로 초안 생성
+2. **ChatGPT Custom GPT**: 템플릿 기반 상세화/정리
+3. **Gemini**: Python 통합으로 데이터/코드 분석 자동화
+
+**실전 운영 팁:**
+- 동일한 스킬 콘텐츠를 `skill_loader.py`로 추출해 모델 간 일관성 유지
+- Claude는 탐색/실행, ChatGPT는 문서화, Gemini는 자동화에 집중
+
+---
+
+## 기여 가이드
+
+기여 절차는 다음 문서를 참고하세요:
+
+**[CONTRIBUTING.md](CONTRIBUTING.md)**
+
+---
+
+## 빠른 참조
+
+- **setup.sh**: 플랫폼별 설정 자동화
+- **skill_loader.py**: 스킬 로딩/검증/프롬프트 생성
+- **templates/**: 스킬 작성 템플릿
+- **[CONTRIBUTING.md](CONTRIBUTING.md)**: 기여 규칙
+- **[상위 README](../README.md)**: 프로젝트 개요
+
+---
+
+**최종 업데이트**: 2026-01-04
+**작성**: Multi-Model AI Workflow (Gemini + Claude + Codex)
