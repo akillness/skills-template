@@ -1,0 +1,12 @@
+name: toon-skill-template
+description: Describe what this skill does and when to use it in 2-3 sentences.
+allowed_tools[1]{tool}:
+bash
+
+instructions[3]{step,action,details}:
+1,Discovery,Understand the user request and identify missing information.
+2,Execution,Execute the core logic of the skill.
+3,Verification,Verify the output matches expectations.
+
+examples[1]{description,input,output}:
+"Basic Usage","<Input example>","<Output example>"
