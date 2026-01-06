@@ -1,12 +1,12 @@
 # 🚀 Agent Skills Template
 
-[![Skills](https://img.shields.io/badge/Skills-30-2ea44f?style=for-the-badge&logo=files)](https://github.com/akillness/skills-template)
-[![Last Update](https://img.shields.io/badge/Last%20Update-2026--01--04-blue?style=for-the-badge&logo=calendar)](https://github.com/akillness/skills-template)
+[![Skills](https://img.shields.io/badge/Skills-31-2ea44f?style=for-the-badge&logo=files)](https://github.com/akillness/skills-template)
+[![Last Update](https://img.shields.io/badge/Last%20Update-2026--01--06-blue?style=for-the-badge&logo=calendar)](https://github.com/akillness/skills-template)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative)](https://github.com/akillness/skills-template)
 [![MCP](https://img.shields.io/badge/MCP-Enabled-purple?style=for-the-badge)](https://github.com/akillness/skills-template)
 
-> **Multi-Model AI Workflow Template with 30 Professional Skills**
-> Gemini + Claude + Codex 협업 기반 에이전트 스킬 시스템
+> **Multi-Model AI Workflow Template with 31 Professional Skills**
+> Gemini + Claude + Codex 협업 기반 에이전트 스킬 시스템 + MCP 자동 설정
 
 ---
 
@@ -25,14 +25,17 @@ Gemini (분석) → Claude (설계) → Codex (구현) → Claude (검증)
 - 코드 품질 **50% 향상** (6/10 → 9/10)
 - 교차 검증으로 **버그 100% 감소**
 
-### 🛠️ setup.sh 최적화
+### 🛠️ setup.sh 최적화 + MCP 자동 설정
 - ✅ **경로 독립성**: 어디서든 실행 가능 (`SCRIPT_DIR` 기반)
 - ✅ **자동 정리**: `trap`으로 임시 파일 자동 삭제
 - ✅ **DRY 원칙**: `copy_skills()` 함수로 중복 60줄 제거
 - ✅ **Shellcheck 준수**: 모든 변수 인용 처리
+- 🆕 **MCP 자동 설정**: Gemini CLI & Codex CLI 원클릭 설치
+- 🆕 **상태 감지**: 이미 설치된 MCP 서버 자동 감지 및 건너뛰기
 
-### ✅ 30개 전문 Skills 완전 구현
-- 8개 카테고리, 30개 프로덕션 레디 스킬
+### ✅ 31개 전문 Skills 완전 구현
+- 8개 카테고리, 31개 프로덕션 레디 스킬
+- 🆕 **multi-agent-workflow**: 멀티 모델 오케스트레이션 스킬
 - 모든 스킬에 SKILL.md + 사용 예시 포함
 - Claude Code, ChatGPT, Gemini 멀티 플랫폼 지원
 
@@ -53,8 +56,8 @@ graph TB
     end
 
     subgraph "Core System"
-        E[MCP Server]
-        F[Agent Skills<br/>Repository<br/>30 Skills]
+        E[MCP Server<br/>Auto-Configured]
+        F[Agent Skills<br/>Repository<br/>31 Skills]
     end
 
     subgraph "Tools & Automation"
@@ -155,16 +158,17 @@ graph TB
 
 <tr>
 <td><b>🔧 Utilities</b></td>
-<td align="center"><b>4</b></td>
+<td align="center"><b>5</b></td>
 <td>
 <code>environment-setup</code> · <code>file-organization</code> ·
-<code>git-workflow</code> · <code>workflow-automation</code>
+<code>git-workflow</code> · <code>workflow-automation</code> ·
+<code>multi-agent-workflow</code> 🆕
 </td>
 </tr>
 
 <tr>
 <td colspan="2"><b>🎯 총합</b></td>
-<td><b>30개 Skills</b></td>
+<td><b>31개 Skills</b></td>
 </tr>
 </table>
 
@@ -185,12 +189,27 @@ bash setup.sh
 ```
 
 **선택 옵션**:
-- `1`: Claude Code 설정 (개인 스킬 + 프로젝트 스킬)
+- `1`: Claude Code 설정 (🆕 MCP 서버 자동 설정 포함)
+  - Step 1/5: 스킬 유효성 검증
+  - Step 2/5: 프로젝트 스킬 설정
+  - Step 3/5: 개인 스킬 설정
+  - Step 4/5: 🆕 **MCP 서버 자동 설정** (Gemini CLI + Codex CLI)
+  - Step 5/5: 설치된 스킬 검증
 - `2`: ChatGPT Custom GPT 설정 (zip 생성)
 - `3`: Gemini Python 통합
 - `4`: 모든 플랫폼 일괄 설정
 
-### 3️⃣ 스킬 사용
+### 3️⃣ MCP 서버 확인 (자동 설정됨)
+```bash
+# MCP 서버 상태 확인
+claude mcp list
+
+# 예상 출력:
+# gemini-cli: npx -y gemini-mcp-tool - ✓ Connected
+# codex-cli: npx -y @openai/codex-shell-tool-mcp - ✓ Connected
+```
+
+### 4️⃣ 스킬 사용
 ```
 # Claude Code에서
 "REST API를 설계해줘"  → api-design 스킬 자동 활성화
@@ -198,6 +217,10 @@ bash setup.sh
 "이 코드를 리뷰해줘"  → code-review 스킬 활성화
 
 "반응형 디자인으로 만들어줘"  → responsive-design 스킬 활성화
+
+🆕 "gemini-cli를 사용해서 이 프로젝트 전체를 분석해줘"  → multi-agent-workflow 스킬 활성화
+
+🆕 "codex-cli로 이 함수를 리팩토링해줘"  → multi-agent-workflow 스킬 활성화
 ```
 
 ---
@@ -228,9 +251,12 @@ bash setup.sh
 - **[MULTI_MODEL_WORKFLOW_TEST_RESULTS.md](.agent-skills/prompt/MULTI_MODEL_WORKFLOW_TEST_RESULTS.md)** (14KB):
   실전 테스트 결과 및 성과 분석
 
+- 🆕 **[MULTI_AGENT_SETUP_COMPLETE.md](MULTI_AGENT_SETUP_COMPLETE.md)**:
+  멀티 에이전트 워크플로우 완벽 설정 가이드
+
 ### ⚙️ 설정 가이드
 - **[CLAUDE_SETUP_GUIDE.md](.agent-skills/prompt/CLAUDE_SETUP_GUIDE.md)**: Claude Code 스킬 설정
-- **[CLAUDE_MCP_GEMINI_CODEX_SETUP.md](.agent-skills/prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md)**: MCP 서버 설정
+- **[CLAUDE_MCP_GEMINI_CODEX_SETUP.md](.agent-skills/prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md)**: MCP 서버 수동 설정 (자동 설정 실패 시)
 
 ---
 
@@ -328,7 +354,8 @@ MIT License - 자유롭게 사용, 수정, 배포 가능합니다.
 
 ---
 
-**버전**: 2.0.0
-**최종 업데이트**: 2026-01-04
+**버전**: 2.1.0
+**최종 업데이트**: 2026-01-06
 **작성**: Multi-Model AI Workflow (Gemini + Claude + Codex)
+🆕 **변경사항**: MCP 자동 설정, multi-agent-workflow 스킬 추가
 
