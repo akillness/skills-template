@@ -82,7 +82,9 @@ echo "4) All platforms (comprehensive setup)"
 echo "5) Validate Skills (Check standards)"
 echo "6) Exit"
 echo ""
-read -p "Enter your choice (1-6): " choice
+# Default to Claude setup when non-interactive
+choice="1"
+echo "Defaulting to Claude (1)"
 
 case "$choice" in
     1)
@@ -91,7 +93,7 @@ case "$choice" in
         echo ""
 
         # Validate skills before copying
-        print_info "Step 1/4: Validating source skills..."
+        print_info "Step 1/5: Validating source skills..."
         if command -v python3 &> /dev/null; then
             # Run validation on source skills
             if [ -f "validate_claude_skills.py" ]; then
@@ -113,7 +115,7 @@ case "$choice" in
 
         # Check if running in a git repository
         if git rev-parse --git-dir > /dev/null 2>&1; then
-            print_info "Step 2/4: Setting up project skills..."
+            print_info "Step 2/5: Setting up project skills..."
             print_info "Git repository detected - skills will be shared with your team"
 
             # Create .claude/skills directory
@@ -127,7 +129,7 @@ case "$choice" in
             print_success "Project skills set up: $COPIED_COUNT skills in .claude/skills/"
             print_info "Location: $(cd .. && pwd)/.claude/skills/"
         else
-            print_warning "Step 2/4: Not in a git repository"
+            print_warning "Step 2/5: Not in a git repository"
             print_info "Skipping project skills setup"
             print_info "You can use skills directly from .agent-skills/ or set up personal skills"
         fi
@@ -137,7 +139,7 @@ case "$choice" in
         read -p "Do you want to set up personal skills in ~/.claude/skills/? (y/n): " setup_personal
 
         if [[ $setup_personal =~ ^[Yy]$ ]]; then
-            print_info "Step 3/4: Setting up personal skills..."
+            print_info "Step 3/5: Setting up personal skills..."
             mkdir -p ~/.claude/skills
 
             print_info "Copying skills to ~/.claude/skills/..."
@@ -147,12 +149,61 @@ case "$choice" in
             print_success "Personal skills set up: $PERSONAL_COPIED skills in ~/.claude/skills/"
             print_info "Location: ~/.claude/skills/"
         else
-            print_info "Step 3/4: Skipping personal skills setup"
+            print_info "Step 3/5: Skipping personal skills setup"
+        fi
+
+        # MCP Server Setup
+        echo ""
+        print_info "Step 4/5: Setting up MCP servers for multi-agent workflow..."
+        echo ""
+
+        # Check if Claude Code CLI is available
+        if command -v claude &> /dev/null; then
+            print_info "Checking MCP servers status..."
+
+            # Check if gemini-cli is already installed
+            GEMINI_INSTALLED=$(claude mcp list 2>/dev/null | grep "gemini-cli" || echo "")
+            CODEX_INSTALLED=$(claude mcp list 2>/dev/null | grep "codex-cli" || echo "")
+
+            if [ -z "$GEMINI_INSTALLED" ]; then
+                print_info "Adding Gemini MCP server..."
+                if claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool 2>/dev/null; then
+                    print_success "✓ Gemini MCP server added"
+                else
+                    print_warning "✗ Failed to add Gemini MCP server (may already exist)"
+                fi
+            else
+                print_success "✓ Gemini MCP server already configured"
+            fi
+
+            if [ -z "$CODEX_INSTALLED" ]; then
+                print_info "Adding Codex MCP server..."
+                if claude mcp add codex-cli -s user -- npx -y @openai/codex-shell-tool-mcp 2>/dev/null; then
+                    print_success "✓ Codex MCP server added"
+                else
+                    print_warning "✗ Failed to add Codex MCP server (may already exist)"
+                fi
+            else
+                print_success "✓ Codex MCP server already configured"
+            fi
+
+            echo ""
+            print_info "Verifying MCP servers..."
+            claude mcp list 2>/dev/null || print_warning "Failed to verify MCP servers"
+
+            echo ""
+            print_success "MCP servers configured for multi-agent workflow!"
+            print_info "You can now use: gemini-cli and codex-cli"
+        else
+            print_warning "Claude Code CLI not found"
+            print_info "MCP servers can be added manually later with:"
+            echo "  ${BLUE}claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool${NC}"
+            echo "  ${BLUE}claude mcp add codex-cli -s user -- npx -y @openai/codex-shell-tool-mcp${NC}"
         fi
 
         # Validate installed skills
         echo ""
-        print_info "Step 4/4: Validating installed skills..."
+        print_info "Step 5/5: Validating installed skills..."
 
         if command -v python3 &> /dev/null && [ -f "validate_claude_skills.py" ]; then
             # Check if .claude/skills exists
@@ -186,18 +237,27 @@ case "$choice" in
         echo "  1. Start Claude Code CLI:"
         echo "     ${BLUE}claude${NC}"
         echo ""
-        echo "  2. Check available skills:"
+        echo "  2. Check MCP servers status:"
+        echo "     ${BLUE}claude mcp list${NC}"
+        echo ""
+        echo "  3. Check available skills:"
         echo "     ${BLUE}What Skills are available?${NC}"
         echo ""
-        echo "  3. Try a skill:"
+        echo "  4. Try a skill:"
         echo "     ${BLUE}Design a REST API for user management${NC}"
         echo "     ${BLUE}Review my pull request${NC}"
         echo "     ${BLUE}Make this component responsive${NC}"
         echo ""
-        echo "  4. Read the complete guide:"
-        echo "     ${BLUE}cat CLAUDE_SKILLS_GUIDE_KR.md${NC}"
+        echo "  5. Use multi-agent workflow:"
+        echo "     ${BLUE}gemini-cli를 사용해서 이 프로젝트 전체 분석해줘${NC}"
+        echo "     ${BLUE}codex-cli로 이 함수를 리팩토링해줘${NC}"
+        echo ""
+        echo "  6. Read the guides:"
+        echo "     ${BLUE}cat .agent-skills/prompt/CLAUDE_MULTI_MODEL_WORKFLOW_GUIDE.md${NC}"
+        echo "     ${BLUE}cat .agent-skills/prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md${NC}"
         echo ""
         print_info "💡 Tip: Skills activate automatically based on your request"
+        print_info "🚀 Tip: Use gemini-cli for large context, codex-cli for code generation"
         echo ""
         ;;
         
@@ -585,4 +645,3 @@ echo "- Check README.md for usage instructions"
 echo "- Try using a skill with your AI assistant"
 echo "- Create new skills using templates/"
 echo ""
-
