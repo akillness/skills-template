@@ -254,6 +254,10 @@ claude mcp list
 - 🆕 **[MULTI_AGENT_SETUP_COMPLETE.md](MULTI_AGENT_SETUP_COMPLETE.md)**:
   멀티 에이전트 워크플로우 완벽 설정 가이드
 
+### 🤖 워크플로우 가이드
+- **[CODEX_WORKFLOW_INTEGRATION.md](CODEX_WORKFLOW_INTEGRATION.md)** 🆕:
+  OpenCode 워크플로우에 Codex 통합 가이드 - 코드 구현, 리팩토링, 테스트 패턴
+
 ### ⚙️ 설정 가이드
 - **[CLAUDE_SETUP_GUIDE.md](.agent-skills/prompt/CLAUDE_SETUP_GUIDE.md)**: Claude Code 스킬 설정
 - **[CLAUDE_MCP_GEMINI_CODEX_SETUP.md](.agent-skills/prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md)**: MCP 서버 수동 설정 (자동 설정 실패 시)
