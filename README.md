@@ -1,11 +1,11 @@
 # 🚀 Agent Skills Template
 
-[![Skills](https://img.shields.io/badge/Skills-31-2ea44f?style=for-the-badge&logo=files)](https://github.com/akillness/skills-template)
+[![Skills](https://img.shields.io/badge/Skills-32-2ea44f?style=for-the-badge&logo=files)](https://github.com/akillness/skills-template)
 [![Last Update](https://img.shields.io/badge/Last%20Update-2026--01--06-blue?style=for-the-badge&logo=calendar)](https://github.com/akillness/skills-template)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative)](https://github.com/akillness/skills-template)
 [![MCP](https://img.shields.io/badge/MCP-Enabled-purple?style=for-the-badge)](https://github.com/akillness/skills-template)
 
-> **Multi-Model AI Workflow Template with 31 Professional Skills**
+> **Multi-Model AI Workflow Template with 32 Professional Skills**
 > Gemini + Claude + Codex 협업 기반 에이전트 스킬 시스템 + MCP 자동 설정
 
 ---
@@ -123,10 +123,11 @@ graph TB
 
 <tr>
 <td><b>🚀 Infrastructure</b></td>
-<td align="center"><b>4</b></td>
+<td align="center"><b>5</b></td>
 <td>
-<code>deployment-automation</code> · <code>monitoring-observability</code> ·
-<code>security-best-practices</code> · <code>system-environment-setup</code>
+<code>deployment-automation</code> · <code>jekyll-site-setup</code> ·
+<code>monitoring-observability</code> · <code>security-best-practices</code> ·
+<code>system-environment-setup</code>
 </td>
 </tr>
 
@@ -168,7 +169,7 @@ graph TB
 
 <tr>
 <td colspan="2"><b>🎯 총합</b></td>
-<td><b>31개 Skills</b></td>
+<td><b>32개 Skills</b></td>
 </tr>
 </table>
 
@@ -299,6 +300,25 @@ claude mcp list
 - 주요 이슈 3가지
 - 개선 제안 5가지
 - 칭찬할 부분 2가지
+```
+
+### 예시 3: Jekyll 사이트 설정
+
+```
+요청: "기술 블로그를 만들어줘"
+
+실행:
+✅ Jekyll 설치 및 설정
+✅ 블로그 레이아웃 시스템 구축
+✅ SCSS 스타일링 설정
+✅ 포스트 템플릿 생성
+✅ 플러그인 설치 (sitemap, RSS, SEO)
+✅ GitHub Pages 배포 설정
+
+출력:
+- 완전한 Jekyll 사이트 구조
+- 반응형 블로그 테마
+- 자동화된 배포 파이프라인
 ```
 
 ---

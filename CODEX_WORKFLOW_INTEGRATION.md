@@ -135,6 +135,7 @@ Delivery
 | Code implementation | ✅ Yes | Fast, accurate code generation |
 | Refactoring | ✅ Yes | Automated code improvements |
 | Test writing | ✅ Yes | Automated test generation |
+| Jekyll site setup | ✅ Yes | Static site generation and configuration |
 | API design | ❌ No | Claude better for design |
 | Architecture decisions | ❌ No | Claude/Oracle better |
 | Code review | ❌ No | Claude better for analysis |

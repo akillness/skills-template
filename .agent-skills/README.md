@@ -9,7 +9,7 @@
 
 ---
 
-## 구현된 Skills (총 30개, 전부 ✅)
+## 구현된 Skills (총 31개, 전부 ✅)
 
 아래 목록은 **모든 스킬이 구현됨(✅)** 상태이며, **8개 카테고리**로 정리되어 있습니다.
 
@@ -32,8 +32,9 @@
 - ✅ performance-optimization
 - ✅ testing-strategies
 
-### Infrastructure (4)
+### Infrastructure (5)
 - ✅ deployment-automation
+- ✅ jekyll-site-setup
 - ✅ monitoring-observability
 - ✅ security-best-practices
 - ✅ system-environment-setup
