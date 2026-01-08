@@ -39,9 +39,10 @@
 - ✅ security-best-practices
 - ✅ system-environment-setup
 
-### Documentation (4)
+### Documentation (5)
 - ✅ api-documentation
 - ✅ changelog-maintenance
+- ✅ latex-writing
 - ✅ technical-writing
 - ✅ user-guide-writing
 

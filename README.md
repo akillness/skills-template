@@ -1,11 +1,11 @@
 # 🚀 Agent Skills Template
 
-[![Skills](https://img.shields.io/badge/Skills-32-2ea44f?style=for-the-badge&logo=files)](https://github.com/akillness/skills-template)
+[![Skills](https://img.shields.io/badge/Skills-33-2ea44f?style=for-the-badge&logo=files)](https://github.com/akillness/skills-template)
 [![Last Update](https://img.shields.io/badge/Last%20Update-2026--01--06-blue?style=for-the-badge&logo=calendar)](https://github.com/akillness/skills-template)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative)](https://github.com/akillness/skills-template)
 [![MCP](https://img.shields.io/badge/MCP-Enabled-purple?style=for-the-badge)](https://github.com/akillness/skills-template)
 
-> **Multi-Model AI Workflow Template with 32 Professional Skills**
+> **Multi-Model AI Workflow Template with 33 Professional Skills**
 > Gemini + Claude + Codex 협업 기반 에이전트 스킬 시스템 + MCP 자동 설정
 
 ---
@@ -353,6 +353,7 @@ claude mcp list
 - **에이전트 B**: 코드 리뷰
 - **에이전트 C**: 문서화
 - **에이전트 D**: 테스트 검증
+- **에이전트 E**: LaTeX 문서 작성
 
 ---
 
