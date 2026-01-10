@@ -1,0 +1,9 @@
+N:skill-standardization
+D:Standardize and validate SKILL.md files to match the project specification. Use when creating new...
+G:skill-management standardization validation automation scripting
+U[2]:
+  Scenario 1
+  Scenario 2
+S[2]{n,action}:
+  1,[Action]
+  2,[Action]

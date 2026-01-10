@@ -1,7 +1,9 @@
 ---
 name: code-review
-description: Conduct thorough, constructive code reviews. Use when reviewing pull requests, checking code quality, or providing feedback on code. Covers best practices, common issues, security, performance, and testing.
-allowed-tools: Read, Grep, Glob
+description: Conduct thorough, constructive code reviews for quality and security. Use when reviewing pull requests, checking code quality, identifying bugs, or auditing security. Handles best practices, SOLID principles, security vulnerabilities, performance analysis, and testing coverage.
+allowed-tools: [Read, Grep, Glob]
+tags: [code-review, code-quality, security, best-practices, PR-review]
+platforms: [Claude, ChatGPT, Gemini]
 ---
 
 # Code Review
@@ -168,14 +170,14 @@ def test1():
 def calculate_total(items: List[Item], tax_rate: float) -> Decimal:
     """
     Calculate the total price including tax.
-    
+
     Args:
         items: List of items to calculate total for
         tax_rate: Tax rate as decimal (e.g., 0.1 for 10%)
-    
+
     Returns:
         Total price including tax
-        
+
     Raises:
         ValueError: If tax_rate is negative
     """
@@ -192,7 +194,7 @@ def calculate_total(items: List[Item], tax_rate: float) -> Decimal:
 **Be constructive**:
 ```
 ✅ Good:
-"Consider extracting this logic into a separate function for better 
+"Consider extracting this logic into a separate function for better
 testability and reusability:
 
 def validate_email(email: str) -> bool:
@@ -207,7 +209,7 @@ This would make it easier to test and reuse across the codebase."
 **Be specific**:
 ```
 ✅ Good:
-"On line 45, this query could cause N+1 problem. Consider using 
+"On line 45, this query could cause N+1 problem. Consider using
 .select_related('author') to fetch related objects in a single query."
 
 ❌ Bad:
@@ -221,7 +223,7 @@ This would make it easier to test and reuse across the codebase."
 
 **Acknowledge good work**:
 ```
-"Nice use of the strategy pattern here! This makes it easy to add 
+"Nice use of the strategy pattern here! This makes it easy to add
 new payment methods in the future."
 ```
 
@@ -379,3 +381,10 @@ API_KEY = os.environ.get("API_KEY")
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [Clean Code by Robert C. Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
 
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

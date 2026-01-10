@@ -7,19 +7,16 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # API Documentation
 
-## 목적 (Purpose)
 
-개발자가 API를 쉽게 이해하고 사용할 수 있도록 명확한 문서를 작성합니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **API 개발**: 새 엔드포인트 추가 시
 - **외부 공개**: Public API 출시
 - **팀 협업**: 프론트엔드-백엔드 인터페이스 정의
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: OpenAPI (Swagger) 스펙
+### Step 1: OpenAPI (Swagger) 스펙
 
 ```yaml
 openapi: 3.0.0
@@ -174,7 +171,7 @@ security:
   - bearerAuth: []
 ```
 
-### 2단계: 코드에서 문서 생성 (JSDoc/Decorators)
+### Step 2: 코드에서 문서 생성 (JSDoc/Decorators)
 
 **Express + TypeScript**:
 ```typescript
@@ -216,7 +213,7 @@ router.post('/users', async (req, res) => {
 });
 ```
 
-### 3단계: 인터랙티브 문서
+### Step 3: 인터랙티브 문서
 
 **Swagger UI 설정**:
 ```typescript
@@ -231,7 +228,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
 }));
 ```
 
-### 4단계: 예제 및 가이드
+### Step 4: 예제 및 가이드
 
 ```markdown
 ## API Documentation
@@ -323,7 +320,7 @@ Response includes pagination info:
 - `500` - Internal Server Error
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### API 문서 구조
 
@@ -347,7 +344,7 @@ docs/
 └── openapi.yaml                 # OpenAPI spec
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -360,19 +357,19 @@ docs/
 1. **예제에 실제 키**: 예제에 실제 API 키/비밀번호 사용 금지
 2. **모호한 설명**: "데이터를 반환합니다" 같은 불명확한 설명
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Try It Out**: 인터랙티브 문서 제공 (Swagger UI)
 2. **SDK 제공**: 주요 언어별 SDK 및 예제
 3. **Changelog**: API 변경 사항 문서화
 
-## 참고 자료
+## References
 
 - [OpenAPI Specification](https://swagger.io/specification/)
 - [Swagger UI](https://swagger.io/tools/swagger-ui/)
 - [Redoc](https://redocly.com/)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -381,3 +378,11 @@ docs/
 
 ### 태그
 `#API-documentation` `#OpenAPI` `#Swagger` `#REST` `#developer-docs` `#documentation`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

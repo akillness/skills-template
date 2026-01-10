@@ -1,6 +1,8 @@
 ---
 name: basic-skill-template
 description: Brief description of what this Skill does and when to use it. Include key technologies and scenarios.
+tags: [template, example-tags]
+platforms: [Claude, ChatGPT, Gemini]
 ---
 
 # Your Skill Name
@@ -58,7 +60,7 @@ Show a different use case or variation.
 class ExampleClass:
     def __init__(self):
         self.value = 0
-    
+
     def method(self):
         return self.value
 ```
@@ -109,4 +111,3 @@ class ExampleClass:
 - [Internal Reference](REFERENCE.md) (if exists)
 - [More Examples](EXAMPLES.md) (if exists)
 - [Advanced Usage](ADVANCED.md) (if exists)
-

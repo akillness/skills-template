@@ -1,0 +1,27 @@
+N:opencode-authentication
+D:Opencode OAuth authentication flows for Claude Code, Gemini/Antigravity, and Codex. Use when set...
+G:opencode oauth authentication claude-code gemini antigravity codex multi-provider
+U[4]:
+  Opencode 초기 설정 및 인증
+  멀티 프로바이더 연동
+  인증 문제 해결
+  Rate Limit 극복 (다중 계정)
+S[7]{n,action}:
+  1,Claude Code OAuth (차단됨→API키)
+  2,Gemini/Antigravity OAuth 설정
+  3,Codex (OpenAI) 인증
+  4,통합 인증 명령어
+  5,모델 설정
+  6,다중 계정 등록
+  7,트러블슈팅
+R[5]:
+  `opencode auth login`
+  `opencode auth list`
+  `opencode-google-antigravity-auth`
+  `opencode-openai-codex-auth`
+  `anthropic-beta: oauth-2025-04-20`
+C[4]:
+  Claude OAuth 2026.01~ 차단
+  API키 환경변수 관리
+  System Prompt 정확히 일치
+  다중계정 최대 10개

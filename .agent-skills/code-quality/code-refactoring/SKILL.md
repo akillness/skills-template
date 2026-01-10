@@ -7,27 +7,17 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Code Refactoring
 
-## 목적 (Purpose)
 
-코드의 내부 구조를 개선하여 가독성, 유지보수성, 확장성을 향상시킵니다.
-
-이 스킬은 다음을 도와줍니다:
-- 복잡한 코드 단순화
-- 중복 코드 제거 (DRY)
-- SOLID 원칙 적용
-- 디자인 패턴 도입
-- 테스트 가능한 코드 작성
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **코드 리뷰**: 복잡하거나 중복된 코드 발견
 - **새 기능 추가 전**: 기존 코드 정리
 - **버그 수정 후**: 근본 원인 제거
 - **기술 부채 해소**: 정기적인 리팩토링
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: Extract Method (메서드 추출)
+### Step 1: Extract Method (메서드 추출)
 
 **Before (긴 함수)**:
 ```typescript
@@ -73,7 +63,7 @@ function processOrder(order: Order) {
 
 **After (메서드 추출)**:
 ```typescript
-function processOrder(order: Order) {
+async function processOrder(order: Order) {
   validateOrder(order);
   const total = calculateTotal(order);
   await checkInventory(order);
@@ -117,7 +107,7 @@ async function createOrder(order: Order, total: number) {
 }
 ```
 
-### 2단계: Remove Duplication (중복 제거)
+### Step 2: Remove Duplication (중복 제거)
 
 **Before (중복)**:
 ```typescript
@@ -158,7 +148,7 @@ const allActiveUsers = await getActiveUsers();
 const premiumUsers = await getActiveUsers({ plan: 'premium' });
 ```
 
-### 3단계: Replace Conditional with Polymorphism
+### Step 3: Replace Conditional with Polymorphism
 
 **Before (긴 if-else)**:
 ```typescript
@@ -226,7 +216,7 @@ class PaymentProcessor {
 }
 ```
 
-### 4단계: Introduce Parameter Object
+### Step 4: Introduce Parameter Object
 
 **Before (많은 파라미터)**:
 ```typescript
@@ -278,7 +268,7 @@ createUser({
 });
 ```
 
-### 5단계: SOLID 원칙 적용
+### Step 5: SOLID 원칙 적용
 
 **Single Responsibility (단일 책임)**:
 ```typescript
@@ -323,7 +313,7 @@ class UserReportGenerator {
 }
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 리팩토링 체크리스트
 
@@ -338,7 +328,7 @@ class UserReportGenerator {
 - [ ] 주석 없이도 이해 가능 (자기 문서화)
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -351,19 +341,19 @@ class UserReportGenerator {
 1. **동시에 여러 작업**: 리팩토링 + 기능 추가 동시 금지
 2. **테스트 없이 리팩토링**: 회귀 위험
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Boy Scout Rule**: 코드를 발견했을 때보다 깨끗하게
 2. **리팩토링 타이밍**: Red-Green-Refactor (TDD)
 3. **점진적 개선**: 완벽보다 꾸준히
 
-## 참고 자료
+## References
 
 - [Refactoring (Martin Fowler)](https://refactoring.com/)
 - [Clean Code (Robert C. Martin)](https://www.oreilly.com/library/view/clean-code-a/9780136083238/)
 - [SOLID Principles](https://en.wikipedia.org/wiki/SOLID)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -376,3 +366,11 @@ class UserReportGenerator {
 
 ### 태그
 `#refactoring` `#code-quality` `#DRY` `#SOLID` `#design-patterns` `#clean-code`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

@@ -9,6 +9,8 @@ metadata:
   author: "Agent Skills Team"
 allowed-tools:
   - python
+tags: [api-design, REST, GraphQL, OpenAPI, versioning, backend]
+platforms: [Claude, ChatGPT, Gemini]
 ---
 
 # API Design
@@ -325,3 +327,10 @@ type Mutation {
 - [GraphQL Best Practices](https://graphql.org/learn/best-practices/)
 - [HTTP Status Codes](https://httpstatuses.com/)
 
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

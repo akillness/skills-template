@@ -2,6 +2,8 @@
 name: advanced-skill-template
 description: Comprehensive description of what this skill does and when to use it. Include technologies, use cases, and any special requirements or dependencies.
 allowed-tools: Read, Write, Grep, Glob
+tags: [template, example-tags]
+platforms: [Claude, ChatGPT, Gemini]
 ---
 
 # Advanced Skill Name
@@ -98,38 +100,38 @@ class MainImplementation:
     def __init__(self, config):
         self.config = config
         self.state = {}
-    
+
     def process(self, input_data):
         """
         Process input data according to configuration.
-        
+
         Args:
             input_data: Data to process
-            
+
         Returns:
             Processed result
-            
+
         Raises:
             ValueError: If input is invalid
         """
         # Validation
         if not self.validate(input_data):
             raise ValueError("Invalid input")
-        
+
         # Processing
         result = self.transform(input_data)
-        
+
         # Post-processing
         return self.finalize(result)
-    
+
     def validate(self, data):
         # Validation logic
         return True
-    
+
     def transform(self, data):
         # Transformation logic
         return data
-    
+
     def finalize(self, result):
         # Finalization logic
         return result
@@ -152,17 +154,17 @@ import unittest
 class TestMainImplementation(unittest.TestCase):
     def setUp(self):
         self.impl = MainImplementation(test_config)
-    
+
     def test_basic_processing(self):
         """Test basic processing workflow."""
         result = self.impl.process(test_data)
         self.assertEqual(result, expected_result)
-    
+
     def test_error_handling(self):
         """Test error cases."""
         with self.assertRaises(ValueError):
             self.impl.process(invalid_data)
-    
+
     def test_edge_cases(self):
         """Test edge cases."""
         # Edge case testing
@@ -239,18 +241,18 @@ class AdvancedWorkflow:
         self.config = load_config('config.yaml')
         self.impl = MainImplementation(self.config)
         self.logger = logging.getLogger(__name__)
-    
+
     def run(self):
         """Run the complete workflow."""
         try:
             # Step 1: Prepare
             self.logger.info("Preparing data...")
             data = self.prepare()
-            
+
             # Step 2: Process
             self.logger.info("Processing...")
             result = self.impl.process(data)
-            
+
             # Step 3: Validate
             self.logger.info("Validating results...")
             if self.validate_result(result):
@@ -258,24 +260,24 @@ class AdvancedWorkflow:
                 self.logger.info("Workflow complete!")
             else:
                 raise ValueError("Validation failed")
-                
+
         except Exception as e:
             self.logger.error(f"Workflow failed: {e}")
             self.handle_error(e)
             raise
-    
+
     def prepare(self):
         # Preparation logic
         pass
-    
+
     def validate_result(self, result):
         # Validation logic
         return True
-    
+
     def save(self, result):
         # Save logic
         pass
-    
+
     def handle_error(self, error):
         # Error handling
         pass
@@ -299,7 +301,7 @@ See [examples/production_example.py](examples/production_example.py)
    ```language
    # Use caching for expensive operations
    from functools import lru_cache
-   
+
    @lru_cache(maxsize=128)
    def expensive_operation(param):
        # Expensive computation
@@ -357,7 +359,7 @@ See [examples/production_example.py](examples/production_example.py)
 
 ### Issue 1: Performance degradation
 
-**Symptoms**: 
+**Symptoms**:
 - Slow processing times
 - High memory usage
 - CPU spikes
@@ -506,3 +508,10 @@ Set up alerts for:
 - [RFC xxxx](https://tools.ietf.org/html/rfcxxxx)
 - [Industry Standard](https://standard.example.com)
 
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

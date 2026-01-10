@@ -1,378 +1,446 @@
-# Agent Skills Developer Guide
+# Agent Skills Repository
 
-이 문서는 `.agent-skills/` 저장소의 **개발자 종합 가이드**입니다. 루트 `README.md`보다 상세하며, 스킬 사용/설치/통합/확장/기여 전 과정을 다룹니다.
-
----
-
-## 구현된 Skills (총 35개, 전부 ✅)
-
-### 🏗️ Backend (5)
-- ✅ api-design
-- ✅ authentication-setup
-- ✅ backend-testing
-- ✅ database-schema-design
-- ✅ toon-demo
-
-### 🎨 Frontend (4)
-- ✅ responsive-design
-- ✅ state-management
-- ✅ ui-component-patterns
-- ✅ web-accessibility
-
-### ✨ Code Quality (4)
-- ✅ code-refactoring
-- ✅ code-review
-- ✅ performance-optimization
-- ✅ testing-strategies
-
-### 🚀 Infrastructure (6)
-- ✅ deployment-automation
-- ✅ jekyll-site-setup
-- ✅ monitoring-observability
-- ✅ security-best-practices
-- ✅ system-environment-setup
-
-### 📚 Documentation (5)
-- ✅ ai-paper-writing
-- ✅ api-documentation
-- ✅ changelog-maintenance
-- ✅ technical-writing
-- ✅ user-guide-writing
-
-### 📋 Project Management (4)
-- ✅ sprint-retrospective
-- ✅ standup-meeting
-- ✅ task-estimation
-- ✅ task-planning
-
-### 🔍 Search & Analysis (1)
-- ✅ codebase-search
-
-### 🔧 Utilities (4)
-- ✅ environment-setup
-- ✅ file-organization
-- ✅ git-workflow
-- ✅ workflow-automation
+범용 AI 에이전트를 위한 Agent Skills 모음입니다. Claude, ChatGPT, Gemini 등 모든 AI 플랫폼에서 사용 가능한 오픈 표준을 따릅니다.
 
 ---
 
-## 🧭 시스템 아키텍처
+## AI Agent Setup / AI 에이전트 설정
 
-### 🎯 Frontend: Cursor, Claude Code, Claude.ai
-### 🎨 Backend: Gemini, Claude, Codex
-### 🚀 Infrastructure: Jekyll, Docker, GitHub Pages
+> **For AI Agents**: `.agent-skills/setup.sh 실행하고 skill 설정해줘`
 
----
+| Agent Type | Command |
+|------------|---------|
+| **Shell Access** (Claude Code, Codex) | `./setup.sh` → option 1 |
+| **No Shell** (GPT, Gemini Web) | 사용자에게 안내: `cd .agent-skills && ./setup.sh` |
 
-## 🧭 멀티 모델 워크플로우
-
-### **Gemini 2.5 Pro**
-- 대용량 분석
-- 200만 토큰 수 (문맥, 챗)
-- 400만 토큰 출력 (실행, 코드)
-- 1M+ 토큰 컨텍스트
-
-### **Claude Sonnet 4.5**
-- 1M 토큰 컨텍스트
-- 100만 토큰 출력
-- 120K 토큰 입력
-
-### **Codex GPT-5.2**
-- 1M 토큰 컨텍스트
-- 200만 토큰 출력
-
----
-
-## 📊 성과 지표
-
-| 항목 | 완료 |
-|------|--------|
-| **Backend** | 5개 스킬 |
-| **Frontend** | 4개 스킬 |
-| **Code Quality** | 4개 스킬 |
-| **Infrastructure** | 6개 스킬 |
-| **Documentation** | 5개 스킬 |
-| **Project Management** | 4개 스킬 |
-| **Search & Analysis** | 1개 스킬 |
-| **Utilities** | 4개 스킬 |
-| **총합** | **34개 스킬 |
-
----
-
-## 📚 빠른 참조
-
-- **[Agent Skills README](../README.md): 전체 스킬 목록 및 상세 사용법
-- [CLAUDE_MULTI_MODEL_WORKFLOW_GUIDE.md](prompt/CLAUDE_MULTI_MODEL_WORKFLOW_GUIDE.md): 멀티 모델 워크플로우 완벽 가이드
-- [CLAUDE_MCP_GEMINI_CODEX_SETUP.md](prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md): MCP 서버 자동 설정
-- [CLAUDE_SETUP_GUIDE.md](prompt/CLAUDE_SETUP_GUIDE.md): 개발자 설정
-
----
-
-## 💡 스킬 사용법
-
-### Claude Code에서 AI 스킬 활성화
-
-```
-# AI 논문 및 공학 논문 완벽 작성해줘"
+**Non-interactive (AI recommended):**
+```bash
+python3 scripts/generate_compact_skills.py && \
+mkdir -p ~/.claude/skills && \
+cp -r backend frontend code-quality infrastructure documentation project-management search-analysis utilities ~/.claude/skills/
 ```
 
-### ChatGPT Custom GPT 설정
+---
+
+## 개요
+
+Agent Skills는 AI 에이전트의 기능을 확장하는 모듈식 기능입니다. 각 Skill은 특정 작업을 수행하는 방법에 대한 지침, 스크립트, 참고 자료를 포함합니다.
+
+**특징**:
+- 📦 **모듈화**: 각 Skill은 독립적으로 작동
+- 🔄 **재사용 가능**: 다양한 프로젝트에서 사용
+- 🌐 **플랫폼 독립적**: Claude, ChatGPT, Gemini 모두 지원
+- 📝 **자체 문서화**: SKILL.md만 읽어도 이해 가능
+- 🔍 **점진적 공개**: 필요할 때만 컨텍스트 로드
+- 🤝 **멀티 에이전트 지원**: 개선 작업 시 여러 AI 에이전트를 협업하여 품질 향상
+
+## 폴더 구조
 
 ```
-# Agent Skills System
+.agent-skills/
+├── README.md                          # 이 파일
+├── CONTRIBUTING.md                    # 기여 가이드
+├── setup.sh                           # 설정 스크립트
+├── skill_loader.py                    # Python 유틸리티
+├── templates/                         # Skills 작성 템플릿
+│   ├── basic-skill-template/         # 기본 템플릿
+│   ├── advanced-skill-template/       # 고급 템플릿
+│   ├── multiplatform-skill-template/ # 멀티 플랫폼 템플릿
+│   └── chatgpt-skill-template/       # ChatGPT 전용 템플릿 ✅
+├── infrastructure/                    # 인프라 Skills
+│   ├── system-setup/
+│   ├── deployment/
+│   ├── monitoring/
+│   └── security/
+├── backend/                           # 백엔드 Skills
+│   ├── api-design/                   ✅ 구현됨
+│   ├── database/
+│   ├── authentication/
+│   └── testing/
+├── frontend/                          # 프론트엔드 Skills
+│   ├── ui-components/
+│   ├── state-management/
+│   ├── responsive-design/
+│   └── accessibility/
+├── documentation/                     # 문서 Skills
+│   ├── technical-writing/            ✅ 구현됨
+│   ├── api-documentation/
+│   ├── user-guides/
+│   └── changelog/
+├── code-quality/                      # 코드 품질 Skills
+│   ├── code-review/                  ✅ 구현됨
+│   ├── refactoring/
+│   ├── testing-strategies/
+│   └── performance-optimization/
+├── search-analysis/                   # 검색/분석 Skills
+│   ├── codebase-search/              ✅ 구현됨
+│   ├── log-analysis/
+│   ├── data-analysis/
+│   └── pattern-detection/
+├── project-management/                # 프로젝트 관리 Skills
+│   ├── task-planning/
+│   ├── estimation/
+│   ├── retrospective/
+│   ├── standup-helper/
+│   └── ultrathink-multiagent-workflow/ ✅ 구현됨 (Ralph Wiggum 기법)
+└── utilities/                         # 유틸리티 Skills
+    ├── git-workflow/                 ✅ 구현됨
+    ├── environment-setup/
+    ├── file-organization/
+    ├── automation/
+    └── opencode-authentication/      ✅ 구현됨 (OAuth 인증 가이드)
+```
+
+## 사용 방법
+
+### Claude (Cursor, Claude.ai, Claude Code)
+
+**자동 발견**:
+Claude는 `.agent-skills/` 또는 `~/.claude/skills/` 폴더의 Skills를 자동으로 발견하고 로드합니다.
+
+```bash
+# 프로젝트 Skills (팀과 공유)
+cp -r .agent-skills/.claude/skills/
+
+# 개인 Skills
+cp -r .agent-skills/* ~/.claude/skills/
+```
+
+**사용 예시**:
+```
+사용자: "REST API를 설계해줘"
+→ Claude가 자동으로 'api-design' Skill 활성화
+→ API 설계 베스트 프랙티스를 따라 설계
+```
+
+### ChatGPT (Custom GPTs)
+
+ChatGPT에는 공식적인 `skills.md` 포맷이 없고, 대신 **Custom GPT 설명서**를 Instructions 탭에 작성하는 방식입니다. 따라서 `skills.md`는 내부용 설계 문서로 사용하고, 그 내용을 Instructions·Actions에 옮기는 방식을 권장합니다.
+
+**권장 방법: ChatGPT 전용 템플릿 사용**
+
+1. **템플릿 복사**:
+   ```bash
+   cp -r templates/chatgpt-skill-template chatgpt/my-skill
+   ```
+
+2. **skills.md 작성**:
+   - `chatgpt/my-skill/skills.md` 파일 편집
+   - 스킬의 목적, 사용 방법, 예시 등을 상세히 작성
+   - Instructions 탭에 넣을 압축 버전 포함
+
+3. **Custom GPT 생성**:
+   - ChatGPT Builder에서 Custom GPT 생성
+   - Instructions 탭에 `skills.md`의 "7. Instructions 탭에 넣을 압축 버전" 복사
+   - 실제 값으로 교체하여 붙여넣기
+
+4. **Knowledge 설정** (선택사항):
+   - `skills.md`의 "2.2 Knowledge" 섹션 참고
+   - 필요한 문서를 Knowledge에 업로드
+
+5. **Actions 설정** (선택사항):
+   - `skills.md`의 "3. GPT Actions" 섹션 참고
+   - OpenAPI 스키마 작성 및 연결
+
+**템플릿 위치**: `templates/chatgpt-skill-template/`
+
+> **GPT Setup**: See [AI Agent Setup](#ai-agent-setup--ai-에이전트-설정) section above.
+
+**기존 방법 (레거시)**:
+
+**방법 1: Knowledge Base 업로드**
+1. `.agent-skills/` 폴더를 zip으로 압축
+2. Custom GPT의 Knowledge에 업로드
+3. Instructions에 기본 가이드 추가 (위 템플릿 방식 권장)
+
+**방법 2: 직접 프롬프트 포함**
+```
+I'm using Agent Skills. Here's the skill:
+
+[SKILL.md 내용 붙여넣기]
+
+Now help me with: [작업 요청]
+```
+
+### Gemini (Gemini Advanced, API)
+
+**Python 스크립트 사용**:
+```python
+from skill_loader import SkillLoader
+
+# Skills 로드
+loader = SkillLoader('.agent-skills')
+
+# 특정 Skill 가져오기
+api_skill = loader.get_skill('api-design')
+
+# 프롬프트 생성
+prompt = f"""
+{api_skill['body']}
+
+Now help me design an API for user management.
+"""
+
+# Gemini API 호출
+import google.generativeai as genai
+model = genai.GenerativeModel('gemini-pro')
+response = model.generate_content(prompt)
+```
+
+### MCP Integration (Gemini-CLI, Codex-CLI)
+
+**MCP(Model Context Protocol) 서버를 통한 스킬 사용**:
+
+MCP는 Claude Code에서 다양한 AI 모델을 통합하여 사용할 수 있게 하는 프로토콜입니다. Gemini-CLI, Codex-CLI 등의 MCP 서버를 통해 Agent Skills를 활용할 수 있습니다.
+
+**설정 방법**:
+```bash
+# setup.sh 실행 후 옵션 6 선택
+./setup.sh
+# 6) MCP Integration (Gemini-CLI, Codex-CLI)
+```
+
+**생성되는 파일**:
+- `MCP_CONTEXT.md`: MCP 사용을 위한 스킬 시스템 가이드
+- `mcp-skill-loader.sh`: 스킬 로드 헬퍼 스크립트
+- `mcp-shell-config.sh`: Shell 설정 스니펫
+
+**사용 예시**:
+```bash
+# 1. Helper 함수 로드
+source .agent-skills/mcp-skill-loader.sh
+
+# 2. 사용 가능한 스킬 목록 확인
+list_skills
+
+# 3. 스킬 검색
+search_skills "API design"
+
+# 4. Gemini CLI와 함께 사용
+gemini chat "$(load_skill backend/api-design)
+
+사용자 관리 REST API를 설계해줘"
+
+# 5. Codex CLI와 함께 사용
+codex-cli shell "$(load_skill code-quality/code-review)
+
+이 코드를 리뷰해줘: $(cat src/app.ts)"
+
+# 6. 컨텍스트와 함께 스킬 로드
+load_skill_with_context backend/api-design
+```
+
+**Shell RC 파일에 추가** (~/.bashrc 또는 ~/.zshrc):
+```bash
+# Agent Skills MCP 통합
+export AGENT_SKILLS_PATH="/path/to/.agent-skills"
+source "$AGENT_SKILLS_PATH/mcp-skill-loader.sh"
+
+# 편의 alias
+alias skills-list='list_skills'
+alias skills-search='search_skills'
+```
+
+**MCP 서버 설정**:
+MCP 서버 설치 및 설정은 다음 가이드를 참고하세요:
+- `.agent-skills/prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md`
+
+## 빠른 시작
+
+> **Setup**: See [AI Agent Setup](#ai-agent-setup--ai-에이전트-설정) or run `./setup.sh`
+
+### 첫 번째 Skill 사용
+
+**Claude 사용자**:
+```
+"REST API를 설계해줘"
+```
+
+**ChatGPT 사용자**:
+```bash
+# ChatGPT 전용 템플릿 사용 (권장)
+cp -r templates/chatgpt-skill-template chatgpt/my-skill
+# chatgpt/my-skill/skills.md 편집 후 Instructions 탭에 복사
+
+# 또는 기존 방법
+python skill_loader.py --skill api-design --output prompt.txt
+# prompt.txt 내용을 ChatGPT에 붙여넣기
+```
+
+**Gemini 사용자**:
+```python
+# Python 스크립트로 통합
+python -c "
+from skill_loader import SkillLoader
+loader = SkillLoader('.agent-skills')
+print(loader.format_for_prompt(['api-design']))
+"
+```
+
+### 3. 새 Skill 추가
+
+**일반 Skills (Claude, Gemini용)**:
+```bash
+# 새 Skill 폴더 생성
+mkdir -p .agent-skills/backend/new-skill
+
+# SKILL.md 생성
+cat > .agent-skills/backend/new-skill/SKILL.md << 'EOF'
+---
+name: new-skill
+description: What this skill does and when to use it
+---
+
+# New Skill
+
+## Instructions
+1. Step 1
+2. Step 2
+
+## Examples
 ...
+EOF
+
+# Git에 커밋
+git add .agent-skills/backend/new-skill/
+git commit -m "Add new-skill"
 ```
 
-### Gemini 사용법
+**ChatGPT Custom GPT용**:
+```bash
+# ChatGPT 전용 템플릿 복사
+cp -r templates/chatgpt-skill-template chatgpt/my-skill
+
+# skills.md 편집
+# - 플레이스홀더를 실제 내용으로 교체
+# - Instructions 탭에 넣을 압축 버전 작성
+
+# Custom GPT 생성 시
+# - ChatGPT Builder의 Instructions 탭에 skills.md의 "7. Instructions 탭에 넣을 압축 버전" 복사
+```
+
+## 사용 가능한 Skills
+
+### Infrastructure (인프라)
+- 🏗️ **system-setup**: 시스템 환경 설정
+- 🚀 **deployment**: 배포 자동화
+- 📊 **monitoring**: 모니터링 설정
+- 🔒 **security**: 보안 구성
+
+### Backend (백엔드)
+- ✅ **api-design**: REST/GraphQL API 설계 (구현됨)
+- 🗄️ **database**: 데이터베이스 스키마 설계
+- 🔐 **authentication**: 인증/인가 구현
+- 🧪 **testing**: 백엔드 테스트 전략
+
+### Frontend (프론트엔드)
+- 🎨 **ui-components**: UI 컴포넌트 개발
+- 🔄 **state-management**: 상태 관리
+- 📱 **responsive-design**: 반응형 디자인
+- ♿ **accessibility**: 접근성 구현
+
+### Documentation (문서)
+- ✅ **technical-writing**: 기술 문서 작성 (구현됨)
+- 📚 **api-documentation**: API 문서화
+- 📖 **user-guides**: 사용자 가이드
+- 📝 **changelog**: 변경 이력 관리
+
+### Code Quality (코드 품질)
+- ✅ **code-review**: 코드 리뷰 (구현됨)
+- 🔧 **refactoring**: 리팩토링 전략
+- 🧪 **testing-strategies**: 테스트 전략
+- ⚡ **performance-optimization**: 성능 최적화
+
+### Search & Analysis (검색/분석)
+- ✅ **codebase-search**: 코드베이스 검색 (구현됨)
+- 📋 **log-analysis**: 로그 분석
+- 📊 **data-analysis**: 데이터 분석
+- 🔍 **pattern-detection**: 패턴 감지
+
+### Project Management (프로젝트 관리)
+- 📋 **task-planning**: 작업 계획
+- ⏱️ **estimation**: 개발 시간 추정
+- 🔄 **retrospective**: 회고 진행
+- 📢 **standup-helper**: 스탠드업 준비
+- ✅ **ultrathink-multiagent-workflow**: Ralph Wiggum 기반 멀티 에이전트 워크플로우 (구현됨)
+
+### Utilities (유틸리티)
+- ✅ **git-workflow**: Git 워크플로우 (구현됨)
+- ⚙️ **environment-setup**: 환경 설정
+- 📁 **file-organization**: 파일 정리
+- 🤖 **automation**: 자동화 스크립트
+- ✅ **opencode-authentication**: Opencode OAuth 인증 (Claude Code, Gemini/Antigravity, Codex) (구현됨)
+
+## 기여하기
+
+새로운 Skill을 추가하거나 기존 Skill을 개선하려면 [CONTRIBUTING.md](CONTRIBUTING.md)를 참조하세요.
+
+### 기여 단계
+1. 새 Skill 폴더 생성
+2. `SKILL.md` 파일 작성 (템플릿 참조)
+3. 지원 파일 추가 (선택사항)
+4. 테스트
+5. Pull Request 생성
+
+### 🤝 멀티 에이전트 기여 방식
+
+이 프로젝트는 개선 작업 시 **멀티 에이전트 접근 방식**을 권장합니다. 여러 AI 에이전트가 각자의 전문 Skill을 활용하여 협업하면 더 높은 품질의 결과를 얻을 수 있습니다.
+
+**멀티 에이전트 워크플로우 예시**:
 
 ```
-gemini chat --extension .
+1. 에이전트 A (구현): 새 Skill 작성
+   → api-design Skill을 참고하여 REST API 설계
+
+2. 에이전트 B (검토): 코드 리뷰 수행
+   → code-review Skill을 활용하여 품질 검증
+   → 보안, 성능, 테스트 커버리지 확인
+
+3. 에이전트 C (문서화): 문서 작성
+   → technical-writing Skill을 사용하여 문서화
+   → README, 예제, Best practices 작성
+
+4. 에이전트 D (검색/분석): 관련 코드 찾기
+   → codebase-search Skill을 활용하여 유사 구현 탐색
+   → 일관성 및 패턴 분석
 ```
 
-### Codex CLI 사용법
+**멀티 에이전트의 장점**:
+- ✅ 각 에이전트가 전문 Skill에 집중하여 더 정확한 결과
+- ✅ 다양한 관점에서 검토하여 품질 향상
+- ✅ 병렬 작업으로 효율성 증대
+- ✅ 각 Skill의 활용도 증가
 
-```
-codex exec [프로젝트]
-```
+**실전 활용**:
+- 새 Skill 개발 시: 구현 → 리뷰 → 문서화 → 검증의 파이프라인 구성
+- 기존 Skill 개선 시: 검색 → 분석 → 개선 → 리뷰 → 문서 업데이트
+- 버그 수정 시: 문제 탐색 → 원인 분석 → 수정 → 테스트 → 문서화
+
+## 참고 자료
+
+### 공식 문서
+- [Agent Skills 공식 사이트](https://agentskills.io/)
+- [Agent Skills 사양](https://agentskills.io/specification)
+- [Agent Skills GitHub](https://github.com/agentskills/agentskills)
+- [Claude Code Skills](https://code.claude.com/docs/ko/skills)
+
+### 가이드 문서
+- [Skills 작성 템플릿](/Skills/claude_skill_template_guide.md)
+- [범용 Skills 아키텍처](/Skills/universal_agent_skills_architecture.md)
+
+## 라이선스
+
+이 프로젝트는 Agent Skills 오픈 표준을 따르며, 자유롭게 사용, 수정, 배포할 수 있습니다.
+
+## 문의
+
+- Issue: GitHub Issues
+- Email: [your-email]
+- Slack: [your-slack-channel]
 
 ---
 
-## 🎯 사용 예시
+**버전**: 1.2.0
+**최종 업데이트**: 2026-01-10  
+**관리자**: [Your Name]
 
-### 1. AI 논문 작성 (Claude)
-
-```
-"AI 및 머신러닝 논문을 완벽 작성해줘"
-→ Claude가 자동으로 논문 구조를 작성하고 내용을 채워냅니다.
-```
-
-### 2. AI 공학 논문 작성 (Codex + Codex)
-
-```
-"codex-cli를 사용해서 이 논문을 분석해줘"
-→ Codex가 자동으로 분석하고 답변을 제공합니다.
-```
-
-### 3. AI 테스트 작성 (Claude + Codex)
-
-```
-"gemini-cli를 사용해서 프로젝트 전체를 분석하고 설명해줘"
-→ gemini가 대용량 분석 완료.
-```
-
-### 4. AI 코드 생성 (Codex + Claude)
-
-```
-"codex-cli로 이 함수를 리팩토링해줘"
-→ Codex가 자동으로 리팩토링 제공합니다.
-```
-
-### 5. Jekyll 사이트 설정 (Claude + Codex)
-
-```
-"jekyll 사이트를 자동으로 설정해줘"
-→ Claude가 코드와 스타일을 생성합니다.
-```
-
----
-
-## 🔑 기여 하이점
-
-### 1. 효율성
-
-#### 콘텐츠 비교
-- **Claude**: 자동 스킬 → AI 논문 구조 작성
-- **Codex**: 자동 리팩토링 → 코드 최적화
-
-#### 속도 비교
-- **Claude**: 설계 → Codex 구현
-- **Codex**: 코드 생성
-
-#### 비용
-- **Codex**: 15달러 무료
-- **Codex**: ChatGPT Custom GPT + 템플릿
-
----
-
-### 2. 생산성
-
-#### 시간
-- **Claude + Codex**: 6배 빠른 속도
-- **Codex + Claude**: 12분 (1분에 5배)
-
----
-
-### 3. 품질
-
-- **Claude + Codex**: 높은 정확도
-- **Claude + Codex**: 고품질의 정확
-
----
-
-## 🎯 완벽 가이드
-
-### 1. 설정
-
-#### Zed 설정
-
-```json
-{
-  "agent": {
-    "profiles": {
-      "codex-workflow": {
-        "name": "Codex Workflow",
-        "tools": {
-          "thinking": true,
-          "fetch": true,
-          "web_search": true
-        },
-        "enable_all_context_servers": false,
-        "context_servers": {
-          "codex-cli": {
-            "tools": {
-              "ask-codex": true,
-              "brainstorm": true,
-              "ping": true,
-              "fetch-chunk": true
-            }
-        }
-      },
-      "default_model": {
-        "provider": "openai",
-        "model": "gpt-5"
-      }
-    }
-  }
-}
-```
-
-#### 설정 방법
-
-**Method 1**: Agent Panel > Settings > Add Custom Server
-- 서버: `codex-cli`
-- 명령: `npx -y @cexll/codex-mcp-server`
-
-**Method 2**: setup.sh 사용
-- 옵션 1: Claude (또는 ChatGPT)
-- 옵션 5: All platforms
-- 설치 전체 자동 설정
-
----
-
-## 📝 사용 가이드
-
-### Claude 사용시
-
-```
-"codex-cli를 사용해서 [기능]해줘"
-```
-
-### Codex 사용시
-
-```
-"codex exec @src/app.ts"
-```
-
----
-
-## 🎬 실전 사용 예시
-
-### 예시 1: AI 논문 작성 (Claude + Codex)
-
-**사용자 요청**: "AI 및 공학 논문을 완벽 작성해줘"
-
-**실행 절차**:
-1. **분석**: Claude가 관련 논문 10편 검색
-2. **구조 작성**: Claude가 논문 구조 작성 (Introduction → Abstract → Related Work → Methodology → Results → Discussion → Conclusion)
-3. **내용 작성**: Claude가 상세 논문을 구조 확장
-4. **코드 작성**: Claude가 논문을 자동 작성
-
-**결과**: Claude가 완성한 300줄, 8쪄분 논문, 15개 참고 문헌
-
-### 예시 2: AI 논문 분석 (Codex + Claude)
-
-**사용자 요청**: "이 프로젝트 전체 분석해줘"
-
-**실행 절차**:
-1. **Gemini**: 대용량 분석 (200만 토큰)
-2. **Codex**: 코드 구현 및 리팩토링 (50% 향상)
-
-**결과**: 200만 톁� 크기를 대용량으로 분석 완료. 코드 구현 및 리팩토링으로 기존 방법 개선.
-
----
-
-### 예시 3: AI 코드 생성 (Claude + Codex)
-
-**사용자 요청**: "이 기능을 구현해줘"
-
-**실행 절차**:
-1. **Codex**: 기능 설계
-2. **Claude**: API 설계
-3. **Claude**: 기초기
-4. **Codex**: 구현
-
-**결과**: 기능 완벽, API 설계 완료, 초안 작성 완료. Jekyll 사이트 설정 자동화 가능.
-
----
-
-## 🎯 비교: Codex vs Claude
-
-| 기능 | Codex | Claude |
-|------|--------|------|
-| 대용량 분석 | 200만 토큰 vs 120K | ✅ |
-| 자동 코드 생성 | ✅ |
-| 빠른 리팩토링 | ✅ |
-| 15달러 무료 | ❌ |
-
----
-
-## 📝 실전 사용 경험
-
-### 1. AI 논문 작성 (Claude only)
-
-**경로**: 30분 소요
-- **결과**: 완벽한 300줄 논문 완성
-
-### 2. AI 공학 논문 작성 (Claude + Codex)
-
-**경로**: 2시간 (1시간)
-- **결과**: 600줄 논문 완성
-
----
-
-### 3. Jekyll 사이트 자동화 (Claude + Codex)
-
-**경로**: 30분
-- **결과**: Jekyll 사이트 구축 완료
-- **깃헙 블로그**: 60줄
-- **CSS 스타일**: 50줄
-- **RSS 피드**: 완료
-
----
-
-## 🎯 결론
-
-**Codex CLI를 사용하여 OpenCode 워크플로우**
-- **설치**: 간단계 (npm install, 코드 생성, Jekyll 설정)
-- **기능**: 빠르고 정확도 (200만 토큰)
-- **생산성성**: 2-3배 더 빠름
-
-**현재 상태**: 설치 완료, 스킬 작성 완료, 워크플로우 자동화
-
----
-
-**[📝 Documentation](../README.md)**
-
----
-
-## 📞 참고 자료
-
-- [README.md](../README.md): 전체 스킬 목록
-- [CODX_WORKFLOW_INTEGRATION.md](prompt/CODX_WORKFLOW_INTEGRATION.md): 멀티 모델 워크플로우 완벽 가이드
-- [CLAUDE_MCP_GEMINI_CODEX_SETUP.md](prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md): MCP 서버 자동 설정
-
----
-
-**[🚀 끝점]**
-
-✅ AI 스킬 업데이트 완료

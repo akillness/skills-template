@@ -7,27 +7,17 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Monitoring & Observability
 
-## 목적 (Purpose)
 
-애플리케이션 및 인프라의 상태를 실시간으로 모니터링하고 문제를 조기에 발견합니다.
-
-이 스킬은 다음을 도와줍니다:
-- 메트릭 수집 (Prometheus, CloudWatch)
-- 로그 집계 (ELK, Loki)
-- 대시보드 구축 (Grafana)
-- 알림 설정 (PagerDuty, Slack)
-- 분산 추적 (Jaeger, Zipkin)
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **프로덕션 배포 전**: 모니터링 시스템 필수 구축
 - **성능 문제 발생**: 병목 지점 식별
 - **장애 대응**: 빠른 원인 파악
 - **SLA 준수**: 가용성/응답시간 추적
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: 메트릭 수집 (Prometheus)
+### Step 1: 메트릭 수집 (Prometheus)
 
 **애플리케이션 계측** (Node.js):
 ```typescript
@@ -105,7 +95,7 @@ rule_files:
   - 'alert_rules.yml'
 ```
 
-### 2단계: 알림 규칙
+### Step 2: 알림 규칙
 
 **alert_rules.yml**:
 ```yaml
@@ -165,7 +155,7 @@ groups:
           description: "Memory usage is {{ $value }}%"
 ```
 
-### 3단계: 로그 집계 (Structured Logging)
+### Step 3: 로그 집계 (Structured Logging)
 
 **Winston (Node.js)**:
 ```typescript
@@ -215,7 +205,7 @@ app.use((req, res, next) => {
 });
 ```
 
-### 4단계: Grafana 대시보드
+### Step 4: Grafana 대시보드
 
 **dashboard.json** (예시):
 ```json
@@ -266,7 +256,7 @@ app.use((req, res, next) => {
 }
 ```
 
-### 5단계: Health Checks
+### Step 5: Health Checks
 
 **Advanced Health Check**:
 ```typescript
@@ -328,7 +318,7 @@ app.get('/health', async (req, res) => {
 });
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 모니터링 대시보드 구성
 
@@ -354,7 +344,7 @@ Golden Signals:
    - Network bandwidth
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -367,19 +357,19 @@ Golden Signals:
 1. **민감정보 로깅 금지**: 비밀번호, API 키 절대 로깅하지 않음
 2. **과도한 메트릭**: 불필요한 메트릭은 리소스 낭비
 
-## 베스트 프랙티스 (Best Practices)
+## Best practices
 
 1. **SLO 정의**: Service Level Objectives 명확히
 2. **Runbook 작성**: 알림별 대응 절차 문서화
 3. **Dashboards**: 팀별 필요한 대시보드 커스터마이징
 
-## 참고 자료 (References)
+## References
 
 - [Prometheus](https://prometheus.io/)
 - [Grafana](https://grafana.com/)
 - [Google SRE Book](https://sre.google/books/)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -392,3 +382,11 @@ Golden Signals:
 
 ### 태그
 `#monitoring` `#observability` `#Prometheus` `#Grafana` `#logging` `#metrics` `#infrastructure`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

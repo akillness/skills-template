@@ -1,0 +1,16 @@
+N:environment-setup
+D:Configure and manage development, staging, and production environments. Use when setting up envir...
+G:environment configuration env-variables dotenv config-management
+U[3]:
+  **신규 프로젝트**: 초기 환경 설정
+  **다중 환경**: dev, staging, production 분리
+  **팀 협업**: 일관된 환경 공유
+S[5]{n,action}:
+  1,.env 파일 구조
+  2,Type-Safe 환경변수 (TypeScript)
+  3,환경별 Config 파일
+  4,환경별 설정 파일
+  5,Docker 환경변수
+R[2]:
+  DATABASE_URL=postgresql
+  REDIS_URL=redis

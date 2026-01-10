@@ -7,19 +7,16 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Standup Meeting
 
-## 목적 (Purpose)
 
-효율적인 Daily Standup을 통해 팀 동기화 및 블로커 해결을 촉진합니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **매일**: 같은 시간, 같은 장소
 - **스프린트 중**: 팀 동기화 필요 시
 - **원격 팀**: 비동기 스탠드업
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: 3 Questions 포맷
+### Step 1: 3 Questions 포맷
 
 ```markdown
 ## Daily Standup Template
@@ -59,7 +56,7 @@ platforms: [Claude, ChatGPT, Gemini]
 2. [ ] 팀장이 팀원 C의 DB 권한 요청 (오늘 중)
 ```
 
-### 2단계: Walking the Board (보드 기반)
+### Step 2: Walking the Board (보드 기반)
 
 ```markdown
 ## Standup: Walking the Board
@@ -91,28 +88,28 @@ platforms: [Claude, ChatGPT, Gemini]
 - **On Track**: Yes ✅
 ```
 
-### 3단계: 비동기 Standup (원격 팀)
+### Step 3: 비동기 Standup (원격 팀)
 
 **Slack 템플릿**:
 ```markdown
-:calendar: **Daily Update - 2025-01-15**
+[Daily Update - 2025-01-15]
 
-:white_check_mark: **Yesterday**
+**Yesterday**
 - Completed user authentication flow
 - Fixed bug in password validation
 
-:runner: **Today**
+**Today**
 - Implementing JWT refresh tokens
 - Writing unit tests
 
-:no_entry: **Blockers**
+**Blockers**
 - None
 
-:chart_with_upward_trend: **Sprint Progress**
+**Sprint Progress**
 - 8/13 story points completed
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### Standup 회의록
 
@@ -141,7 +138,7 @@ platforms: [Claude, ChatGPT, Gemini]
 - Team morale: High
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -155,18 +152,18 @@ platforms: [Claude, ChatGPT, Gemini]
 2. **Status Report**: 관리자에게 보고하는 자리 아님
 3. **Late Start**: 시간 엄수
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Stand Up**: 실제로 서서 진행 (짧게 유지)
 2. **Parking Lot**: 깊은 논의는 별도 시간
 3. **Visualize**: 보드를 보며 진행
 
-## 참고 자료
+## References
 
 - [Scrum Guide - Daily Scrum](https://scrumguides.org/)
 - [15 Minute Stand-up](https://www.mountaingoatsoftware.com/agile/scrum/meetings/daily-scrum)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -175,3 +172,11 @@ platforms: [Claude, ChatGPT, Gemini]
 
 ### 태그
 `#standup` `#daily-scrum` `#agile` `#team-sync` `#project-management`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

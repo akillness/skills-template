@@ -7,18 +7,8 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Database Schema Design
 
-## 목적 (Purpose)
 
-효율적이고 확장 가능한 데이터베이스 스키마를 설계하고 최적화합니다.
-
-이 스킬은 다음을 도와줍니다:
-- 정규화/비정규화된 스키마 설계
-- 관계형 및 NoSQL 데이터베이스 모델링
-- 인덱스 전략 수립
-- 마이그레이션 스크립트 작성
-- 성능 최적화
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 이 스킬을 트리거해야 하는 구체적인 상황을 나열합니다:
 
@@ -30,7 +20,7 @@ platforms: [Claude, ChatGPT, Gemini]
 
 ## 입력 형식 (Input Format)
 
-사용자로부터 받아야 할 입력의 형식과 필수/선택 정보입니다. 구체적인 예시는 [EXAMPLES.md](./EXAMPLES.md)를 참고하세요.
+사용자로부터 받아야 할 입력의 형식과 필수/선택 정보:
 
 ### 필수 정보
 - **데이터베이스 종류**: PostgreSQL, MySQL, MongoDB, SQLite 등
@@ -43,11 +33,25 @@ platforms: [Claude, ChatGPT, Gemini]
 - **트랜잭션 요구사항**: ACID 필요 여부 (기본값: true)
 - **샤딩/파티셔닝**: 대용량 데이터 분산 필요 여부 (기본값: false)
 
-## 작업 절차 (Procedure)
+### 입력 예시
 
-단계별로 정확하게 따라야 할 작업 순서입니다. 각 단계별 코드 예제는 [EXAMPLES.md](./EXAMPLES.md)를 참고하세요.
+```
+전자상거래 플랫폼의 데이터베이스를 설계해줘:
+- DB: PostgreSQL
+- 엔티티: User(사용자), Product(상품), Order(주문), Review(리뷰)
+- 관계:
+  - User는 여러 Order를 가질 수 있음
+  - Order는 여러 Product를 포함 (N:M)
+  - Review는 User와 Product에 연결
+- 예상 데이터: 10만 사용자, 1만 상품
+- 읽기 중심 (상품 조회 빈번)
+```
 
-### 1단계: 엔티티 및 속성 정의
+## Instructions
+
+단계별로 정확하게 따라야 할 작업 순서를 명시합니다.
+
+### Step 1: 엔티티 및 속성 정의
 
 핵심 데이터 객체와 그 속성을 식별합니다.
 
@@ -57,9 +61,41 @@ platforms: [Claude, ChatGPT, Gemini]
 - 데이터 타입 결정 (VARCHAR, INTEGER, TIMESTAMP, JSON 등)
 - Primary Key 지정 (UUID vs Auto-increment ID)
 
-👉 **상세 코드**: [EXAMPLES.md > Entity Definition Example](./EXAMPLES.md#1-entity-definition-example-e-commerce)
+**예시** (전자상거래):
+```
+Users (사용자)
+- id: UUID PRIMARY KEY
+- email: VARCHAR(255) UNIQUE NOT NULL
+- username: VARCHAR(50) UNIQUE NOT NULL
+- password_hash: VARCHAR(255) NOT NULL
+- created_at: TIMESTAMP DEFAULT NOW()
+- updated_at: TIMESTAMP DEFAULT NOW()
 
-### 2단계: 관계 설계 및 정규화
+Products (상품)
+- id: UUID PRIMARY KEY
+- name: VARCHAR(255) NOT NULL
+- description: TEXT
+- price: DECIMAL(10, 2) NOT NULL
+- stock: INTEGER DEFAULT 0
+- category_id: UUID REFERENCES Categories(id)
+- created_at: TIMESTAMP DEFAULT NOW()
+
+Orders (주문)
+- id: UUID PRIMARY KEY
+- user_id: UUID REFERENCES Users(id)
+- total_amount: DECIMAL(10, 2) NOT NULL
+- status: VARCHAR(20) DEFAULT 'pending'
+- created_at: TIMESTAMP DEFAULT NOW()
+
+OrderItems (주문 상품 - 중간 테이블)
+- id: UUID PRIMARY KEY
+- order_id: UUID REFERENCES Orders(id) ON DELETE CASCADE
+- product_id: UUID REFERENCES Products(id)
+- quantity: INTEGER NOT NULL
+- price: DECIMAL(10, 2) NOT NULL
+```
+
+### Step 2: 관계 설계 및 정규화
 
 테이블 간의 관계를 정의하고 정규화를 적용합니다.
 
@@ -75,9 +111,50 @@ platforms: [Claude, ChatGPT, Gemini]
 - 읽기 중심 → 일부 비정규화로 JOIN 최소화
 - 쓰기 중심 → 완전 정규화로 중복 제거
 
-👉 **상세 코드**: [EXAMPLES.md > Relationship & Normalization](./EXAMPLES.md#2-relationship--normalization-mermaid-erd)
+**예시** (ERD Mermaid):
+```mermaid
+erDiagram
+    Users ||--o{ Orders : places
+    Orders ||--|{ OrderItems : contains
+    Products ||--o{ OrderItems : "ordered in"
+    Categories ||--o{ Products : categorizes
+    Users ||--o{ Reviews : writes
+    Products ||--o{ Reviews : "reviewed by"
 
-### 3단계: 인덱스 전략 수립
+    Users {
+        uuid id PK
+        string email UK
+        string username UK
+        string password_hash
+        timestamp created_at
+    }
+
+    Products {
+        uuid id PK
+        string name
+        decimal price
+        int stock
+        uuid category_id FK
+    }
+
+    Orders {
+        uuid id PK
+        uuid user_id FK
+        decimal total_amount
+        string status
+        timestamp created_at
+    }
+
+    OrderItems {
+        uuid id PK
+        uuid order_id FK
+        uuid product_id FK
+        int quantity
+        decimal price
+    }
+```
+
+### Step 3: 인덱스 전략 수립
 
 쿼리 성능을 위한 인덱스를 설계합니다.
 
@@ -94,9 +171,55 @@ platforms: [Claude, ChatGPT, Gemini]
 - [x] 복합 인덱스 순서 최적화 (선택도 높은 칼럼 먼저)
 - [x] 과도한 인덱스 지양 (INSERT/UPDATE 성능 저하)
 
-👉 **상세 코드**: [EXAMPLES.md > Index Strategy](./EXAMPLES.md#3-index-strategy-postgresql)
+**예시** (PostgreSQL):
+```sql
+-- Primary Keys (자동 인덱스)
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,  -- UNIQUE = 자동 인덱스
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
 
-### 4단계: 제약조건 및 트리거 설정
+-- Foreign Keys + 명시적 인덱스
+CREATE TABLE orders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX idx_orders_user_id ON orders(user_id);
+CREATE INDEX idx_orders_status ON orders(status);
+CREATE INDEX idx_orders_created_at ON orders(created_at);
+
+-- 복합 인덱스 (status와 created_at 함께 조회 빈번)
+CREATE INDEX idx_orders_status_created ON orders(status, created_at DESC);
+
+-- Products 테이블
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
+    stock INTEGER DEFAULT 0 CHECK (stock >= 0),
+    category_id UUID REFERENCES categories(id),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX idx_products_category ON products(category_id);
+CREATE INDEX idx_products_price ON products(price);  -- 가격 범위 검색
+CREATE INDEX idx_products_name ON products(name);    -- 상품명 검색
+
+-- Full-text search (PostgreSQL)
+CREATE INDEX idx_products_name_fts ON products USING GIN(to_tsvector('english', name));
+CREATE INDEX idx_products_description_fts ON products USING GIN(to_tsvector('english', description));
+```
+
+### Step 4: 제약조건 및 트리거 설정
 
 데이터 무결성을 위한 제약조건을 추가합니다.
 
@@ -107,9 +230,35 @@ platforms: [Claude, ChatGPT, Gemini]
 - Foreign Key + CASCADE 옵션
 - Default 값 설정
 
-👉 **상세 코드**: [EXAMPLES.md > Constraints & Triggers](./EXAMPLES.md#4-constraints--triggers)
+**예시**:
+```sql
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
+    stock INTEGER DEFAULT 0 CHECK (stock >= 0),
+    discount_percent INTEGER CHECK (discount_percent >= 0 AND discount_percent <= 100),
+    category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
 
-### 5단계: 마이그레이션 스크립트 작성
+-- Trigger: updated_at 자동 갱신
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_products_updated_at
+BEFORE UPDATE ON products
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
+```
+
+### Step 5: 마이그레이션 스크립트 작성
 
 스키마 변경사항을 안전하게 적용하는 마이그레이션을 작성합니다.
 
@@ -119,22 +268,119 @@ platforms: [Claude, ChatGPT, Gemini]
 - 트랜잭션으로 래핑
 - 데이터 손실 방지 (ALTER TABLE 신중히)
 
-👉 **상세 코드**: [EXAMPLES.md > Migration Scripts](./EXAMPLES.md#5-migration-scripts)
+**예시** (SQL 마이그레이션):
+```sql
+-- migrations/001_create_initial_schema.up.sql
+BEGIN;
 
-## 출력 포맷 (Output Format)
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-결과물이 따라야 할 정확한 형식을 정의합니다. 구체적인 예시는 [EXAMPLES.md](./EXAMPLES.md)를 참고하세요.
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE categories (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) UNIQUE NOT NULL,
+    parent_id UUID REFERENCES categories(id)
+);
+
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
+    stock INTEGER DEFAULT 0 CHECK (stock >= 0),
+    category_id UUID REFERENCES categories(id),
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX idx_products_category ON products(category_id);
+CREATE INDEX idx_products_price ON products(price);
+
+COMMIT;
+
+-- migrations/001_create_initial_schema.down.sql
+BEGIN;
+
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+COMMIT;
+```
+
+## Output format
+
+결과물이 따라야 할 정확한 형식을 정의합니다.
 
 ### 기본 구조
-프로젝트 루트 내 `database/` 디렉토리에 스키마, 마이그레이션, 시드 데이터, 문서를 포함하는 구조여야 합니다.
 
-### 문서화
-- **ERD**: Mermaid 형식을 사용하여 관계 시각화
-- **스키마 설명**: 각 테이블의 목적, 인덱스 정보, 예상 데이터량 명시
+```
+프로젝트/
+├── database/
+│   ├── schema.sql                    # 전체 스키마
+│   ├── migrations/
+│   │   ├── 001_create_users.up.sql
+│   │   ├── 001_create_users.down.sql
+│   │   ├── 002_create_products.up.sql
+│   │   └── 002_create_products.down.sql
+│   ├── seeds/
+│   │   └── sample_data.sql           # 테스트 데이터
+│   └── docs/
+│       ├── ERD.md                     # Mermaid ERD 다이어그램
+│       └── SCHEMA.md                  # 스키마 설명 문서
+└── README.md
+```
 
-## 제약사항 (Constraints)
+### ERD 다이어그램 (Mermaid 형식)
 
-반드시 지켜야 할 규칙과 금지 사항입니다.
+```markdown
+# Database Schema
+
+## Entity Relationship Diagram
+
+\`\`\`mermaid
+erDiagram
+    Users ||--o{ Orders : places
+    Orders ||--|{ OrderItems : contains
+    Products ||--o{ OrderItems : "ordered in"
+
+    Users {
+        uuid id PK
+        string email UK
+        string username UK
+    }
+
+    Products {
+        uuid id PK
+        string name
+        decimal price
+    }
+\`\`\`
+
+## Table Descriptions
+
+### users
+- **Purpose**: Store user account information
+- **Indexes**: email, username
+- **Estimated rows**: 100,000
+
+### products
+- **Purpose**: Product catalog
+- **Indexes**: category_id, price, name
+- **Estimated rows**: 10,000
+```
+
+## Constraints
+
+반드시 지켜야 할 규칙과 금지 사항을 명시합니다.
 
 ### 필수 규칙 (MUST)
 
@@ -170,7 +416,268 @@ platforms: [Claude, ChatGPT, Gemini]
 - **SQL Injection 방지**: Prepared Statements/Parameterized Queries 사용
 - **민감 칼럼 암호화**: 개인정보는 암호화 저장 고려
 
-## 메타데이터
+## Examples
+
+실제 사용 사례를 통해 스킬의 적용 방법을 보여줍니다.
+
+### 예시 1: 블로그 플랫폼 스키마
+
+**상황**: Medium 스타일의 블로그 플랫폼 데이터베이스 설계
+
+**사용자 요청**:
+```
+블로그 플랫폼을 위한 PostgreSQL 스키마를 설계해줘:
+- 사용자는 여러 포스트를 작성
+- 포스트는 여러 태그를 가짐 (N:M)
+- 사용자는 포스트에 좋아요, 북마크 가능
+- 댓글 기능 (대댓글 지원)
+```
+
+**최종 결과**:
+```sql
+-- Users
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    bio TEXT,
+    avatar_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Posts
+CREATE TABLE posts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    author_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) UNIQUE NOT NULL,
+    content TEXT NOT NULL,
+    published_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX idx_posts_author ON posts(author_id);
+CREATE INDEX idx_posts_published ON posts(published_at);
+CREATE INDEX idx_posts_slug ON posts(slug);
+
+-- Tags
+CREATE TABLE tags (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(50) UNIQUE NOT NULL,
+    slug VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Post-Tag relationship (N:M)
+CREATE TABLE post_tags (
+    post_id UUID REFERENCES posts(id) ON DELETE CASCADE,
+    tag_id UUID REFERENCES tags(id) ON DELETE CASCADE,
+    PRIMARY KEY (post_id, tag_id)
+);
+
+CREATE INDEX idx_post_tags_post ON post_tags(post_id);
+CREATE INDEX idx_post_tags_tag ON post_tags(tag_id);
+
+-- Likes
+CREATE TABLE post_likes (
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    post_id UUID REFERENCES posts(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id, post_id)
+);
+
+-- Bookmarks
+CREATE TABLE post_bookmarks (
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    post_id UUID REFERENCES posts(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id, post_id)
+);
+
+-- Comments (self-referencing for nested comments)
+CREATE TABLE comments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    post_id UUID NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    author_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    parent_comment_id UUID REFERENCES comments(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX idx_comments_post ON comments(post_id);
+CREATE INDEX idx_comments_author ON comments(author_id);
+CREATE INDEX idx_comments_parent ON comments(parent_comment_id);
+```
+
+### 예시 2: MongoDB 스키마 (NoSQL)
+
+**상황**: 실시간 채팅 앱을 위한 MongoDB 스키마
+
+**사용자 요청**:
+```
+실시간 채팅 앱의 MongoDB 스키마를 설계해줘.
+읽기가 매우 빈번하고, 메시지 히스토리를 빠르게 조회해야 해.
+```
+
+**최종 결과**:
+```javascript
+// users collection
+{
+  _id: ObjectId,
+  username: String,  // indexed, unique
+  email: String,     // indexed, unique
+  avatar_url: String,
+  status: String,    // 'online', 'offline', 'away'
+  last_seen: Date,
+  created_at: Date
+}
+
+// conversations collection (비정규화 - 읽기 최적화)
+{
+  _id: ObjectId,
+  participants: [    // indexed
+    {
+      user_id: ObjectId,
+      username: String,
+      avatar_url: String
+    }
+  ],
+  last_message: {    // 비정규화로 최근 메시지 빠른 조회
+    content: String,
+    sender_id: ObjectId,
+    sent_at: Date
+  },
+  unread_counts: {   // 각 참여자별 읽지 않은 메시지 수
+    "user_id_1": 5,
+    "user_id_2": 0
+  },
+  created_at: Date,
+  updated_at: Date
+}
+
+// messages collection
+{
+  _id: ObjectId,
+  conversation_id: ObjectId,  // indexed
+  sender_id: ObjectId,
+  content: String,
+  attachments: [
+    {
+      type: String,  // 'image', 'file', 'video'
+      url: String,
+      filename: String
+    }
+  ],
+  read_by: [ObjectId],  // 읽은 사용자 ID 배열
+  sent_at: Date,        // indexed
+  edited_at: Date
+}
+
+// Indexes
+db.users.createIndex({ username: 1 }, { unique: true });
+db.users.createIndex({ email: 1 }, { unique: true });
+
+db.conversations.createIndex({ "participants.user_id": 1 });
+db.conversations.createIndex({ updated_at: -1 });
+
+db.messages.createIndex({ conversation_id: 1, sent_at: -1 });
+db.messages.createIndex({ sender_id: 1 });
+```
+
+**설계 특징**:
+- 읽기 최적화를 위한 비정규화 (last_message 임베딩)
+- 자주 조회되는 필드에 인덱스
+- 배열 필드 활용 (participants, read_by)
+
+## Best practices
+
+### 품질 향상
+
+1. **명명 규칙 일관성**: 테이블/칼럼 이름은 snake_case 사용
+   - users, post_tags, created_at
+   - 복수형/단수형 일관되게 (테이블은 복수, 칼럼은 단수 등)
+
+2. **Soft Delete 고려**: 중요 데이터는 물리 삭제 대신 논리 삭제
+   - deleted_at TIMESTAMP (NULL이면 활성, NOT NULL이면 삭제됨)
+   - 실수로 삭제한 데이터 복구 가능
+   - 감사(Audit) 추적
+
+3. **Timestamp 필수**: created_at, updated_at은 대부분 테이블에 포함
+   - 데이터 추적 및 디버깅
+   - 시계열 분석
+
+### 효율성 개선
+
+- **Partial Indexes**: 조건부 인덱스로 인덱스 크기 최소화
+  ```sql
+  CREATE INDEX idx_posts_published ON posts(published_at) WHERE published_at IS NOT NULL;
+  ```
+- **Materialized Views**: 복잡한 집계 쿼리는 Materialized View로 캐싱
+- **Partitioning**: 대용량 테이블은 날짜/범위 기준 파티셔닝
+
+## 자주 발생하는 문제 (Common Issues)
+
+### 문제 1: N+1 쿼리 문제
+
+**증상**: 한 쿼리로 충분한데 여러 번 DB 호출
+
+**원인**: JOIN 없이 반복문에서 개별 조회
+
+**해결방법**:
+```sql
+-- ❌ 나쁜 예: N+1 queries
+SELECT * FROM posts;  -- 1번
+-- 각 post마다
+SELECT * FROM users WHERE id = ?;  -- N번
+
+-- ✅ 좋은 예: 1 query
+SELECT posts.*, users.username, users.avatar_url
+FROM posts
+JOIN users ON posts.author_id = users.id;
+```
+
+### 문제 2: 인덱스 없는 Foreign Key로 인한 느린 JOIN
+
+**증상**: JOIN 쿼리가 매우 느림
+
+**원인**: Foreign Key 칼럼에 인덱스 누락
+
+**해결방법**:
+```sql
+CREATE INDEX idx_orders_user_id ON orders(user_id);
+CREATE INDEX idx_order_items_order_id ON order_items(order_id);
+CREATE INDEX idx_order_items_product_id ON order_items(product_id);
+```
+
+### 문제 3: UUID vs Auto-increment 성능
+
+**증상**: UUID Primary Key 사용 시 삽입 성능 저하
+
+**원인**: UUID는 랜덤하여 인덱스 조각화
+
+**해결방법**:
+- PostgreSQL: `uuid_generate_v7()` 사용 (시간 순서 UUID)
+- MySQL: `UUID_TO_BIN(UUID(), 1)` 사용
+- 또는 Auto-increment BIGINT 사용 고려
+
+## References
+
+### 공식 문서
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [MySQL Documentation](https://dev.mysql.com/doc/)
+- [MongoDB Schema Design Best Practices](https://www.mongodb.com/docs/manual/core/data-modeling-introduction/)
+
+### 도구
+- [dbdiagram.io](https://dbdiagram.io/) - ERD 다이어그램 작성
+- [PgModeler](https://pgmodeler.io/) - PostgreSQL 모델링 도구
+- [Prisma](https://www.prisma.io/) - ORM + 마이그레이션
+
+### 학습 자료
+- [Database Design Course (freecodecamp)](https://www.youtube.com/watch?v=ztHopE5Wnpc)
+- [Use The Index, Luke](https://use-the-index-luke.com/) - SQL 인덱싱 가이드
+
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0

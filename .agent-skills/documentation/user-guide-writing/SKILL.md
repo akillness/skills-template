@@ -7,19 +7,16 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # User Guide Writing
 
-## 목적 (Purpose)
 
-사용자가 제품을 쉽게 이해하고 사용할 수 있도록 명확한 가이드를 작성합니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **신규 기능**: 사용자에게 새 기능 소개
 - **온보딩**: 신규 사용자 교육
 - **FAQ**: 자주 묻는 질문 정리
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: Quick Start Guide
+### Step 1: Quick Start Guide
 
 ```markdown
 # Getting Started with MyApp
@@ -67,7 +64,7 @@ Welcome to MyApp! This guide will help you get up and running in 5 minutes.
 - 📚 [Help Center](https://help.myapp.com)
 ```
 
-### 2단계: How-To Guide (작업 중심)
+### Step 2: How-To Guide (작업 중심)
 
 ```markdown
 # How to Export Your Data
@@ -148,7 +145,7 @@ A ZIP file will be downloaded containing:
 - [Data Security](data-security.md)
 ```
 
-### 3단계: FAQ (자주 묻는 질문)
+### Step 3: FAQ (자주 묻는 질문)
 
 ```markdown
 # Frequently Asked Questions (FAQ)
@@ -234,7 +231,7 @@ MyApp works best on:
 - 👥 [Community Forum](https://community.myapp.com)
 ```
 
-### 4단계: Tutorial (학습 중심)
+### Step 4: Tutorial (학습 중심)
 
 ```markdown
 # Tutorial: Build Your First Dashboard
@@ -296,7 +293,7 @@ Now that you've created your first dashboard, try:
 You've completed the tutorial. Happy dashboard building! 🎉
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ```
 docs/
@@ -314,7 +311,7 @@ docs/
     └── dashboard.png
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -327,18 +324,18 @@ docs/
 1. **기술 용어 남발**: API, endpoint 등
 2. **긴 문단**: 짧고 명확하게
 
-## 베스트 프랙티스
+## Best practices
 
 1. **User-Centric**: 사용자 관점으로 작성
 2. **Show, Don't Tell**: 스크린샷, GIF, 비디오
 3. **Update Regularly**: UI 변경 시 문서도 업데이트
 
-## 참고 자료
+## References
 
 - [Docs as Code](https://www.writethedocs.org/guide/docs-as-code/)
 - [Good Docs Project](https://thegooddocsproject.dev/)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -347,3 +344,11 @@ docs/
 
 ### 태그
 `#user-guides` `#tutorials` `#documentation` `#onboarding` `#how-to` `#FAQ`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

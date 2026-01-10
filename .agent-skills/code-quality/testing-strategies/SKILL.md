@@ -7,27 +7,17 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Testing Strategies
 
-## 목적 (Purpose)
 
-효과적인 테스트 전략을 수립하여 소프트웨어 품질을 보장합니다.
-
-이 스킬은 다음을 도와줍니다:
-- Test Pyramid 구축 (Unit > Integration > E2E)
-- TDD (Test-Driven Development) 적용
-- 테스트 커버리지 목표 설정
-- 테스트 자동화
-- CI/CD 파이프라인에 테스트 통합
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **신규 프로젝트**: 테스트 전략 수립
 - **품질 문제**: 버그 빈번히 발생
 - **리팩토링 전**: 안전망 구축
 - **CI/CD 구축**: 자동화된 테스트
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: Test Pyramid 이해
+### Step 1: Test Pyramid 이해
 
 ```
        /\
@@ -46,7 +36,7 @@ platforms: [Claude, ChatGPT, Gemini]
 - Integration: 20%
 - E2E: 10%
 
-### 2단계: Unit Testing 전략
+### Step 2: Unit Testing 전략
 
 **Given-When-Then 패턴**:
 ```typescript
@@ -100,7 +90,7 @@ describe('UserService', () => {
 });
 ```
 
-### 3단계: Integration Testing
+### Step 3: Integration Testing
 
 **API 엔드포인트 테스트**:
 ```typescript
@@ -145,7 +135,7 @@ describe('POST /api/users', () => {
 });
 ```
 
-### 4단계: E2E Testing (Playwright)
+### Step 4: E2E Testing (Playwright)
 
 ```typescript
 import { test, expect } from '@playwright/test';
@@ -187,7 +177,7 @@ test.describe('User Registration Flow', () => {
 });
 ```
 
-### 5단계: TDD (Test-Driven Development)
+### Step 5: TDD (Test-Driven Development)
 
 **Red-Green-Refactor Cycle**:
 
@@ -220,7 +210,7 @@ it('should return false for non-palindrome', () => {
 });
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 테스트 전략 문서
 
@@ -249,7 +239,7 @@ it('should return false for non-palindrome', () => {
 - E2E tests on staging environment
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -263,21 +253,21 @@ it('should return false for non-palindrome', () => {
 2. **프로덕션 DB**: 테스트에서 실제 DB 사용 금지
 3. **Sleep/Timeout**: 시간 기반 테스트 지양
 
-## 베스트 프랙티스
+## Best practices
 
 1. **AAA 패턴**: Arrange-Act-Assert
 2. **테스트 이름**: "should ... when ..."
 3. **Edge Cases**: 경계값, null, 빈 값 테스트
 4. **Happy Path + Sad Path**: 성공/실패 시나리오 모두
 
-## 참고 자료
+## References
 
 - [Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html)
 - [Jest](https://jestjs.io/)
 - [Playwright](https://playwright.dev/)
 - [Testing Best Practices](https://github.com/goldbergyoni/javascript-testing-best-practices)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -290,3 +280,11 @@ it('should return false for non-palindrome', () => {
 
 ### 태그
 `#testing` `#test-strategy` `#TDD` `#unit-test` `#integration-test` `#E2E` `#code-quality`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

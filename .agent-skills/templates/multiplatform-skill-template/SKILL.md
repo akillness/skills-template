@@ -7,16 +7,8 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # 스킬 이름
 
-## 목적 (Purpose)
 
-이 스킬이 해결하는 문제와 제공하는 가치를 명확히 설명합니다.
-
-이 스킬은 다음을 도와줍니다:
-- 핵심 기능 1
-- 핵심 기능 2
-- 핵심 기능 3
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 이 스킬을 트리거해야 하는 구체적인 상황을 나열합니다:
 
@@ -44,11 +36,11 @@ platforms: [Claude, ChatGPT, Gemini]
 [사용자 입력 예시]
 ```
 
-## 작업 절차 (Procedure)
+## Instructions
 
 단계별로 정확하게 따라야 할 작업 순서를 명시합니다.
 
-### 1단계: [작업 이름]
+### Step 1: [작업 이름]
 
 무엇을 해야 하는지 구체적으로 설명합니다.
 
@@ -65,7 +57,7 @@ def step_1_example():
     pass
 ```
 
-### 2단계: [작업 이름]
+### Step 2: [작업 이름]
 
 다음 단계로 진행합니다.
 
@@ -77,7 +69,7 @@ def step_1_example():
 - 조건 A이면 → 동작 X
 - 조건 B이면 → 동작 Y
 
-### 3단계: [작업 이름]
+### Step 3: [작업 이름]
 
 마지막 단계를 완료합니다.
 
@@ -86,7 +78,7 @@ def step_1_example():
 - [ ] 체크포인트 2
 - [ ] 체크포인트 3
 
-## 출력 포맷 (Output Format)
+## Output format
 
 결과물이 따라야 할 정확한 형식을 정의합니다.
 
@@ -121,7 +113,7 @@ def step_1_example():
 [구체적인 출력 예시를 여기에 포함]
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 반드시 지켜야 할 규칙과 금지 사항을 명시합니다.
 
@@ -157,7 +149,7 @@ def step_1_example():
 - **추측 금지**: 확실하지 않은 정보는 추가하지 않음
 - **환경변수**: 민감한 설정은 환경변수로만 관리
 
-## 작업 예시 (Examples)
+## Examples
 
 실제 사용 사례를 통해 스킬의 적용 방법을 보여줍니다.
 
@@ -206,7 +198,7 @@ def step_1_example():
 [완성된 결과물]
 ```
 
-## 베스트 프랙티스 (Best Practices)
+## Best practices
 
 효과적으로 이 스킬을 사용하기 위한 권장사항입니다.
 
@@ -300,7 +292,7 @@ def step_1_example():
 - [REFERENCE.md](REFERENCE.md): 상세 레퍼런스
 - [FAQ.md](FAQ.md): 자주 묻는 질문
 
-## 참고 자료 (References)
+## References
 
 추가 학습을 위한 외부 자료입니다.
 
@@ -316,7 +308,7 @@ def step_1_example():
 - [GitHub Repository](https://github.com/example/repo)
 - [Community Forum](https://forum.example.com)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0

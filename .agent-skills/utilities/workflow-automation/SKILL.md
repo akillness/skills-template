@@ -7,19 +7,16 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Workflow Automation
 
-## 목적 (Purpose)
 
-반복적인 개발 작업을 자동화하여 생산성을 향상시킵니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **반복 작업**: 매번 같은 명령어 실행
 - **복잡한 빌드**: 여러 단계 빌드 프로세스
 - **팀 온보딩**: 일관된 개발 환경
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: npm scripts
+### Step 1: npm scripts
 
 **package.json**:
 ```json
@@ -43,7 +40,7 @@ platforms: [Claude, ChatGPT, Gemini]
 }
 ```
 
-### 2단계: Makefile
+### Step 2: Makefile
 
 **Makefile**:
 ```makefile
@@ -96,7 +93,7 @@ make dev         # Start development
 make ci          # Run full CI locally
 ```
 
-### 3단계: Husky + lint-staged (Git Hooks)
+### Step 3: Husky + lint-staged (Git Hooks)
 
 **package.json**:
 ```json
@@ -132,7 +129,7 @@ npm test -- --onlyChanged
 echo "✅ Pre-commit checks passed!"
 ```
 
-### 4단계: Task Runner 스크립트
+### Step 4: Task Runner 스크립트
 
 **scripts/dev-setup.sh**:
 ```bash
@@ -222,7 +219,7 @@ fi
 echo "✅ Deployment to $ENV completed!"
 ```
 
-### 5단계: GitHub Actions Workflow 자동화
+### Step 5: GitHub Actions Workflow 자동화
 
 **.github/workflows/ci.yml**:
 ```yaml
@@ -263,7 +260,7 @@ jobs:
         uses: codecov/codecov-action@v3
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ```
 project/
@@ -279,7 +276,7 @@ project/
     └── pre-push
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -292,19 +289,19 @@ project/
 1. **하드코딩된 비밀**: 스크립트에 비밀번호, API 키 포함 금지
 2. **파괴적 명령**: 확인 없이 rm -rf 실행 금지
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Make 사용**: 플랫폼 무관 인터페이스
 2. **Git Hooks**: 자동 품질 검사
 3. **CI/CD**: GitHub Actions로 자동화
 
-## 참고 자료
+## References
 
 - [npm scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts)
 - [Make Tutorial](https://makefiletutorial.com/)
 - [Husky](https://typicode.github.io/husky/)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -313,3 +310,11 @@ project/
 
 ### 태그
 `#automation` `#scripts` `#workflow` `#npm-scripts` `#Makefile` `#utilities`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

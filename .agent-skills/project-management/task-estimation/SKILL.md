@@ -7,25 +7,16 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Task Estimation
 
-## 목적 (Purpose)
 
-소프트웨어 개발 작업을 정확하게 추정하여 현실적인 계획을 수립합니다.
-
-이 스킬은 다음을 도와줍니다:
-- Story Points 산정
-- T-Shirt Sizing (S, M, L, XL)
-- Planning Poker
-- 리스크 식별 및 버퍼 추가
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **Sprint Planning**: 스프린트에 포함할 작업 결정
 - **Roadmap 작성**: 장기 계획 수립
 - **리소스 계획**: 팀 규모 및 일정 산정
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: Story Points (상대적 추정)
+### Step 1: Story Points (상대적 추정)
 
 **Fibonacci 시퀀스**: 1, 2, 3, 5, 8, 13, 21
 
@@ -73,7 +64,7 @@ platforms: [Claude, ChatGPT, Gemini]
 - **필수**: 반드시 더 작은 스토리로 분할
 ```
 
-### 2단계: Planning Poker
+### Step 2: Planning Poker
 
 **프로세스**:
 1. Product Owner가 스토리 설명
@@ -100,7 +91,7 @@ Story: "사용자가 프로필 사진을 업로드할 수 있다"
 재투표 → 5 points 합의
 ```
 
-### 3단계: T-Shirt Sizing (빠른 추정)
+### Step 3: T-Shirt Sizing (빠른 추정)
 
 ```markdown
 ## T-Shirt 사이즈
@@ -117,7 +108,7 @@ Story: "사용자가 프로필 사진을 업로드할 수 있다"
 - 빠른 우선순위 설정
 ```
 
-### 4단계: 리스크 및 불확실성 고려
+### Step 4: 리스크 및 불확실성 고려
 
 **추정 조정**:
 ```typescript
@@ -151,7 +142,7 @@ const task = {
 const final = adjustEstimate(task);  // 5 * 1.3 * 1.2 = 7.8 → 8 points
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 추정 문서 템플릿
 
@@ -187,7 +178,7 @@ const final = adjustEstimate(task);  // 5 * 1.3 * 1.2 = 7.8 → 8 points
 - Need to discuss design with UX team
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -201,19 +192,19 @@ const final = adjustEstimate(task);  // 5 * 1.3 * 1.2 = 7.8 → 8 points
 2. **너무 세밀한 추정**: 13+ points는 분할
 3. **추정치를 데드라인으로**: 추정 ≠ 확약
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Break Down**: 큰 작업은 작게 분할
 2. **Reference Stories**: 과거 유사 작업 참고
 3. **Buffer 포함**: 예상치 못한 일 대비
 
-## 참고 자료
+## References
 
 - [Scrum Guide](https://scrumguides.org/)
 - [Planning Poker](https://www.planningpoker.com/)
 - [Story Points](https://www.atlassian.com/agile/project-management/estimation)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -222,3 +213,11 @@ const final = adjustEstimate(task);  // 5 * 1.3 * 1.2 = 7.8 → 8 points
 
 ### 태그
 `#estimation` `#agile` `#story-points` `#planning-poker` `#sprint-planning` `#project-management`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

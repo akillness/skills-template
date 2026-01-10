@@ -7,27 +7,17 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Security Best Practices
 
-## 목적 (Purpose)
 
-웹 애플리케이션 및 인프라의 보안을 강화하고 취약점을 방지합니다.
-
-이 스킬은 다음을 도와줍니다:
-- OWASP Top 10 대응
-- 인증/인가 보안
-- API 보안 (Rate Limiting, Input Validation)
-- HTTPS, CORS, CSP 설정
-- 시크릿 관리
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **신규 프로젝트**: 처음부터 보안 고려
 - **보안 감사**: 취약점 점검 및 수정
 - **API 공개**: 외부 접근 API 보안 강화
 - **컴플라이언스**: GDPR, PCI-DSS 등 준수
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: HTTPS 강제 및 보안 헤더
+### Step 1: HTTPS 강제 및 보안 헤더
 
 **Express.js 보안 미들웨어**:
 ```typescript
@@ -88,7 +78,7 @@ const authLimiter = rateLimit({
 app.use('/api/auth/login', authLimiter);
 ```
 
-### 2단계: Input Validation (SQL Injection, XSS 방지)
+### Step 2: Input Validation (SQL Injection, XSS 방지)
 
 **Joi 검증**:
 ```typescript
@@ -124,7 +114,7 @@ app.post('/api/users', async (req, res) => {
 });
 ```
 
-### 3단계: CSRF 방지
+### Step 3: CSRF 방지
 
 **CSRF Token**:
 ```typescript
@@ -156,7 +146,7 @@ app.post('/api/*', csrfProtection, (req, res, next) => {
 // });
 ```
 
-### 4단계: Secrets 관리
+### Step 4: Secrets 관리
 
 **.env (절대 커밋하지 않음)**:
 ```bash
@@ -192,7 +182,7 @@ if (!dbUrl) {
 }
 ```
 
-### 5단계: API 인증 보안
+### Step 5: API 인증 보안
 
 **JWT + Refresh Token Rotation**:
 ```typescript
@@ -230,7 +220,7 @@ app.post('/api/auth/refresh', async (req, res) => {
 });
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -261,19 +251,19 @@ app.post('/api/auth/refresh', async (req, res) => {
 - [ ] A10: SSRF - 외부 요청 검증
 ```
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Principle of Least Privilege**: 최소 권한 부여
 2. **Defense in Depth**: 다층 보안
 3. **Security Audits**: 정기적인 보안 점검
 
-## 참고 자료
+## References
 
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [helmet.js](https://helmetjs.github.io/)
 - [Security Checklist](https://github.com/shieldfy/API-Security-Checklist)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -286,3 +276,11 @@ app.post('/api/auth/refresh', async (req, res) => {
 
 ### 태그
 `#security` `#OWASP` `#HTTPS` `#CORS` `#XSS` `#SQL-injection` `#CSRF` `#infrastructure`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

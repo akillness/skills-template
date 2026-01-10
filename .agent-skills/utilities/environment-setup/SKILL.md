@@ -1,25 +1,23 @@
 ---
-name: environment-configuration
+name: environment-setup
 description: Configure and manage development, staging, and production environments. Use when setting up environment variables, managing configurations, or separating environments. Handles .env files, config management, and environment-specific settings.
+allowed-tools: [Read, Write, Edit, Bash]
 tags: [environment, configuration, env-variables, dotenv, config-management]
 platforms: [Claude, ChatGPT, Gemini]
 ---
 
 # Environment Configuration
 
-## 목적 (Purpose)
 
-환경별 설정을 체계적으로 관리하여 안전하고 효율적인 개발/배포를 가능하게 합니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **신규 프로젝트**: 초기 환경 설정
 - **다중 환경**: dev, staging, production 분리
 - **팀 협업**: 일관된 환경 공유
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: .env 파일 구조
+### Step 1: .env 파일 구조
 
 **.env.example** (템플릿):
 ```bash
@@ -89,7 +87,7 @@ LOG_LEVEL=warn
 ENABLE_2FA=true
 ```
 
-### 2단계: Type-Safe 환경변수 (TypeScript)
+### Step 2: Type-Safe 환경변수 (TypeScript)
 
 **config/env.ts**:
 ```typescript
@@ -142,7 +140,7 @@ try {
 }
 ```
 
-### 3단계: 환경별 Config 파일
+### Step 3: 환경별 Config 파일
 
 **config/index.ts**:
 ```typescript
@@ -206,7 +204,7 @@ for (const envVar of requiredEnvVars) {
 export default config;
 ```
 
-### 4단계: 환경별 설정 파일
+### Step 4: 환경별 설정 파일
 
 **config/environments/development.ts**:
 ```typescript
@@ -260,7 +258,7 @@ const configs = {
 export const environmentConfig = configs[env];
 ```
 
-### 5단계: Docker 환경변수
+### Step 5: Docker 환경변수
 
 **docker-compose.yml**:
 ```yaml
@@ -290,7 +288,7 @@ services:
     image: redis:7-alpine
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ```
 project/
@@ -316,7 +314,7 @@ project/
 .env.production
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -329,19 +327,19 @@ project/
 1. **Secrets 커밋**: .env 파일 절대 커밋하지 않음
 2. **하드코딩**: 코드에 환경별 설정 하드코딩 금지
 
-## 베스트 프랙티스
+## Best practices
 
 1. **12 Factor App**: 환경변수로 설정 관리
 2. **Type Safety**: Zod로 런타임 검증
 3. **Secrets Management**: AWS Secrets Manager, Vault 사용
 
-## 참고 자료
+## References
 
 - [dotenv](https://github.com/motdotla/dotenv)
 - [Zod](https://zod.dev/)
 - [12 Factor App - Config](https://12factor.net/config)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -350,3 +348,11 @@ project/
 
 ### 태그
 `#environment` `#configuration` `#env-variables` `#dotenv` `#config-management` `#utilities`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

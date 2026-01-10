@@ -7,19 +7,16 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Changelog Maintenance
 
-## 목적 (Purpose)
 
-사용자와 개발자가 변경사항을 쉽게 파악할 수 있도록 체계적인 변경 로그를 유지합니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **릴리스 전**: 버전 출시 전 변경사항 정리
 - **지속적**: 주요 변경 발생 시마다 업데이트
 - **마이그레이션 가이드**: Breaking changes 문서화
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: Keep a Changelog 형식
+### Step 1: Keep a Changelog 형식
 
 **CHANGELOG.md**:
 ```markdown
@@ -106,7 +103,7 @@ Initial release
 [1.0.0]: https://github.com/username/repo/releases/tag/v1.0.0
 ```
 
-### 2단계: Semantic Versioning
+### Step 2: Semantic Versioning
 
 **버전 번호**: `MAJOR.MINOR.PATCH`
 
@@ -133,7 +130,7 @@ PATCH (1.1.1 → 1.1.2): Backward-compatible bug fixes
 - `1.0.1` → `1.1.0`: 새 기능 추가
 - `1.1.0` → `2.0.0`: Breaking change
 
-### 3단계: Release Notes (사용자 친화적)
+### Step 3: Release Notes (사용자 친화적)
 
 ```markdown
 # Release Notes v1.2.0
@@ -186,7 +183,7 @@ See [CHANGELOG.md](CHANGELOG.md) for complete details.
 **Upgrade Instructions**: [docs/upgrade-to-v1.2.md](docs/upgrade-to-v1.2.md)
 ```
 
-### 4단계: Breaking Changes 마이그레이션 가이드
+### Step 4: Breaking Changes 마이그레이션 가이드
 
 ```markdown
 # Migration Guide: v1.x to v2.0
@@ -257,7 +254,7 @@ const users = response.data;
 - v2.2 (Mar 2025): Basic Auth removed
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ```
 CHANGELOG.md             # 개발자용 상세 로그
@@ -267,7 +264,7 @@ docs/migration/
   └── v2-to-v3.md
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -280,18 +277,18 @@ docs/migration/
 1. **Git Log 복사 금지**: 사용자 관점으로 작성
 2. **모호한 표현**: "버그 수정", "성능 개선" (구체적으로)
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Keep a Changelog**: 표준 형식 따르기
 2. **Semantic Versioning**: 일관된 버전 관리
 3. **Breaking Changes**: 마이그레이션 가이드 제공
 
-## 참고 자료
+## References
 
 - [Keep a Changelog](https://keepachangelog.com/)
 - [Semantic Versioning](https://semver.org/)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -300,3 +297,11 @@ docs/migration/
 
 ### 태그
 `#changelog` `#release-notes` `#versioning` `#semantic-versioning` `#documentation`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

@@ -1,0 +1,32 @@
+N:ultrathink-multiagent-workflow
+D:Ralph Wiggum 기법 기반 멀티 에이전트 워크플로우. Opus Ultrathink + Sonnet Workers + Codex Executor...
+G:ultrathink multi-agent ralph-wiggum orchestration autonomous opus sonnet extended-thinking
+U[4]:
+  대규모 코드베이스 분석 (500+ 파일)
+  복잡한 구현/디버깅/아키텍처
+  자율 개발 루프 (장시간 무인)
+  멀티 모델 협업 (Opus/Sonnet/Gemini/Codex)
+S[7]{n,action}:
+  1,Ralph Wiggum 기법 이해 (Bash loop)
+  2,Ultrathink Opus 서브에이전트 설정
+  3,Worker Sonnet 병렬 배치 (최대 500)
+  4,IMPLEMENTATION_PLAN.md 기반 개발
+  5,14 에이전트 시스템 구성
+  6,Context Preservation (ledger/handoff)
+  7,Escape Hatches 비용 제어
+R[6]:
+  `파일시스템=상태, Git=메모리`
+  `Opus: 추론, Sonnet: 병렬, Codex: 실행`
+  `IMPLEMENTATION_PLAN.md`
+  `--max-iterations 50`
+  `.ralph/ledger.json`
+  `handoffs/*.md`
+C[4]:
+  항상 max-iterations 설정
+  무제한 루프 금지
+  역할별 에이전트 분리
+  Handoff 문서화 필수
+A[3]:
+  Orchestrator→Planner→Coder
+  Coder→Reviewer→Tester
+  Debugger→Refactorer→Deployer

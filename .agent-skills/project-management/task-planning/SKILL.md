@@ -7,19 +7,16 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Task Planning
 
-## 목적 (Purpose)
 
-효과적인 작업 계획을 통해 개발 과정을 체계적으로 관리합니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **피처 개발**: 새 기능을 작은 태스크로 분할
 - **Sprint Planning**: 스프린트에 포함할 작업 선정
 - **Backlog Grooming**: 백로그 정리 및 우선순위 설정
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: User Story 작성 (INVEST)
+### Step 1: User Story 작성 (INVEST)
 
 **INVEST 원칙**:
 - **I**ndependent: 독립적
@@ -89,7 +86,7 @@ platforms: [Claude, ChatGPT, Gemini]
 - MoSCoW: Must Have
 ```
 
-### 2단계: Epic → Story → Task 분해
+### Step 2: Epic → Story → Task 분해
 
 ```markdown
 ## Epic: User Management System
@@ -124,7 +121,7 @@ platforms: [Claude, ChatGPT, Gemini]
   - [ ] Tests (2h)
 ```
 
-### 3단계: MoSCoW 우선순위
+### Step 3: MoSCoW 우선순위
 
 ```markdown
 ## Feature Prioritization (MoSCoW)
@@ -149,7 +146,7 @@ platforms: [Claude, ChatGPT, Gemini]
 - Multiple Sessions Management
 ```
 
-### 4단계: Sprint Planning
+### Step 4: Sprint Planning
 
 ```markdown
 ## Sprint 10 Planning
@@ -191,7 +188,7 @@ platforms: [Claude, ChatGPT, Gemini]
 - [ ] QA approved
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 태스크 보드 구조
 
@@ -219,7 +216,7 @@ Done:
 - 배포 완료
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -232,18 +229,18 @@ Done:
 1. **너무 큰 스토리**: 13+ points는 분할
 2. **모호한 요구사항**: "개선한다", "최적화한다" 금지
 
-## 베스트 프랙티스
+## Best practices
 
 1. **INVEST 원칙**: 좋은 사용자 스토리 작성
 2. **Definition of Ready**: 스프린트 시작 전 준비 완료
 3. **Definition of Done**: 명확한 완료 기준
 
-## 참고 자료
+## References
 
 - [User Story Guide](https://www.atlassian.com/agile/project-management/user-stories)
 - [MoSCoW Prioritization](https://www.productplan.com/glossary/moscow-prioritization/)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -252,3 +249,11 @@ Done:
 
 ### 태그
 `#task-planning` `#user-stories` `#backlog` `#sprint-planning` `#agile` `#project-management`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

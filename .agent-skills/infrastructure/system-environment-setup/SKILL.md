@@ -7,27 +7,17 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # System & Environment Setup
 
-## 목적 (Purpose)
 
-일관되고 재현 가능한 개발 및 프로덕션 환경을 구성합니다.
-
-이 스킬은 다음을 도와줍니다:
-- Docker Compose로 로컬 환경 구성
-- 환경변수 관리
-- Dev Containers 설정
-- Infrastructure as Code (Terraform)
-- 의존성 관리
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **신규 프로젝트**: 초기 환경 설정
 - **팀 온보딩**: 새 개발자 환경 통일
 - **다중 서비스**: 마이크로서비스 로컬 실행
 - **프로덕션 재현**: 로컬에서 프로덕션 환경 테스트
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: Docker Compose 설정
+### Step 1: Docker Compose 설정
 
 **docker-compose.yml**:
 ```yaml
@@ -107,7 +97,7 @@ docker-compose down
 docker-compose down -v
 ```
 
-### 2단계: 환경변수 관리
+### Step 2: 환경변수 관리
 
 **.env.example**:
 ```bash
@@ -188,7 +178,7 @@ function loadEnv(): Env {
 export const env = loadEnv();
 ```
 
-### 3단계: Dev Container (VS Code)
+### Step 3: Dev Container (VS Code)
 
 **.devcontainer/devcontainer.json**:
 ```json
@@ -222,7 +212,7 @@ export const env = loadEnv();
 }
 ```
 
-### 4단계: Makefile (편의 명령어)
+### Step 4: Makefile (편의 명령어)
 
 **Makefile**:
 ```makefile
@@ -285,7 +275,7 @@ make dev          # 개발 서버 시작
 make docker-up    # Docker 서비스 시작
 ```
 
-### 5단계: Infrastructure as Code (Terraform)
+### Step 5: Infrastructure as Code (Terraform)
 
 **main.tf** (AWS 예시):
 ```hcl
@@ -396,7 +386,7 @@ variable "db_password" {
 }
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 프로젝트 구조
 
@@ -416,7 +406,7 @@ project/
 └── README.md
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -429,19 +419,19 @@ project/
 1. **Secrets 커밋 금지**: .env, credentials 파일 절대 커밋하지 않음
 2. **하드코딩 금지**: 모든 설정은 환경변수로
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Docker Compose**: 로컬 개발은 Docker Compose
 2. **Volume Mount**: 코드 변경 즉시 반영
 3. **Health Checks**: 서비스 준비 상태 확인
 
-## 참고 자료
+## References
 
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Dev Containers](https://containers.dev/)
 - [Terraform](https://www.terraform.io/)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -454,3 +444,11 @@ project/
 
 ### 태그
 `#environment-setup` `#Docker-Compose` `#dev-environment` `#IaC` `#Terraform` `#infrastructure`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

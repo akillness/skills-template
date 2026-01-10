@@ -7,27 +7,17 @@ platforms: [Claude, ChatGPT, Gemini]
 
 # Performance Optimization
 
-## 목적 (Purpose)
 
-애플리케이션의 성능을 측정하고 개선하여 사용자 경험을 향상시킵니다.
-
-이 스킬은 다음을 도와줍니다:
-- Core Web Vitals 개선 (LCP, FID, CLS)
-- React 렌더링 최적화
-- 번들 크기 감소
-- 데이터베이스 쿼리 최적화
-- 캐싱 전략
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **느린 페이지 로드**: Lighthouse 점수 낮음
 - **느린 렌더링**: 사용자 인터랙션 지연
 - **큰 번들 크기**: 다운로드 시간 증가
 - **느린 쿼리**: 데이터베이스 병목
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: 성능 측정
+### Step 1: 성능 측정
 
 **Lighthouse (Chrome DevTools)**:
 ```bash
@@ -55,7 +45,7 @@ getLCP(sendToAnalytics);
 getTTFB(sendToAnalytics);
 ```
 
-### 2단계: React 최적화
+### Step 2: React 최적화
 
 **React.memo (불필요한 리렌더링 방지)**:
 ```tsx
@@ -129,7 +119,7 @@ function Dashboard() {
 }
 ```
 
-### 3단계: 번들 크기 최적화
+### Step 3: 번들 크기 최적화
 
 **Webpack Bundle Analyzer**:
 ```bash
@@ -161,7 +151,7 @@ button.addEventListener('click', async () => {
 });
 ```
 
-### 4단계: 이미지 최적화
+### Step 4: 이미지 최적화
 
 **Next.js Image 컴포넌트**:
 ```tsx
@@ -191,7 +181,7 @@ function ProductImage() {
 </picture>
 ```
 
-### 5단계: 데이터베이스 쿼리 최적화
+### Step 5: 데이터베이스 쿼리 최적화
 
 **N+1 쿼리 문제 해결**:
 ```typescript
@@ -242,7 +232,7 @@ async function getUserProfile(userId: string) {
 }
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 성능 최적화 체크리스트
 
@@ -268,7 +258,7 @@ async function getUserProfile(userId: string) {
 - [ ] CLS < 0.1
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -281,19 +271,19 @@ async function getUserProfile(userId: string) {
 1. **조기 최적화**: 병목이 없는데 최적화하지 않음
 2. **가독성 희생**: 성능을 위해 코드를 복잡하게 만들지 않음
 
-## 베스트 프랙티스
+## Best practices
 
 1. **80/20 법칙**: 20% 노력으로 80% 개선
 2. **사용자 중심**: 실제 사용자 경험 개선에 집중
 3. **자동화**: CI에서 성능 회귀 테스트
 
-## 참고 자료
+## References
 
 - [web.dev/vitals](https://web.dev/vitals/)
 - [React Optimization](https://react.dev/learn/render-and-commit#optimizing-performance)
 - [Webpack Bundle Analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -306,3 +296,11 @@ async function getUserProfile(userId: string) {
 
 ### 태그
 `#performance` `#optimization` `#React` `#caching` `#lazy-loading` `#web-vitals` `#code-quality`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

@@ -1,25 +1,23 @@
 ---
-name: project-file-organization
+name: file-organization
 description: Organize project files and folders for maintainability and scalability. Use when structuring new projects, refactoring folder structure, or establishing conventions. Handles project structure, naming conventions, and file organization best practices.
+allowed-tools: [Read, Write, Glob, Bash]
 tags: [file-organization, project-structure, folder-structure, naming-conventions]
 platforms: [Claude, ChatGPT, Gemini]
 ---
 
 # Project File Organization
 
-## 목적 (Purpose)
 
-일관되고 확장 가능한 프로젝트 구조를 유지하여 협업과 유지보수를 용이하게 합니다.
-
-## 사용 시점 (When to Use)
+## When to use this skill
 
 - **신규 프로젝트**: 초기 폴더 구조 설계
 - **프로젝트 성장**: 복잡도 증가 시 리팩토링
 - **팀 표준화**: 일관된 구조 확립
 
-## 작업 절차 (Procedure)
+## Instructions
 
-### 1단계: React/Next.js 프로젝트 구조
+### Step 1: React/Next.js 프로젝트 구조
 
 ```
 src/
@@ -77,7 +75,7 @@ src/
     └── theme.ts
 ```
 
-### 2단계: Node.js/Express 백엔드 구조
+### Step 2: Node.js/Express 백엔드 구조
 
 ```
 src/
@@ -134,7 +132,7 @@ src/
 └── index.ts                  # Entry point
 ```
 
-### 3단계: Feature-Based 구조 (대규모 앱)
+### Step 3: Feature-Based 구조 (대규모 앱)
 
 ```
 src/
@@ -173,7 +171,7 @@ src/
     └── config/
 ```
 
-### 4단계: 명명 규칙 (Naming Conventions)
+### Step 4: 명명 규칙 (Naming Conventions)
 
 **파일명**:
 ```
@@ -218,7 +216,7 @@ const hasPermission = false;
 const canEdit = true;
 ```
 
-### 5단계: index.ts 배럴 파일
+### Step 5: index.ts 배럴 파일
 
 **components/ui/index.ts**:
 ```typescript
@@ -238,7 +236,7 @@ export * from './Button';
 export * from './Input';
 ```
 
-## 출력 포맷 (Output Format)
+## Output format
 
 ### 프로젝트 템플릿
 
@@ -265,7 +263,7 @@ my-app/
 └── README.md
 ```
 
-## 제약사항 (Constraints)
+## Constraints
 
 ### 필수 규칙 (MUST)
 
@@ -279,7 +277,7 @@ my-app/
 2. **모호한 이름**: utils2/, helpers/, misc/ 지양
 3. **순환 의존성**: A → B → A 참조 금지
 
-## 베스트 프랙티스
+## Best practices
 
 1. **Colocation**: 관련 파일은 가까이 (컴포넌트 + 스타일 + 테스트)
 2. **Feature-Based**: 기능별로 모듈화
@@ -308,13 +306,13 @@ import { Button } from '../../../components/ui/Button';
 import { Button } from '@/components/ui';
 ```
 
-## 참고 자료
+## References
 
 - [React File Structure](https://react.dev/learn/thinking-in-react#step-1-break-the-ui-into-a-component-hierarchy)
 - [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices)
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
-## 메타데이터
+## Metadata
 
 ### 버전
 - **현재 버전**: 1.0.0
@@ -323,3 +321,11 @@ import { Button } from '@/components/ui';
 
 ### 태그
 `#file-organization` `#project-structure` `#folder-structure` `#naming-conventions` `#utilities`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

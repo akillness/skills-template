@@ -1,0 +1,9 @@
+N:user-guide-writing
+D:Write clear and helpful user guides and tutorials for end users. Use when creating onboarding doc...
+G:user-guides tutorials documentation onboarding how-to
+U[3]:
+  **신규 기능**: 사용자에게 새 기능 소개
+  **온보딩**: 신규 사용자 교육
+  **FAQ**: 자주 묻는 질문 정리
+S[1]{n,action}:
+  1,Quick Start Guide

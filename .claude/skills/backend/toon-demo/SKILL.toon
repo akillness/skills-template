@@ -1,9 +1,0 @@
-name: toon-demo
-description: A demonstration skill showing how to use the TOON format for Agent Skills.
-allowed_tools[1]{tool}:
-python
-
-steps[3]{step,description,command}:
-1,Initialize,Start the demo process,"print('Hello TOON')"
-2,Process,Run the main logic,"data = [1, 2, 3]"
-3,Finish,Cleanup resources,"print('Done')"
