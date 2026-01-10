@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.x-blue.svg?logo=python)](https://www.python.org/)
-[![Skills](https://img.shields.io/badge/Skills-37-green.svg)](.agent-skills/)
+[![Skills](https://img.shields.io/badge/Skills-41-green.svg)](.agent-skills/)
 [![Multi-Agent](https://img.shields.io/badge/Multi--Agent-Claude%20%7C%20Gemini%20%7C%20Codex-blueviolet.svg)](CLAUDE.md)
 [![Token](https://img.shields.io/badge/Token%20Optimization-95%25-success.svg)](.agent-skills/scripts/generate_compact_skills.py)
 
@@ -83,7 +83,7 @@ graph TB
 | Feature | Description | Status |
 |---------|-------------|--------|
 | **Multi-Agent Workflow** | Claude + Gemini + Codex 자동 오케스트레이션 | ✅ |
-| **37 Skills** | 8개 카테고리의 실전 스킬 | ✅ |
+| **41 Skills** | 8개 카테고리의 실전 스킬 | ✅ |
 | **Token Optimization** | 95% 토큰 절감 (toon 모드 기본) | ✅ |
 | **Auto Orchestration** | CLAUDE.md 기반 에이전트 역할 자동 분배 | ✅ |
 | **MCP Integration** | gemini-cli, codex-cli 원클릭 설정 | ✅ |
@@ -114,7 +114,7 @@ source ~/.zshrc && claude  # Test: "skill을 사용해서 REST API 설계해줘"
 ### Quick Setup 7 Steps / Quick Setup 7단계
 
 | Step | Action | Result |
-|------|--------|--------|
+|--------|--------|--------|
 | 1 | Token optimization | Generate SKILL.toon (95% reduction) / SKILL.toon 생성 (95% 절감) |
 | 2 | Claude skills | Copy to .claude/skills/ / .claude/skills/ 복사 |
 | 3 | MCP shell config | Create gemini-skill, codex-skill functions / gemini-skill, codex-skill 함수 생성 |
@@ -129,15 +129,15 @@ source ~/.zshrc && claude  # Test: "skill을 사용해서 REST API 설계해줘"
 
 ```mermaid
 pie showData
-    title Skills by Category (37 Total)
-    "Backend" : 4
+    title Skills by Category (41 Total)
+    "Backend" : 5
     "Frontend" : 4
     "Code-Quality" : 5
     "Infrastructure" : 5
     "Documentation" : 4
-    "Project-Mgmt" : 4
+    "Project-Mgmt" : 6
     "Search-Analysis" : 4
-    "Utilities" : 6
+    "Utilities" : 8
     "Templates" : 5
 ```
 
@@ -145,16 +145,16 @@ pie showData
 
 | Category | Count | Skills |
 |:---------|:-----:|:-------|
-| **Backend** | 4 | `api-design` `database-schema-design` `authentication-setup` `backend-testing` |
+| **Backend** | 5 | `api-design` `database-schema-design` `authentication-setup` `backend-testing` `kling-ai` |
 | **Frontend** | 4 | `ui-component-patterns` `state-management` `responsive-design` `web-accessibility` |
 | **Code-Quality** | 5 | `code-review` `code-refactoring` `testing-strategies` `performance-optimization` `debugging` |
 | **Infrastructure** | 5 | `system-environment-setup` `deployment-automation` `monitoring-observability` `security-best-practices` `firebase-ai-logic` |
 | **Documentation** | 4 | `technical-writing` `api-documentation` `user-guide-writing` `changelog-maintenance` |
-| **Project-Mgmt** | 4 | `task-planning` `task-estimation` `sprint-retrospective` `standup-meeting` |
+| **Project-Mgmt** | 6 | `task-planning` `task-estimation` `sprint-retrospective` `standup-meeting` `subagent-creation` `ultrathink-multiagent-workflow` |
 | **Search-Analysis** | 4 | `codebase-search` `log-analysis` `data-analysis` `pattern-detection` |
-| **Utilities** | 6 | `git-workflow` `environment-setup` `file-organization` `workflow-automation` `skill-standardization` `mcp-codex-integration` |
+| **Utilities** | 8 | `git-workflow` `environment-setup` `file-organization` `workflow-automation` `skill-standardization` `mcp-codex-integration` `git-submodule` `opencode-authentication` |
 
-> **Total: 37 Skills** (including 5 templates: `basic` `advanced` `multiplatform` `chatgpt` `toon`)
+> **Total: 41 Skills** (including 5 templates: `basic` `advanced` `multiplatform` `chatgpt` `toon`)
 
 ## Token Optimization
 
@@ -441,14 +441,14 @@ skills-template/
 │   │   ├── CLAUDE_MCP_GEMINI_CODEX_SETUP.md
 │   │   ├── CLAUDE_SETUP_GUIDE.md
 │   │   └── GEMINI_SETUP_PROMPT.md
-│   ├── backend/                    # 백엔드 스킬 (4)
+│   ├── backend/                    # 백엔드 스킬 (5)
 │   ├── frontend/                   # 프론트엔드 스킬 (4)
 │   ├── code-quality/               # 코드 품질 스킬 (5)
 │   ├── infrastructure/             # 인프라 스킬 (5)
 │   ├── documentation/              # 문서화 스킬 (4)
-│   ├── project-management/         # 프로젝트 관리 스킬 (4)
+│   ├── project-management/         # 프로젝트 관리 스킬 (6)
 │   ├── search-analysis/            # 검색/분석 스킬 (4)
-│   ├── utilities/                  # 유틸리티 스킬 (6)
+│   ├── utilities/                  # 유틸리티 스킬 (8)
 │   └── templates/                  # 스킬 템플릿 (5)
 │       ├── basic-skill-template/
 │       ├── advanced-skill-template/
@@ -535,4 +535,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Version**: 2.4.0 | **Updated**: 2026-01-08 | **Skills**: 37 | **Workflow**: Multi-Agent | **Token**: 95% Reduction
+**Version**: 2.5.0 | **Updated**: 2026-01-10 | **Skills**: 41 | **Workflow**: Multi-Agent | **Token**: 95% Reduction
