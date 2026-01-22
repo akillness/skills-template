@@ -1,8 +1,14 @@
 ---
 name: code-refactoring
-description: Improve code structure, readability, and maintainability without changing functionality. Use when simplifying complex code, removing duplication, or applying design patterns. Handles Extract Method, DRY principle, SOLID principles, and refactoring patterns.
-tags: [refactoring, code-quality, DRY, SOLID, design-patterns, clean-code]
-platforms: [Claude, ChatGPT, Gemini]
+description: Simplify and refactor code while preserving behavior, improving clarity, and reducing complexity. Use when simplifying complex code, removing duplication, or applying design patterns. Handles Extract Method, DRY principle, SOLID principles, behavior validation, and refactoring patterns.
+tags: [refactoring, code-quality, DRY, SOLID, design-patterns, clean-code, simplification, behavior-preservation]
+platforms: [Claude, ChatGPT, Gemini, Codex]
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Bash
+  - Task
 ---
 
 # Code Refactoring
@@ -346,6 +352,123 @@ class UserReportGenerator {
 1. **Boy Scout Rule**: 코드를 발견했을 때보다 깨끗하게
 2. **리팩토링 타이밍**: Red-Green-Refactor (TDD)
 3. **점진적 개선**: 완벽보다 꾸준히
+4. **행동 보존**: 리팩토링은 기능 변경 없음
+5. **작은 커밋**: 포커스된 단위로 커밋
+
+---
+
+## Behavior Validation (Code Simplifier Integration)
+
+### Step A: Understand Current Behavior
+
+리팩토링 전 현재 동작 완전히 이해:
+
+```markdown
+## Behavior Analysis
+
+### Inputs
+- [입력 파라미터 목록]
+- [타입 및 제약사항]
+
+### Outputs
+- [반환값]
+- [부수 효과 (side effects)]
+
+### Invariants
+- [항상 참이어야 하는 조건들]
+- [경계 조건 (edge cases)]
+
+### Dependencies
+- [외부 의존성]
+- [상태 의존성]
+```
+
+### Step B: Validate After Refactoring
+
+```bash
+# 1. 테스트 실행
+npm test -- --coverage
+
+# 2. 타입 체크
+npx tsc --noEmit
+
+# 3. 린트 확인
+npm run lint
+
+# 4. 이전 동작과 비교 (스냅샷 테스트)
+npm test -- --updateSnapshot
+```
+
+### Step C: Document Changes
+
+```markdown
+## Refactoring Summary
+
+### Changes Made
+1. [변경 1]: [이유]
+2. [변경 2]: [이유]
+
+### Behavior Preserved
+- [x] 동일한 입력 → 동일한 출력
+- [x] 부수 효과 동일
+- [x] 에러 처리 동일
+
+### Risks & Follow-ups
+- [잠재적 위험]
+- [후속 작업]
+
+### Test Status
+- [ ] Unit tests: passing
+- [ ] Integration tests: passing
+- [ ] E2E tests: passing
+```
+
+---
+
+## Troubleshooting
+
+### Issue: Tests fail after refactor
+**Cause**: 동작 변경이 발생함
+**Solution**: 되돌리고 변경을 격리하여 재시도
+
+### Issue: Code still complex
+**Cause**: 하나의 함수에 여러 책임 혼합
+**Solution**: 명확한 경계로 더 작은 단위 추출
+
+### Issue: Performance regression
+**Cause**: 비효율적인 추상화 도입
+**Solution**: 프로파일링 후 핫 패스 최적화
+
+---
+
+## Multi-Agent Workflow
+
+### Validation & Retrospectives
+
+- **Round 1 (Orchestrator)**: 행동 보존 체크리스트 검증
+- **Round 2 (Analyst)**: 복잡도 및 중복 분석
+- **Round 3 (Executor)**: 테스트 또는 정적 분석 검증
+
+### Agent Roles
+
+| Agent | Role |
+|-------|------|
+| Claude | 리팩토링 계획, 코드 변환 |
+| Gemini | 대규모 코드베이스 분석, 패턴 탐지 |
+| Codex | 테스트 실행, 빌드 검증 |
+
+### Workflow Example
+
+```bash
+# 1. Gemini: 코드베이스 분석
+ask-gemini "@src/ 복잡도 높은 함수 목록 추출"
+
+# 2. Claude: 리팩토링 계획 및 실행
+# IMPLEMENTATION_PLAN.md 기반 작업
+
+# 3. Codex: 검증
+codex-cli shell "npm test && npm run lint"
+```
 
 ## References
 

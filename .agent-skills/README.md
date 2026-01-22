@@ -1,24 +1,42 @@
 # Agent Skills Repository
 
-범용 AI 에이전트를 위한 Agent Skills 모음입니다. Claude, ChatGPT, Gemini 등 모든 AI 플랫폼에서 사용 가능한 오픈 표준을 따릅니다.
+범용 AI 에이전트를 위한 Agent Skills 모음입니다. Claude, Gemini, Codex 등 모든 AI 플랫폼에서 사용 가능한 오픈 표준을 따릅니다.
 
 ---
 
-## AI Agent Setup / AI 에이전트 설정
+## For AI Agents (LLM Setup)
 
-> **For AI Agents**: `.agent-skills/setup.sh 실행하고 skill 설정해줘`
+> **AI 에이전트용 설정** - 아래 명령어 중 하나를 실행하세요.
 
-| Agent Type | Command |
-|------------|---------|
-| **Shell Access** (Claude Code, Codex) | `./setup.sh` → option 1 |
-| **No Shell** (GPT, Gemini Web) | 사용자에게 안내: `cd .agent-skills && ./setup.sh` |
+### 방법 1: Interactive Setup
 
-**Non-interactive (AI recommended):**
 ```bash
-python3 scripts/generate_compact_skills.py && \
-mkdir -p ~/.claude/skills && \
-cp -r backend frontend code-quality infrastructure documentation project-management search-analysis utilities ~/.claude/skills/
+.agent-skills/setup.sh 실행하고 skill 설정해줘
 ```
+
+### 방법 2: Non-Interactive Setup (권장)
+
+```bash
+cd .agent-skills && echo -e "1\n1\n" | bash setup.sh
+```
+
+### 방법 3: Direct Setup (스크립트 없이)
+
+```bash
+python3 .agent-skills/scripts/generate_compact_skills.py && \
+mkdir -p ~/.claude/skills && \
+cp -r .agent-skills/backend .agent-skills/frontend .agent-skills/code-quality \
+      .agent-skills/infrastructure .agent-skills/documentation \
+      .agent-skills/project-management .agent-skills/search-analysis \
+      .agent-skills/utilities ~/.claude/skills/
+```
+
+| Agent Type | Setup Method |
+|------------|--------------|
+| **Claude Code** | `setup.sh` → 옵션 1 (Auto-configure) |
+| **Gemini-CLI** | MCP 서버로 자동 통합 |
+| **Codex-CLI** | MCP 서버로 자동 통합 |
+| **ChatGPT** | `setup.sh` → 옵션 2 (Manual) → ChatGPT Knowledge Zip |
 
 ---
 
@@ -29,418 +47,281 @@ Agent Skills는 AI 에이전트의 기능을 확장하는 모듈식 기능입니
 **특징**:
 - 📦 **모듈화**: 각 Skill은 독립적으로 작동
 - 🔄 **재사용 가능**: 다양한 프로젝트에서 사용
-- 🌐 **플랫폼 독립적**: Claude, ChatGPT, Gemini 모두 지원
+- 🌐 **플랫폼 독립적**: Claude, Gemini, Codex 모두 지원
 - 📝 **자체 문서화**: SKILL.md만 읽어도 이해 가능
 - 🔍 **점진적 공개**: 필요할 때만 컨텍스트 로드
-- 🤝 **멀티 에이전트 지원**: 개선 작업 시 여러 AI 에이전트를 협업하여 품질 향상
+- 🤖 **멀티 에이전트 지원**: Claude + Gemini + Codex 오케스트레이션
 
 ## 폴더 구조
 
 ```
 .agent-skills/
 ├── README.md                          # 이 파일
-├── CONTRIBUTING.md                    # 기여 가이드
-├── setup.sh                           # 설정 스크립트
-├── skill_loader.py                    # Python 유틸리티
-├── templates/                         # Skills 작성 템플릿
-│   ├── basic-skill-template/         # 기본 템플릿
-│   ├── advanced-skill-template/       # 고급 템플릿
-│   ├── multiplatform-skill-template/ # 멀티 플랫폼 템플릿
-│   └── chatgpt-skill-template/       # ChatGPT 전용 템플릿 ✅
-├── infrastructure/                    # 인프라 Skills
-│   ├── system-setup/
-│   ├── deployment/
-│   ├── monitoring/
-│   └── security/
-├── backend/                           # 백엔드 Skills
-│   ├── api-design/                   ✅ 구현됨
-│   ├── database/
-│   ├── authentication/
-│   └── testing/
-├── frontend/                          # 프론트엔드 Skills
-│   ├── ui-components/
+├── setup.sh                           # 설정 스크립트 (v3.4)
+├── skill_loader.py                    # Python 스킬 로더
+├── skill-query-handler.py             # MCP 쿼리 핸들러
+├── scripts/                           # 유틸리티 스크립트
+│   ├── generate_compact_skills.py     # 토큰 최적화
+│   └── add_new_skill.sh               # 스킬 추가
+├── backend/                           # 백엔드 스킬 (6)
+│   ├── api-design/
+│   ├── database-schema-design/
+│   ├── authentication-setup/
+│   ├── backend-testing/
+│   ├── kling-ai/
+│   └── cs-tool-dashboard/
+├── frontend/                          # 프론트엔드 스킬 (5)
+│   ├── ui-component-patterns/
 │   ├── state-management/
 │   ├── responsive-design/
-│   └── accessibility/
-├── documentation/                     # 문서 Skills
-│   ├── technical-writing/            ✅ 구현됨
-│   ├── api-documentation/
-│   ├── user-guides/
-│   └── changelog/
-├── code-quality/                      # 코드 품질 Skills
-│   ├── code-review/                  ✅ 구현됨
-│   ├── refactoring/
+│   ├── web-accessibility/
+│   └── design-system/                 # NEW: 디자인 토큰, 레이아웃, 접근성
+├── code-quality/                      # 코드 품질 스킬 (6)
+│   ├── code-review/
+│   ├── code-refactoring/
 │   ├── testing-strategies/
-│   └── performance-optimization/
-├── search-analysis/                   # 검색/분석 Skills
-│   ├── codebase-search/              ✅ 구현됨
+│   ├── performance-optimization/
+│   ├── debugging/
+│   └── agent-evaluation/
+├── infrastructure/                    # 인프라 스킬 (7)
+│   ├── system-environment-setup/
+│   ├── deployment-automation/
+│   ├── monitoring-observability/
+│   ├── security-best-practices/
+│   ├── firebase-ai-logic/
+│   ├── agent-configuration/
+│   └── looker-studio-bigquery/
+├── documentation/                     # 문서 스킬 (5)
+│   ├── technical-writing/
+│   ├── api-documentation/
+│   ├── user-guide-writing/
+│   ├── changelog-maintenance/
+│   └── presentation-builder/          # NEW: PPTX 프레젠테이션 빌더
+├── project-management/                # 프로젝트 관리 스킬 (7)
+│   ├── task-planning/
+│   ├── task-estimation/
+│   ├── sprint-retrospective/
+│   ├── standup-meeting/
+│   ├── agent-workflow/
+│   ├── subagent-creation/
+│   └── agentic-principles/
+├── search-analysis/                   # 검색/분석 스킬 (4)
+│   ├── codebase-search/
 │   ├── log-analysis/
 │   ├── data-analysis/
 │   └── pattern-detection/
-├── project-management/                # 프로젝트 관리 Skills
-│   ├── task-planning/
-│   ├── estimation/
-│   ├── retrospective/
-│   ├── standup-helper/
-│   └── ultrathink-multiagent-workflow/ ✅ 구현됨 (Ralph Wiggum 기법)
-└── utilities/                         # 유틸리티 Skills
-    ├── git-workflow/                 ✅ 구현됨
-    ├── environment-setup/
-    ├── file-organization/
-    ├── automation/
-    └── opencode-authentication/      ✅ 구현됨 (OAuth 인증 가이드)
+├── creative-media/                    # NEW: 크리에이티브 미디어 스킬 (2)
+│   ├── image-generation/              # MCP 기반 이미지 생성
+│   └── video-production/              # Remotion 비디오 제작
+├── marketing/                         # NEW: 마케팅 스킬 (1)
+│   └── marketing-automation/          # 23개 마케팅 서브스킬
+├── utilities/                         # 유틸리티 스킬 (14)
+│   ├── git-workflow/
+│   ├── git-submodule/
+│   ├── environment-setup/
+│   ├── file-organization/
+│   ├── workflow-automation/
+│   ├── skill-standardization/
+│   ├── mcp-codex-integration/
+│   ├── opencode-authentication/
+│   ├── npm-git-install/
+│   ├── agentic-development-principles/
+│   ├── agentic-workflow/
+│   ├── opencontext/
+│   ├── project-init-memory/
+│   └── prompt-repetition/
+└── templates/                         # 스킬 템플릿 (3)
+    ├── basic-skill-template/
+    ├── advanced-skill-template/
+    └── toon-skill-template/
 ```
 
-## 사용 방법
+## 사용 가능한 Skills (57개)
 
-### Claude (Cursor, Claude.ai, Claude Code)
+### Backend (6)
+| Skill | Description |
+|-------|-------------|
+| `api-design` | REST/GraphQL API 설계 |
+| `database-schema-design` | DB 스키마 설계 |
+| `authentication-setup` | 인증/인가 구현 |
+| `backend-testing` | 백엔드 테스트 전략 |
+| `kling-ai` | Kling AI 비디오 생성 |
+| `cs-tool-dashboard` | CS Tool 대시보드 |
 
-**자동 발견**:
-Claude는 `.agent-skills/` 또는 `~/.claude/skills/` 폴더의 Skills를 자동으로 발견하고 로드합니다.
+### Frontend (5)
+| Skill | Description |
+|-------|-------------|
+| `ui-component-patterns` | UI 컴포넌트 패턴 |
+| `state-management` | 상태 관리 |
+| `responsive-design` | 반응형 디자인 |
+| `web-accessibility` | 웹 접근성 |
+| `design-system` | **NEW** 디자인 토큰, 레이아웃, 접근성 |
+
+### Code Quality (6)
+| Skill | Description |
+|-------|-------------|
+| `code-review` | 코드 리뷰 |
+| `code-refactoring` | 리팩토링 전략 |
+| `testing-strategies` | 테스트 전략 |
+| `performance-optimization` | 성능 최적화 |
+| `debugging` | 디버깅 기법 |
+| `agent-evaluation` | AI 에이전트 평가 |
+
+### Infrastructure (7)
+| Skill | Description |
+|-------|-------------|
+| `system-environment-setup` | 시스템 환경 설정 |
+| `deployment-automation` | 배포 자동화 |
+| `monitoring-observability` | 모니터링 설정 |
+| `security-best-practices` | 보안 구성 |
+| `firebase-ai-logic` | Firebase AI Logic |
+| `agent-configuration` | AI 에이전트 설정 정책 |
+| `looker-studio-bigquery` | Looker Studio + BigQuery |
+
+### Documentation (5)
+| Skill | Description |
+|-------|-------------|
+| `technical-writing` | 기술 문서 작성 |
+| `api-documentation` | API 문서화 |
+| `user-guide-writing` | 사용자 가이드 |
+| `changelog-maintenance` | 변경 이력 관리 |
+| `presentation-builder` | **NEW** PPTX 프레젠테이션 빌더 |
+
+### Project Management (7)
+| Skill | Description |
+|-------|-------------|
+| `task-planning` | 작업 계획 |
+| `task-estimation` | 개발 시간 추정 |
+| `sprint-retrospective` | 회고 진행 |
+| `standup-meeting` | 스탠드업 준비 |
+| `agent-workflow` | 멀티 에이전트 워크플로우 |
+| `subagent-creation` | 서브에이전트 생성 |
+| `agentic-principles` | AI 에이전트 협업 원칙 |
+
+### Search & Analysis (4)
+| Skill | Description |
+|-------|-------------|
+| `codebase-search` | 코드베이스 검색 |
+| `log-analysis` | 로그 분석 |
+| `data-analysis` | 데이터 분석 |
+| `pattern-detection` | 패턴 감지 |
+
+### Utilities (14)
+| Skill | Description |
+|-------|-------------|
+| `git-workflow` | Git 워크플로우 |
+| `git-submodule` | Git 서브모듈 관리 |
+| `environment-setup` | 환경 설정 |
+| `file-organization` | 파일 정리 |
+| `workflow-automation` | 자동화 스크립트 |
+| `skill-standardization` | 스킬 표준화 |
+| `mcp-codex-integration` | MCP Codex 통합 |
+| `opencode-authentication` | Opencode OAuth 인증 |
+| `npm-git-install` | GitHub에서 npm 설치 |
+| `agentic-development-principles` | 에이전틱 개발 원칙 |
+| `agentic-workflow` | AI 에이전트 워크플로우 |
+| `opencontext` | OpenContext 메모리 관리 |
+| `project-init-memory` | 프로젝트 초기화 메모리 |
+| `prompt-repetition` | 프롬프트 반복 감지 |
+
+### Creative Media (2) - NEW
+| Skill | Description |
+|-------|-------------|
+| `image-generation` | **NEW** MCP 기반 이미지 생성 (Gemini) |
+| `video-production` | **NEW** Remotion 프로그래머블 비디오 |
+
+### Marketing (1) - NEW
+| Skill | Description |
+|-------|-------------|
+| `marketing-automation` | **NEW** 23개 마케팅 서브스킬 (CRO, SEO, 카피라이팅, 분석, 그로스) |
+
+## Token Optimization
+
+스킬 로딩 시 토큰 사용량을 최적화하는 3가지 모드:
+
+| Mode | File | Avg Tokens | Reduction |
+|:-----|:-----|:-----------|:----------|
+| **full** | SKILL.md | ~2,118 | - |
+| **compact** | SKILL.compact.md | ~243 | 88.5% |
+| **toon** | SKILL.toon | ~111 | 94.7% |
 
 ```bash
-# 프로젝트 Skills (팀과 공유)
-cp -r .agent-skills/.claude/skills/
+# 토큰 최적화 실행
+python3 scripts/generate_compact_skills.py
 
-# 개인 Skills
-cp -r .agent-skills/* ~/.claude/skills/
+# 통계 확인
+python3 skill-query-handler.py stats
 ```
 
-**사용 예시**:
-```
-사용자: "REST API를 설계해줘"
-→ Claude가 자동으로 'api-design' Skill 활성화
-→ API 설계 베스트 프랙티스를 따라 설계
-```
+## MCP Integration
 
-### ChatGPT (Custom GPTs)
+### Workflow Types (Auto-Detected)
 
-ChatGPT에는 공식적인 `skills.md` 포맷이 없고, 대신 **Custom GPT 설명서**를 Instructions 탭에 작성하는 방식입니다. 따라서 `skills.md`는 내부용 설계 문서로 사용하고, 그 내용을 Instructions·Actions에 옮기는 방식을 권장합니다.
+| Type | 조건 | 설명 |
+|------|------|------|
+| `standalone` | Claude CLI 없음 | 기본 스킬만 사용 |
+| `claude-only` | Claude만 있음 | 내장 Bash 사용 |
+| `claude-gemini` | +Gemini | 대용량 분석/리서치 |
+| `claude-codex` | +Codex | 실행/배포 자동화 |
+| `full-multiagent` | 모두 있음 | 풀 오케스트레이션 |
 
-**권장 방법: ChatGPT 전용 템플릿 사용**
+### Agent Roles
 
-1. **템플릿 복사**:
-   ```bash
-   cp -r templates/chatgpt-skill-template chatgpt/my-skill
-   ```
+| Agent | Role | Best For |
+|-------|------|----------|
+| **Claude Code** | Orchestrator | 계획 수립, 코드 생성, 스킬 해석 |
+| **Gemini-CLI** | Analyst | 대용량 분석 (1M+ 토큰), 리서치 |
+| **Codex-CLI** | Executor | 명령 실행, 빌드, 배포 |
 
-2. **skills.md 작성**:
-   - `chatgpt/my-skill/skills.md` 파일 편집
-   - 스킬의 목적, 사용 방법, 예시 등을 상세히 작성
-   - Instructions 탭에 넣을 압축 버전 포함
+## CLI Tools
 
-3. **Custom GPT 생성**:
-   - ChatGPT Builder에서 Custom GPT 생성
-   - Instructions 탭에 `skills.md`의 "7. Instructions 탭에 넣을 압축 버전" 복사
-   - 실제 값으로 교체하여 붙여넣기
+### skill-query-handler.py
 
-4. **Knowledge 설정** (선택사항):
-   - `skills.md`의 "2.2 Knowledge" 섹션 참고
-   - 필요한 문서를 Knowledge에 업로드
-
-5. **Actions 설정** (선택사항):
-   - `skills.md`의 "3. GPT Actions" 섹션 참고
-   - OpenAPI 스키마 작성 및 연결
-
-**템플릿 위치**: `templates/chatgpt-skill-template/`
-
-> **GPT Setup**: See [AI Agent Setup](#ai-agent-setup--ai-에이전트-설정) section above.
-
-**기존 방법 (레거시)**:
-
-**방법 1: Knowledge Base 업로드**
-1. `.agent-skills/` 폴더를 zip으로 압축
-2. Custom GPT의 Knowledge에 업로드
-3. Instructions에 기본 가이드 추가 (위 템플릿 방식 권장)
-
-**방법 2: 직접 프롬프트 포함**
-```
-I'm using Agent Skills. Here's the skill:
-
-[SKILL.md 내용 붙여넣기]
-
-Now help me with: [작업 요청]
-```
-
-### Gemini (Gemini Advanced, API)
-
-**Python 스크립트 사용**:
-```python
-from skill_loader import SkillLoader
-
-# Skills 로드
-loader = SkillLoader('.agent-skills')
-
-# 특정 Skill 가져오기
-api_skill = loader.get_skill('api-design')
-
-# 프롬프트 생성
-prompt = f"""
-{api_skill['body']}
-
-Now help me design an API for user management.
-"""
-
-# Gemini API 호출
-import google.generativeai as genai
-model = genai.GenerativeModel('gemini-pro')
-response = model.generate_content(prompt)
-```
-
-### MCP Integration (Gemini-CLI, Codex-CLI)
-
-**MCP(Model Context Protocol) 서버를 통한 스킬 사용**:
-
-MCP는 Claude Code에서 다양한 AI 모델을 통합하여 사용할 수 있게 하는 프로토콜입니다. Gemini-CLI, Codex-CLI 등의 MCP 서버를 통해 Agent Skills를 활용할 수 있습니다.
-
-**설정 방법**:
 ```bash
-# setup.sh 실행 후 옵션 6 선택
-./setup.sh
-# 6) MCP Integration (Gemini-CLI, Codex-CLI)
+# 스킬 목록
+python3 skill-query-handler.py list
+
+# 쿼리 매칭
+python3 skill-query-handler.py match "REST API"
+
+# 프롬프트 생성 (toon 모드 기본)
+python3 skill-query-handler.py query "API 설계해줘"
+
+# 모드 지정
+python3 skill-query-handler.py query "API 설계해줘" --mode full
 ```
 
-**생성되는 파일**:
-- `MCP_CONTEXT.md`: MCP 사용을 위한 스킬 시스템 가이드
-- `mcp-skill-loader.sh`: 스킬 로드 헬퍼 스크립트
-- `mcp-shell-config.sh`: Shell 설정 스니펫
+### skill_loader.py
 
-**사용 예시**:
 ```bash
-# 1. Helper 함수 로드
-source .agent-skills/mcp-skill-loader.sh
+# 스킬 목록
+python3 skill_loader.py list
 
-# 2. 사용 가능한 스킬 목록 확인
-list_skills
+# 스킬 검색
+python3 skill_loader.py search "api"
 
-# 3. 스킬 검색
-search_skills "API design"
-
-# 4. Gemini CLI와 함께 사용
-gemini chat "$(load_skill backend/api-design)
-
-사용자 관리 REST API를 설계해줘"
-
-# 5. Codex CLI와 함께 사용
-codex-cli shell "$(load_skill code-quality/code-review)
-
-이 코드를 리뷰해줘: $(cat src/app.ts)"
-
-# 6. 컨텍스트와 함께 스킬 로드
-load_skill_with_context backend/api-design
+# 스킬 상세
+python3 skill_loader.py show api-design
 ```
 
-**Shell RC 파일에 추가** (~/.bashrc 또는 ~/.zshrc):
+## 새 Skill 추가
+
 ```bash
-# Agent Skills MCP 통합
-export AGENT_SKILLS_PATH="/path/to/.agent-skills"
-source "$AGENT_SKILLS_PATH/mcp-skill-loader.sh"
+# 자동 스킬 추가
+./scripts/add_new_skill.sh <category> <skill-name>
 
-# 편의 alias
-alias skills-list='list_skills'
-alias skills-search='search_skills'
+# 예시
+./scripts/add_new_skill.sh backend graphql-api --description "Design GraphQL APIs"
 ```
-
-**MCP 서버 설정**:
-MCP 서버 설치 및 설정은 다음 가이드를 참고하세요:
-- `.agent-skills/prompt/CLAUDE_MCP_GEMINI_CODEX_SETUP.md`
-
-## 빠른 시작
-
-> **Setup**: See [AI Agent Setup](#ai-agent-setup--ai-에이전트-설정) or run `./setup.sh`
-
-### 첫 번째 Skill 사용
-
-**Claude 사용자**:
-```
-"REST API를 설계해줘"
-```
-
-**ChatGPT 사용자**:
-```bash
-# ChatGPT 전용 템플릿 사용 (권장)
-cp -r templates/chatgpt-skill-template chatgpt/my-skill
-# chatgpt/my-skill/skills.md 편집 후 Instructions 탭에 복사
-
-# 또는 기존 방법
-python skill_loader.py --skill api-design --output prompt.txt
-# prompt.txt 내용을 ChatGPT에 붙여넣기
-```
-
-**Gemini 사용자**:
-```python
-# Python 스크립트로 통합
-python -c "
-from skill_loader import SkillLoader
-loader = SkillLoader('.agent-skills')
-print(loader.format_for_prompt(['api-design']))
-"
-```
-
-### 3. 새 Skill 추가
-
-**일반 Skills (Claude, Gemini용)**:
-```bash
-# 새 Skill 폴더 생성
-mkdir -p .agent-skills/backend/new-skill
-
-# SKILL.md 생성
-cat > .agent-skills/backend/new-skill/SKILL.md << 'EOF'
----
-name: new-skill
-description: What this skill does and when to use it
----
-
-# New Skill
-
-## Instructions
-1. Step 1
-2. Step 2
-
-## Examples
-...
-EOF
-
-# Git에 커밋
-git add .agent-skills/backend/new-skill/
-git commit -m "Add new-skill"
-```
-
-**ChatGPT Custom GPT용**:
-```bash
-# ChatGPT 전용 템플릿 복사
-cp -r templates/chatgpt-skill-template chatgpt/my-skill
-
-# skills.md 편집
-# - 플레이스홀더를 실제 내용으로 교체
-# - Instructions 탭에 넣을 압축 버전 작성
-
-# Custom GPT 생성 시
-# - ChatGPT Builder의 Instructions 탭에 skills.md의 "7. Instructions 탭에 넣을 압축 버전" 복사
-```
-
-## 사용 가능한 Skills
-
-### Infrastructure (인프라)
-- 🏗️ **system-setup**: 시스템 환경 설정
-- 🚀 **deployment**: 배포 자동화
-- 📊 **monitoring**: 모니터링 설정
-- 🔒 **security**: 보안 구성
-
-### Backend (백엔드)
-- ✅ **api-design**: REST/GraphQL API 설계 (구현됨)
-- 🗄️ **database**: 데이터베이스 스키마 설계
-- 🔐 **authentication**: 인증/인가 구현
-- 🧪 **testing**: 백엔드 테스트 전략
-
-### Frontend (프론트엔드)
-- 🎨 **ui-components**: UI 컴포넌트 개발
-- 🔄 **state-management**: 상태 관리
-- 📱 **responsive-design**: 반응형 디자인
-- ♿ **accessibility**: 접근성 구현
-
-### Documentation (문서)
-- ✅ **technical-writing**: 기술 문서 작성 (구현됨)
-- 📚 **api-documentation**: API 문서화
-- 📖 **user-guides**: 사용자 가이드
-- 📝 **changelog**: 변경 이력 관리
-
-### Code Quality (코드 품질)
-- ✅ **code-review**: 코드 리뷰 (구현됨)
-- 🔧 **refactoring**: 리팩토링 전략
-- 🧪 **testing-strategies**: 테스트 전략
-- ⚡ **performance-optimization**: 성능 최적화
-
-### Search & Analysis (검색/분석)
-- ✅ **codebase-search**: 코드베이스 검색 (구현됨)
-- 📋 **log-analysis**: 로그 분석
-- 📊 **data-analysis**: 데이터 분석
-- 🔍 **pattern-detection**: 패턴 감지
-
-### Project Management (프로젝트 관리)
-- 📋 **task-planning**: 작업 계획
-- ⏱️ **estimation**: 개발 시간 추정
-- 🔄 **retrospective**: 회고 진행
-- 📢 **standup-helper**: 스탠드업 준비
-- ✅ **ultrathink-multiagent-workflow**: Ralph Wiggum 기반 멀티 에이전트 워크플로우 (구현됨)
-
-### Utilities (유틸리티)
-- ✅ **git-workflow**: Git 워크플로우 (구현됨)
-- ⚙️ **environment-setup**: 환경 설정
-- 📁 **file-organization**: 파일 정리
-- 🤖 **automation**: 자동화 스크립트
-- ✅ **opencode-authentication**: Opencode OAuth 인증 (Claude Code, Gemini/Antigravity, Codex) (구현됨)
-
-## 기여하기
-
-새로운 Skill을 추가하거나 기존 Skill을 개선하려면 [CONTRIBUTING.md](CONTRIBUTING.md)를 참조하세요.
-
-### 기여 단계
-1. 새 Skill 폴더 생성
-2. `SKILL.md` 파일 작성 (템플릿 참조)
-3. 지원 파일 추가 (선택사항)
-4. 테스트
-5. Pull Request 생성
-
-### 🤝 멀티 에이전트 기여 방식
-
-이 프로젝트는 개선 작업 시 **멀티 에이전트 접근 방식**을 권장합니다. 여러 AI 에이전트가 각자의 전문 Skill을 활용하여 협업하면 더 높은 품질의 결과를 얻을 수 있습니다.
-
-**멀티 에이전트 워크플로우 예시**:
-
-```
-1. 에이전트 A (구현): 새 Skill 작성
-   → api-design Skill을 참고하여 REST API 설계
-
-2. 에이전트 B (검토): 코드 리뷰 수행
-   → code-review Skill을 활용하여 품질 검증
-   → 보안, 성능, 테스트 커버리지 확인
-
-3. 에이전트 C (문서화): 문서 작성
-   → technical-writing Skill을 사용하여 문서화
-   → README, 예제, Best practices 작성
-
-4. 에이전트 D (검색/분석): 관련 코드 찾기
-   → codebase-search Skill을 활용하여 유사 구현 탐색
-   → 일관성 및 패턴 분석
-```
-
-**멀티 에이전트의 장점**:
-- ✅ 각 에이전트가 전문 Skill에 집중하여 더 정확한 결과
-- ✅ 다양한 관점에서 검토하여 품질 향상
-- ✅ 병렬 작업으로 효율성 증대
-- ✅ 각 Skill의 활용도 증가
-
-**실전 활용**:
-- 새 Skill 개발 시: 구현 → 리뷰 → 문서화 → 검증의 파이프라인 구성
-- 기존 Skill 개선 시: 검색 → 분석 → 개선 → 리뷰 → 문서 업데이트
-- 버그 수정 시: 문제 탐색 → 원인 분석 → 수정 → 테스트 → 문서화
 
 ## 참고 자료
 
-### 공식 문서
-- [Agent Skills 공식 사이트](https://agentskills.io/)
-- [Agent Skills 사양](https://agentskills.io/specification)
-- [Agent Skills GitHub](https://github.com/agentskills/agentskills)
-- [Claude Code Skills](https://code.claude.com/docs/ko/skills)
-
-### 가이드 문서
-- [Skills 작성 템플릿](/Skills/claude_skill_template_guide.md)
-- [범용 Skills 아키텍처](/Skills/universal_agent_skills_architecture.md)
-
-## 라이선스
-
-이 프로젝트는 Agent Skills 오픈 표준을 따르며, 자유롭게 사용, 수정, 배포할 수 있습니다.
-
-## 문의
-
-- Issue: GitHub Issues
-- Email: [your-email]
-- Slack: [your-slack-channel]
+| Resource | Link |
+|:---------|:-----|
+| Agent Skills 공식 | [agentskills.io](https://agentskills.io/) |
+| 사양 문서 | [Specification](https://agentskills.io/specification) |
+| Claude Code Skills | [Documentation](https://docs.anthropic.com/en/docs/claude-code) |
 
 ---
 
-**버전**: 1.2.0
-**최종 업데이트**: 2026-01-10  
-**관리자**: [Your Name]
-
+**Version**: 3.5.0 | **Updated**: 2026-01-21 | **Skills**: 57

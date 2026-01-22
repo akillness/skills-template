@@ -1,60 +1,111 @@
-# Agent Skills - Multi-Agent Workflow
+# Agent Skills - Full Multi-Agent Workflow
 
-> 이 프로젝트는 Claude Code를 중심으로 Gemini-CLI와 Codex-CLI를 통합하는 Multi-Agent 시스템입니다.
+> 이 문서는 현재 MCP 환경에 맞춰 자동 생성되었습니다.
+> Generated: 2026-01-22 | Workflow: full-multiagent | Preset: balanced
 
-## Agent Roles
+## Agent Roles & Status
 
-| Agent | Role | MCP Tool | Best For |
-|-------|------|----------|----------|
-| **Claude Code** | Orchestrator | Built-in | 계획 수립, 코드 생성, 스킬 해석 |
-| **Gemini-CLI** | Analyst | `ask-gemini` | 대용량 분석, 리서치, 코드 리뷰 |
-| **Codex-CLI** | Executor | `shell` | 명령 실행, 빌드, 배포 |
+| Agent | Role | Status | Best For |
+|-------|------|--------|----------|
+| **Claude Code** | Orchestrator | ✅ Integrated | 계획 수립, 코드 생성, 스킬 해석 |
+| **Gemini-CLI** | Analyst | ✅ Integrated | 대용량 분석 (1M+ 토큰), 리서치, 코드 리뷰 |
+| **Codex-CLI** | Executor | ✅ Integrated | 명령 실행, 빌드, 배포, Docker/K8s |
+| **OpenContext** | Memory | ✅ Integrated | 영구 컨텍스트 저장, 프로젝트 문서 관리 |
 
-## Multi-Agent Workflow
+## Model Configuration (balanced)
 
-### When to Use Each Agent
+| Role | Provider | Model | Use Case |
+|------|----------|-------|----------|
+| **Orchestrator** | claude | `claude-opus-4-5-20251101` | 계획 수립, 코드 생성 |
+| **Analyst** | gemini | `gemini-3-pro` | 대용량 분석, 리서치 |
+| **Executor** | openai | `gpt-5.2-codex` | 명령 실행, 빌드 |
 
-**Claude Code (기본)**: 코드 작성/수정, 파일 읽기/쓰기, 스킬 기반 작업 계획
-
-**Gemini-CLI (`ask-gemini`)**: 대용량 코드베이스 분석 (1M+ 토큰), 복잡한 아키텍처 리서치
-
-**Codex-CLI (`shell`)**: 장시간 실행 명령, Docker/Kubernetes 작업, 빌드/배포
-
-### Skill Integration
-
-```bash
-# 스킬 쿼리 (기본: toon 모드 - 95% 토큰 절감)
-gemini-skill "API 설계해줘"
-gemini-skill "query" compact  # 88% 절감
-gemini-skill "query" full     # 상세
+### Claude Task Tool Model Hints
+```
+# Task tool에서 model 파라미터 사용
+orchestrator tasks → model: "opus" (고성능) or "sonnet" (균형)
+analyst tasks     → model: "sonnet" (or gemini-cli ask-gemini)
+executor tasks    → model: "haiku" (빠름) (or codex-cli shell)
 ```
 
-### Orchestration Examples
+## Full Multi-Agent Workflow
 
-**API 설계 + 구현**:
-1. [Claude] 스킬 로드 → API 스펙 설계
-2. [Codex] shell "npm test"
-3. [Claude] 결과 리포트
+### Orchestration Pattern
+```
+[Claude] 계획 수립 → [Gemini] 분석/리서치 → [Claude] 코드 작성 → [Codex] 실행/테스트 → [Claude] 결과 종합
+```
 
-**대규모 코드 리뷰**:
-1. [Gemini] ask-gemini "@src/ 전체 분석"
-2. [Claude] 개선점 도출 및 수정
+### Example: API 설계 + 구현 + 테스트
+1. **[Claude]** 스킬 기반 API 스펙 설계
+2. **[Gemini]** `ask-gemini "@src/ 기존 API 패턴 분석"` - 대용량 코드베이스 분석
+3. **[Claude]** 분석 결과 기반 코드 구현
+4. **[Codex]** `shell "npm test && npm run build"` - 테스트 및 빌드
+5. **[Claude]** 최종 리포트 생성
+
+### MCP Tools Usage
+```bash
+# Gemini: 대용량 분석
+ask-gemini "전체 코드베이스 구조 분석해줘"
+ask-gemini "@src/ @tests/ 테스트 커버리지 분석"
+
+# Codex: 명령 실행
+shell "docker-compose up -d"
+shell "kubectl apply -f deployment.yaml"
+```
 
 ## Available Skills
 
-- `backend/`: API 설계, DB 스키마, 인증
-- `frontend/`: UI 컴포넌트, 상태 관리
-- `code-quality/`: 코드 리뷰, 디버깅
-- `infrastructure/`: 배포, 모니터링, 보안
-- `documentation/`: 기술 문서, API 문서
-- `utilities/`: Git, 환경 설정
+| Category | Description |
+|----------|-------------|
+| `backend/` | API 설계, DB 스키마, 인증 |
+| `frontend/` | UI 컴포넌트, 상태 관리 |
+| `code-quality/` | 코드 리뷰, 디버깅, 테스트 |
+| `infrastructure/` | 배포, 모니터링, 보안 |
+| `documentation/` | 기술 문서, API 문서 |
+| `utilities/` | Git, 환경 설정 |
 
-## MCP Server Check
+### Skill Query (Token-Optimized)
+\`\`\`bash
+gemini-skill "API 설계해줘"           # toon mode (95% 절감)
+gemini-skill "query" compact          # compact mode (88% 절감)
+gemini-skill "query" full             # 상세 모드
+\`\`\`
 
+## OpenContext (Persistent Memory)
+
+프로젝트 문서와 컨텍스트를 영구 저장하고 검색할 수 있습니다.
+
+### 기본 사용법
 ```bash
-claude mcp list
-# Expected: gemini-cli, codex-cli - Connected
+# 문서 검색
+oc_search "API 설계 패턴"
+
+# 폴더 생성
+oc_folder_create "project-name/docs"
+
+# 문서 생성 및 저장
+oc_create_doc "project-name/docs" "api-spec.md" "API 스펙 문서"
+
+# 문서 목록 조회
+oc_list_docs "project-name/docs"
+
+# stable link로 문서 참조
+oc_get_link "project-name/docs/api-spec.md"
+```
+
+### 컨텍스트 저장 위치
+```
+~/.opencontext/contexts/
+├── .ideas/inbox/     # 아이디어 저장소
+└── [project-name]/   # 프로젝트별 문서
+```
+
+### 검색 활성화 (OpenAI API 키 필요)
+```bash
+# 환경변수 또는 config.toml 설정
+export OPENAI_API_KEY="sk-..."
+# 또는: ~/.opencontext/config.toml 편집
 ```
 
 ---
-**Version**: 2.3.0 | **Workflow**: Multi-Agent
+**Version**: 3.1.0 | **Generated**: 2026-01-22

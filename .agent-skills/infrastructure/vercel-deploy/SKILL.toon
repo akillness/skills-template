@@ -1,0 +1,23 @@
+# vercel-deploy
+
+Vercel 즉시 배포 (인증 불필요)
+
+## 사용
+```bash
+bash /mnt/skills/user/vercel-deploy/scripts/deploy.sh [path]
+```
+
+## 흐름
+1. tarball 생성 (node_modules, .git 제외)
+2. 프레임워크 자동 감지
+3. 업로드
+4. Preview URL + Claim URL 반환
+
+## 출력
+```
+Preview URL: https://skill-deploy-abc.vercel.app
+Claim URL: https://vercel.com/claim-deployment?code=...
+```
+
+## 지원
+Next.js, Nuxt, SvelteKit, Astro, Vite, Express 등

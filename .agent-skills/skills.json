@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generated": true,
-  "skill_count": 34,
+  "skill_count": 52,
   "categories": {
     "documentation": [
       "technical-writing",
@@ -17,7 +17,10 @@
     ],
     "project-management": [
       "sprint-retrospective",
+      "ultrathink-multiagent-workflow",
       "standup-meeting",
+      "subagent-creation",
+      "agentic-principles",
       "task-planning",
       "task-estimation"
     ],
@@ -25,20 +28,33 @@
       "authentication-setup",
       "backend-testing",
       "database-schema-design",
-      "api-design"
+      "api-design",
+      "kling-ai",
+      "cs-tool-dashboard"
     ],
     "utilities": [
+      "opencode-authentication",
+      "agentic-workflow",
       "mcp-codex-integration",
-      "environment-configuration",
+      "environment-setup",
+      "opencontext",
       "git-workflow",
       "workflow-automation",
-      "project-file-organization"
+      "git-submodule",
+      "project-init-memory",
+      "npm-git-install",
+      "prompt-repetition",
+      "skill-standardization",
+      "file-organization",
+      "agentic-development-principles"
     ],
     "code-quality": [
       "testing-strategies",
       "code-review",
+      "debugging",
       "code-refactoring",
-      "performance-optimization"
+      "performance-optimization",
+      "agent-evaluation"
     ],
     "search-analysis": [
       "log-analysis",
@@ -47,6 +63,8 @@
       "pattern-detection"
     ],
     "infrastructure": [
+      "looker-studio-bigquery",
+      "agent-configuration",
       "deployment-automation",
       "firebase-ai-logic",
       "security-best-practices",
@@ -57,14 +75,29 @@
   "skills": [
     {
       "name": "technical-writing",
-      "description": "Write clear, comprehensive technical documentation. Use when creating specs, architecture docs, runbooks, API docs, or any technical documentation. Follows industry best practices for clarity and structure.",
+      "description": "Write clear, comprehensive technical documentation. Use when creating specs, architecture docs, runbooks, or API documentation. Handles technical specifications, system design docs, operational guides, and developer documentation with industry best practices.",
       "category": "documentation",
       "path": "documentation/technical-writing/SKILL.md",
-      "tags": [],
-      "platforms": [
-        "Claude"
+      "tags": [
+        "technical-writing",
+        "documentation",
+        "specs",
+        "architecture",
+        "runbooks",
+        "API-docs"
       ],
-      "allowed_tools": [],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Glob",
+        "Grep"
+      ],
       "commands": [
         {
           "command": "./deploy.sh production",
@@ -286,6 +319,71 @@
       "commands": []
     },
     {
+      "name": "ultrathink-multiagent-workflow",
+      "description": "Design principles for ultrathink multi-agent workflows using the Ralph Wiggum technique. Use when orchestrating multiple AI agents (Opus/Sonnet/Gemini/Codex) for complex autonomous development tasks with extended thinking and iterative improvement loops.",
+      "category": "project-management",
+      "path": "project-management/ultrathink-multiagent-workflow/SKILL.md",
+      "tags": [
+        "ultrathink",
+        "multi-agent",
+        "ralph-wiggum",
+        "orchestration",
+        "autonomous",
+        "extended-thinking",
+        "opus",
+        "sonnet"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini",
+        "Opencode"
+      ],
+      "allowed_tools": [],
+      "commands": [
+        {
+          "command": "while true; do",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "claude --prompt \"작업을 계속하세요. 완료되면 COMPLETE 출력\"",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "if grep -q \"COMPLETE\" output.log; then break; fi",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "done",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "ralph-loop --max-iterations 50 --task \"Implement feature X\"",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "ralph-loop --max-cost $10 --task \"Refactor module Y\"",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "ralph-loop --timeout 2h --task \"Debug issue Z\"",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "claude task \"src/* 전체 파일의 코드 스멜 분석\"",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "claude task --model opus \"분석 결과를 종합하고 IMPLEMENTATION_PLAN.md 작성. Ultrathink.\"",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        },
+        {
+          "command": "ralph-loop --max-iterations 100 \\",
+          "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
+        }
+      ]
+    },
+    {
       "name": "standup-meeting",
       "description": "Conduct effective daily standup meetings for agile teams. Use when facilitating standups, tracking blockers, or improving team synchronization. Handles standup format, time management, and blocker resolution.",
       "category": "project-management",
@@ -303,6 +401,93 @@
         "Gemini"
       ],
       "allowed_tools": [],
+      "commands": []
+    },
+    {
+      "name": "subagent-creation",
+      "description": "Create and configure Claude Code subagents for specialized task delegation. Use when defining expert AI assistants with focused responsibilities, custom prompts, and specific tool permissions.",
+      "category": "project-management",
+      "path": "project-management/subagent-creation/SKILL.md",
+      "tags": [
+        "claude-code",
+        "subagent",
+        "delegation",
+        "automation",
+        "workflow",
+        "configuration"
+      ],
+      "platforms": [
+        "Claude"
+      ],
+      "allowed_tools": [],
+      "commands": [
+        {
+          "command": "claude --agents '{",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "\"code-reviewer\": {",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "\"description\": \"Review code changes for quality and security\",",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "\"tools\": [\"Read\", \"Grep\", \"Glob\", \"LSP\"],",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "\"model\": \"inherit\"",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "}",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "}'",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "claude --agents '{",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "\"code-reviewer\": {\"description\": \"...\", \"tools\": [\"Read\"]},",
+          "source": "project-management/subagent-creation/SKILL.md"
+        },
+        {
+          "command": "\"debugger\": {\"description\": \"...\", \"tools\": [\"Read\", \"Write\", \"Edit\"]},",
+          "source": "project-management/subagent-creation/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "agentic-principles",
+      "description": "AI 에이전트 협업 개발의 핵심 원칙. 분해정복, 컨텍스트 관리, 추상화 수준 선택, 자동화 철학, 검증 회고를 정의. 모든 AI 에이전트 사용 시 최적의 협업 패턴 적용.",
+      "category": "project-management",
+      "path": "project-management/agentic-principles/SKILL.md",
+      "tags": [
+        "agentic-development",
+        "principles",
+        "context-management",
+        "automation",
+        "multi-agent"
+      ],
+      "platforms": [
+        "Claude",
+        "Gemini",
+        "ChatGPT",
+        "Codex"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Bash",
+        "Grep",
+        "Glob"
+      ],
       "commands": []
     },
     {
@@ -499,12 +684,189 @@
       "description": "Design RESTful and GraphQL APIs following best practices. Use when creating new APIs, refactoring existing endpoints, or documenting API specifications. Handles OpenAPI, REST, GraphQL, versioning.",
       "category": "backend",
       "path": "backend/api-design/SKILL.md",
+      "tags": [
+        "api-design",
+        "REST",
+        "GraphQL",
+        "OpenAPI",
+        "versioning",
+        "backend"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [],
+      "commands": []
+    },
+    {
+      "name": "kling-ai",
+      "description": "Generate images and videos using Kling AI API. Use when creating AI-generated images from text prompts, converting images to videos, or generating videos from text descriptions.",
+      "category": "backend",
+      "path": "backend/kling-ai/SKILL.md",
+      "tags": [
+        "ai",
+        "image-generation",
+        "video-generation",
+        "kling",
+        "text-to-image",
+        "text-to-video",
+        "image-to-video"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [],
+      "commands": []
+    },
+    {
+      "name": "cs-tool-dashboard",
+      "description": "Supercent CS Tool 대시보드 개발 - FAQ 시스템, 티켓 관리, Firebase 기반 인프라",
+      "category": "backend",
+      "path": "backend/cs-tool-dashboard/SKILL.md",
       "tags": [],
       "platforms": [
         "Claude"
       ],
       "allowed_tools": [],
       "commands": []
+    },
+    {
+      "name": "opencode-authentication",
+      "description": "Opencode OAuth authentication flows for Claude Code, Gemini/Antigravity, and Codex. Use when setting up multi-provider authentication, configuring Opencode with various AI services, or troubleshooting auth issues.",
+      "category": "utilities",
+      "path": "utilities/opencode-authentication/SKILL.md",
+      "tags": [
+        "opencode",
+        "oauth",
+        "authentication",
+        "claude-code",
+        "gemini",
+        "antigravity",
+        "codex",
+        "multi-provider"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini",
+        "Opencode"
+      ],
+      "allowed_tools": [],
+      "commands": [
+        {
+          "command": "{",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "\"$schema\": \"https://opencode.ai/config.json\",",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "\"plugin\": [\"opencode-google-antigravity-auth\"]",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "}",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "opencode auth login",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "opencode auth login",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "code login",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "claude login",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "opencode auth login",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        },
+        {
+          "command": "opencode auth login",
+          "source": "utilities/opencode-authentication/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "agentic-workflow",
+      "description": "AI 에이전트 실전 워크플로우와 생산성 기법. 명령어, 단축키, Git 통합, MCP 활용, 세션 관리 등 일상 개발 작업의 최적화 패턴 제공.",
+      "category": "utilities",
+      "path": "utilities/agentic-workflow/SKILL.md",
+      "tags": [
+        "agentic-workflow",
+        "productivity",
+        "git",
+        "mcp",
+        "commands",
+        "multi-agent"
+      ],
+      "platforms": [
+        "Claude",
+        "Gemini",
+        "ChatGPT",
+        "Codex"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Bash",
+        "Grep",
+        "Glob"
+      ],
+      "commands": [
+        {
+          "command": "claude --continue",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "claude --resume <session-name>",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "/rename stripe-integration",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "alias c='claude'",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "alias cc='claude --continue'",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "alias cr='claude --resume'",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "alias g='gemini'",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "alias cx='codex'",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "git worktree add ../myapp-feature-auth feature/auth",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        },
+        {
+          "command": "git worktree add ../myapp-hotfix hotfix/critical-bug",
+          "source": "utilities/agentic-workflow/SKILL.md"
+        }
+      ]
     },
     {
       "name": "mcp-codex-integration",
@@ -530,7 +892,7 @@
       ]
     },
     {
-      "name": "environment-configuration",
+      "name": "environment-setup",
       "description": "Configure and manage development, staging, and production environments. Use when setting up environment variables, managing configurations, or separating environments. Handles .env files, config management, and environment-specific settings.",
       "category": "utilities",
       "path": "utilities/environment-setup/SKILL.md",
@@ -546,7 +908,12 @@
         "ChatGPT",
         "Gemini"
       ],
-      "allowed_tools": [],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Bash"
+      ],
       "commands": [
         {
           "command": "NODE_ENV=development",
@@ -591,13 +958,90 @@
       ]
     },
     {
+      "name": "opencontext",
+      "description": "OpenContext를 활용한 AI 에이전트 영구 메모리 및 컨텍스트 관리. 세션/레포/날짜 간 컨텍스트 유지, 결론 저장, 문서 검색 워크플로우 제공.",
+      "category": "utilities",
+      "path": "utilities/opencontext/SKILL.md",
+      "tags": [
+        "opencontext",
+        "context-management",
+        "memory",
+        "knowledge-base",
+        "multi-agent"
+      ],
+      "platforms": [
+        "Claude",
+        "Gemini",
+        "ChatGPT",
+        "Codex",
+        "Cursor"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Bash",
+        "Grep",
+        "Glob"
+      ],
+      "commands": [
+        {
+          "command": "npm install -g @aicontextlab/cli",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "npx @aicontextlab/cli <command>",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "cd your-project",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "oc init",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "oc folder ls --all",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "oc folder create project-a -d \"My project\"",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "oc doc create project-a design.md -d \"Design doc\"",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "oc doc ls project-a",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "oc search \"your query\" --mode keyword --format json",
+          "source": "utilities/opencontext/SKILL.md"
+        },
+        {
+          "command": "oc context manifest project-a --limit 10",
+          "source": "utilities/opencontext/SKILL.md"
+        }
+      ]
+    },
+    {
       "name": "git-workflow",
       "description": "Manage Git workflows including commits, branches, merges, and collaboration. Use when working with Git repositories, creating commits, managing branches, or resolving conflicts.",
       "category": "utilities",
       "path": "utilities/git-workflow/SKILL.md",
-      "tags": [],
+      "tags": [
+        "git",
+        "version-control",
+        "branching",
+        "commits",
+        "collaboration"
+      ],
       "platforms": [
-        "Claude"
+        "Claude",
+        "ChatGPT",
+        "Gemini"
       ],
       "allowed_tools": [],
       "commands": [
@@ -706,7 +1150,264 @@
       ]
     },
     {
-      "name": "project-file-organization",
+      "name": "git-submodule",
+      "description": "Manage Git submodules for including external repositories within a main repository. Use when working with external libraries, shared modules, or managing dependencies as separate Git repositories.",
+      "category": "utilities",
+      "path": "utilities/git-submodule/SKILL.md",
+      "tags": [
+        "git",
+        "submodule",
+        "dependencies",
+        "version-control",
+        "modular"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [],
+      "commands": [
+        {
+          "command": "git submodule add <repository-url> <path>",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git submodule add https://github.com/example/lib.git libs/lib",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git submodule add -b main https://github.com/example/lib.git libs/lib",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git add .gitmodules libs/lib",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git commit -m \"feat: add lib as submodule\"",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git clone --recursive <repository-url>",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git clone <repository-url>",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "cd <repository>",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git submodule init",
+          "source": "utilities/git-submodule/SKILL.md"
+        },
+        {
+          "command": "git submodule update",
+          "source": "utilities/git-submodule/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "project-init-memory",
+      "description": "Automatically remember and apply skillset configuration when first running a project. Use when initializing projects in .skills-template or any project requiring consistent AI agent setup. Handles CLAUDE.md generation, skill loading, and environment persistence.",
+      "category": "utilities",
+      "path": "utilities/project-init-memory/SKILL.md",
+      "tags": [
+        "project-init",
+        "memory",
+        "skillset",
+        "configuration",
+        "automation",
+        "claude-code"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [],
+      "commands": [
+        {
+          "command": "ls -la .claude/ 2>/dev/null",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "cat .claude/settings.json 2>/dev/null",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "cat CLAUDE.md 2>/dev/null",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "if [ -d \".agent-skills\" ]; then",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "echo \"Found .agent-skills directory\"",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "ls -la .agent-skills/",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "fi",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "if [ -d \".skills-template\" ]; then",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "echo \"Found .skills-template\"",
+          "source": "utilities/project-init-memory/SKILL.md"
+        },
+        {
+          "command": "ls -la .skills-template/.agent-skills/",
+          "source": "utilities/project-init-memory/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "npm-git-install",
+      "description": "Install npm packages directly from GitHub repositories using git URLs. Use when installing packages from private repos, specific branches, or unreleased versions not yet on npm registry.",
+      "category": "utilities",
+      "path": "utilities/npm-git-install/SKILL.md",
+      "tags": [
+        "npm",
+        "git",
+        "github",
+        "install",
+        "package-management",
+        "node"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini",
+        "Opencode"
+      ],
+      "allowed_tools": [],
+      "commands": [
+        {
+          "command": "npm install git+https://github.com/<owner>/<repo>.git#<branch|tag|commit>",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "npm install -g git+https://github.com/JEO-tech-ai/supercode.git#main",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "npm install git+https://github.com/owner/repo.git#v1.0.0",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "npm install git+https://github.com/owner/repo.git#abc1234",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "npm install git+https://github.com/owner/repo.git",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "npm install -g git+ssh://git@github.com:JEO-tech-ai/supercode.git#main",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "npm install -g git+https://github.com/JEO-tech-ai/supercode.git#main --verbose",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "git clone https://github.com/owner/repo.git /tmp/npm-xxx",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "cd /tmp/npm-xxx",
+          "source": "utilities/npm-git-install/SKILL.md"
+        },
+        {
+          "command": "git checkout main",
+          "source": "utilities/npm-git-install/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "prompt-repetition",
+      "description": "LLM 정확도 향상을 위한 프롬프트 반복 기법. 70개 벤치마크 중 67%(47/70)에서 유의미한 성능 향상 달성. 경량 모델(haiku, flash, mini)에서 자동 적용.",
+      "category": "utilities",
+      "path": "utilities/prompt-repetition/SKILL.md",
+      "tags": [
+        "prompt-engineering",
+        "accuracy",
+        "optimization",
+        "lightweight-model",
+        "attention"
+      ],
+      "platforms": [
+        "Claude",
+        "Gemini",
+        "ChatGPT",
+        "Codex"
+      ],
+      "allowed_tools": [
+        ""
+      ],
+      "commands": []
+    },
+    {
+      "name": "skill-standardization",
+      "description": "Standardize and validate SKILL.md files to match the project specification. Use when creating new skills, converting existing skills to standard format, or validating skill file structure. Handles section heading conversion, frontmatter standardization, and missing section detection.",
+      "category": "utilities",
+      "path": "utilities/skill-standardization/SKILL.md",
+      "tags": [
+        "skill-management",
+        "standardization",
+        "validation",
+        "automation",
+        "scripting"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Bash",
+        "Read",
+        "Write",
+        "Edit",
+        "Glob",
+        "Grep"
+      ],
+      "commands": [
+        {
+          "command": "cd /path/to/.agent-skills",
+          "source": "utilities/skill-standardization/SKILL.md"
+        },
+        {
+          "command": "python3 scripts/convert_skills.py",
+          "source": "utilities/skill-standardization/SKILL.md"
+        },
+        {
+          "command": "python3 scripts/remove_duplicates.py",
+          "source": "utilities/skill-standardization/SKILL.md"
+        },
+        {
+          "command": "python3 scripts/final_cleanup.py",
+          "source": "utilities/skill-standardization/SKILL.md"
+        },
+        {
+          "command": "grep -E \"^## (When to use|Instructions|Examples|Best practices|References)\" SKILL.md",
+          "source": "utilities/skill-standardization/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "file-organization",
       "description": "Organize project files and folders for maintainability and scalability. Use when structuring new projects, refactoring folder structure, or establishing conventions. Handles project structure, naming conventions, and file organization best practices.",
       "category": "utilities",
       "path": "utilities/file-organization/SKILL.md",
@@ -721,7 +1422,39 @@
         "ChatGPT",
         "Gemini"
       ],
-      "allowed_tools": [],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Glob",
+        "Bash"
+      ],
+      "commands": []
+    },
+    {
+      "name": "agentic-development-principles",
+      "description": "AI 에이전트와 협업하는 에이전틱 개발의 범용 원칙. 분해정복, 컨텍스트 관리, 추상화 수준 선택, 자동화 철학을 정의. 모든 AI 코딩 도구에 적용 가능.",
+      "category": "utilities",
+      "path": "utilities/agentic-development-principles/SKILL.md",
+      "tags": [
+        "agentic-development",
+        "principles",
+        "context-management",
+        "automation",
+        "ai-collaboration",
+        "universal"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Bash",
+        "Grep",
+        "Glob"
+      ],
       "commands": []
     },
     {
@@ -748,15 +1481,69 @@
     },
     {
       "name": "code-review",
-      "description": "Conduct thorough, constructive code reviews. Use when reviewing pull requests, checking code quality, or providing feedback on code. Covers best practices, common issues, security, performance, and testing.",
+      "description": "Conduct thorough, constructive code reviews for quality and security. Use when reviewing pull requests, checking code quality, identifying bugs, or auditing security. Handles best practices, SOLID principles, security vulnerabilities, performance analysis, and testing coverage.",
       "category": "code-quality",
       "path": "code-quality/code-review/SKILL.md",
-      "tags": [],
-      "platforms": [
-        "Claude"
+      "tags": [
+        "code-review",
+        "code-quality",
+        "security",
+        "best-practices",
+        "PR-review"
       ],
-      "allowed_tools": "Read, Grep, Glob",
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Grep",
+        "Glob"
+      ],
       "commands": []
+    },
+    {
+      "name": "debugging",
+      "description": "Systematically debug code issues using proven methodologies. Use when encountering errors, unexpected behavior, or performance problems. Handles error analysis, root cause identification, debugging strategies, and fix verification.",
+      "category": "code-quality",
+      "path": "code-quality/debugging/SKILL.md",
+      "tags": [
+        "debugging",
+        "troubleshooting",
+        "error-analysis",
+        "bug-fixing",
+        "problem-solving"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Grep",
+        "Glob",
+        "Bash"
+      ],
+      "commands": [
+        {
+          "command": "git log --oneline -10",
+          "source": "code-quality/debugging/SKILL.md"
+        },
+        {
+          "command": "git diff HEAD~5",
+          "source": "code-quality/debugging/SKILL.md"
+        },
+        {
+          "command": "npm list --depth=0  # Node.js",
+          "source": "code-quality/debugging/SKILL.md"
+        },
+        {
+          "command": "pip freeze          # Python",
+          "source": "code-quality/debugging/SKILL.md"
+        }
+      ]
     },
     {
       "name": "code-refactoring",
@@ -835,6 +1622,39 @@
         {
           "command": "}",
           "source": "code-quality/performance-optimization/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "agent-evaluation",
+      "description": "Design and implement comprehensive evaluation systems for AI agents. Use when building evals for coding agents, conversational agents, research agents, or computer-use agents. Covers grader types, benchmarks, 8-step roadmap, and production integration.",
+      "category": "code-quality",
+      "path": "code-quality/agent-evaluation/SKILL.md",
+      "tags": [
+        "agent-evaluation",
+        "evals",
+        "AI-agents",
+        "benchmarks",
+        "graders",
+        "testing",
+        "quality-assurance"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Shell",
+        "Grep",
+        "Glob"
+      ],
+      "commands": [
+        {
+          "command": "mkdir -p evals/{tasks,results,graders}",
+          "source": "code-quality/agent-evaluation/SKILL.md"
         }
       ]
     },
@@ -936,11 +1756,23 @@
       "description": "Search and navigate large codebases efficiently. Use when finding specific code patterns, tracing function calls, understanding code structure, or locating bugs. Handles semantic search, grep patterns, AST analysis.",
       "category": "search-analysis",
       "path": "search-analysis/codebase-search/SKILL.md",
-      "tags": [],
-      "platforms": [
-        "Claude"
+      "tags": [
+        "codebase-search",
+        "grep",
+        "code-navigation",
+        "pattern-matching"
       ],
-      "allowed_tools": "Read, Grep, Glob, Codebase_Search",
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Grep",
+        "Glob",
+        "Bash"
+      ],
       "commands": [
         {
           "command": "grep -n \"def function_name\" --type py",
@@ -1047,6 +1879,111 @@
         {
           "command": "grep -rn \"SELECT.*\\+.*\\|\\|\" --include=\"*.{js,ts}\" .",
           "source": "search-analysis/pattern-detection/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "looker-studio-bigquery",
+      "description": "Design and configure Looker Studio dashboards with BigQuery data sources. Use when creating analytics dashboards, connecting BigQuery to visualization tools, or optimizing data pipeline performance. Handles BigQuery connections, custom SQL queries, scheduled queries, dashboard design, and performance optimization.",
+      "category": "infrastructure",
+      "path": "infrastructure/looker-studio-bigquery/SKILL.md",
+      "tags": [
+        "Looker-Studio",
+        "BigQuery",
+        "dashboard",
+        "analytics",
+        "visualization",
+        "GCP",
+        "data-studio",
+        "SQL"
+      ],
+      "platforms": [
+        "Claude",
+        "ChatGPT",
+        "Gemini"
+      ],
+      "allowed_tools": [],
+      "commands": [
+        {
+          "command": "gcloud projects create my-analytics-project",
+          "source": "infrastructure/looker-studio-bigquery/SKILL.md"
+        },
+        {
+          "command": "gcloud config set project my-analytics-project",
+          "source": "infrastructure/looker-studio-bigquery/SKILL.md"
+        },
+        {
+          "command": "gcloud services enable bigquery.googleapis.com",
+          "source": "infrastructure/looker-studio-bigquery/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "agent-configuration",
+      "description": "AI 에이전트 설정 정책 및 보안 가이드. 프로젝트 설명 파일 작성법, Hooks/Skills/Plugins 설정, 보안 정책, 팀 공유 워크플로우 정의.",
+      "category": "infrastructure",
+      "path": "infrastructure/agent-configuration/SKILL.md",
+      "tags": [
+        "agent-configuration",
+        "security",
+        "hooks",
+        "skills",
+        "plugins",
+        "multi-agent"
+      ],
+      "platforms": [
+        "Claude",
+        "Gemini",
+        "ChatGPT",
+        "Codex"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Bash",
+        "Grep",
+        "Glob"
+      ],
+      "commands": [
+        {
+          "command": "/init  # Claude가 코드베이스 분석 후 초안 생성",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "mkdir -p ~/.claude/skills/my-skill",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "cat > ~/.claude/skills/my-skill/SKILL.md << 'EOF'",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "---",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "name: my-skill",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "description: 나의 커스텀 스킬",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "platforms: [Claude, Gemini, ChatGPT]",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "---",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "- 특정 작업에 필요할 때",
+          "source": "infrastructure/agent-configuration/SKILL.md"
+        },
+        {
+          "command": "1. 첫 번째 단계",
+          "source": "infrastructure/agent-configuration/SKILL.md"
         }
       ]
     },

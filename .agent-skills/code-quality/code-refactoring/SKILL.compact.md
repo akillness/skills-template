@@ -1,6 +1,6 @@
 # code-refactoring
 
-> Improve code structure, readability, and maintainability without changing functionality. Use when simplifying complex code, removing duplication, o...
+> Simplify and refactor code while preserving behavior, improving clarity, and reducing complexity. Use when simplifying complex code, removing dupli...
 
 ## When to use this skill
 • **코드 리뷰**: 복잡하거나 중복된 코드 발견
@@ -28,3 +28,5 @@
 1. Boy Scout Rule
 2. 리팩토링 타이밍
 3. 점진적 개선
+4. 행동 보존
+5. 작은 커밋

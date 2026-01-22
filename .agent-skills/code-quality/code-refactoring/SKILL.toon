@@ -1,5 +1,5 @@
 N:code-refactoring
-D:Improve code structure, readability, and maintainability without changing functionality. Use when...
+D:Simplify and refactor code while preserving behavior, improving clarity, and reducing complexity....
 G:refactoring code-quality DRY SOLID design-patterns
 U[4]:
   **코드 리뷰**: 복잡하거나 중복된 코드 발견

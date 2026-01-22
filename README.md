@@ -1,43 +1,253 @@
 # Agent Skills
 
-> Claude Code 중심의 Multi-Agent 워크플로우 시스템 (Gemini-CLI + Codex-CLI 통합)
+> Claude Code 중심의 Multi-Agent 워크플로우 시스템 (Gemini-CLI + Codex-CLI + OpenContext 통합)
+> **Claude Code 완전 가이드 70가지 팁 적용** - 에이전틱 개발 정책 강화
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.x-blue.svg?logo=python)](https://www.python.org/)
-[![Skills](https://img.shields.io/badge/Skills-41-green.svg)](.agent-skills/)
+[![Skills](https://img.shields.io/badge/Skills-55-green.svg)](.agent-skills/)
 [![Multi-Agent](https://img.shields.io/badge/Multi--Agent-Claude%20%7C%20Gemini%20%7C%20Codex-blueviolet.svg)](CLAUDE.md)
-[![Token](https://img.shields.io/badge/Token%20Optimization-95%25-success.svg)](.agent-skills/scripts/generate_compact_skills.py)
+[![Token](https://img.shields.io/badge/Token%20Savings-95%25-success.svg)](.agent-skills/scripts/generate_compact_skills.py)
+[![Setup](https://img.shields.io/badge/Setup-One--Liner-orange.svg)](#-ai-agent-installation)
+
+![Agent Skills](AgentSkills.png)
 
 ---
 
-## Installation / 설치
+## AI Agent Installation
 
-> **Important / 중요**: This `skills-template` folder must be placed in a location accessible to the AI agent.
-> 이 `skills-template` 폴더는 AI 에이전트가 접근 가능한 위치에 배치되어야 합니다.
-> - Claude Code: Project root or `~/.claude/skills/`
-> - ChatGPT: Upload to Custom GPT Knowledge
-> - Gemini: Project directory with Python access
+> **LLM 기반 설치를 지원합니다.** 원라이너 명령 또는 AI 에이전트 프롬프트로 설치하세요.
 
-### Setup Command / 설정 명령
+### 🚀 One-Liner 설치 (권장)
 
 ```bash
-cd .agent-skills && ./setup.sh
-# → Select option 1 (Quick Setup) / 옵션 1 선택
+curl -fsSL https://raw.githubusercontent.com/supercent-io/skills-template/main/install.sh | bash
 ```
 
-### For AI Agents / AI 에이전트용
+### 🤖 AI 에이전트용 프롬프트
 
-**With Shell Access (Claude Code, Codex-CLI):**
+Claude Code, Gemini, ChatGPT 등에게 아래 프롬프트를 **복사-붙여넣기**하세요:
+
+#### 기본 설치 프롬프트
+```
+https://github.com/supercent-io/skills-template 저장소를 임시로 클론하고, .agent-skills 폴더를 현재 디렉토리로 복사해. 그 후 setup.sh를 --silent --install-mcp 모드로 실행하고, 임시 클론 폴더는 삭제해.
+```
+
+#### 사용 예제 프롬프트
+
+| 목적 | 프롬프트 |
+|------|----------|
+| **스킬 검색** | `"API 설계" 관련 스킬을 찾아서 로드해줘` |
+| **코드 리뷰** | `code-review 스킬을 사용해서 src/ 폴더를 리뷰해줘` |
+| **DB 스키마 설계** | `database-schema-design 스킬로 사용자 관리 시스템 스키마를 설계해줘` |
+| **PPT 작성** | `presentation-builder 스킬을 로드하고 투자자 발표 자료 10슬라이드로 만들어줘` |
+| **이미지 프롬프트** | `image-generation 스킬로 Midjourney용 프롬프트를 작성해줘` |
+| **Docker 배포** | `deployment-automation 스킬을 사용해서 Docker Compose 설정을 만들어줘` |
+
+#### 스킬 호출 CLI 예시
 ```bash
-.agent-skills/setup.sh 실행하고 skill 설정해줘
-# Run .agent-skills/setup.sh and configure skills
+# 자연어로 스킬 검색
+python3 .agent-skills/skill-query-handler.py query "API 설계해줘"
+
+# 특정 스킬 직접 로드 (토큰 절약)
+python3 .agent-skills/skill-query-handler.py query "코드 리뷰" --mode toon
+
+# 스킬 목록 확인
+python3 .agent-skills/skill_loader.py list
 ```
 
-**Without Shell Access (GPT, Gemini Web)** - Instruct user:
-> 터미널에서 `cd .agent-skills && ./setup.sh` 실행 후 옵션 1 선택
+<details>
+<summary><strong>📦 설치 모드별 옵션 (클릭하여 펼치기)</strong></summary>
 
-### Documentation / 상세 문서
-- **[.agent-skills/README.md](.agent-skills/README.md)** - Full setup guide
+| 모드 | 명령어 | 설명 |
+|------|--------|------|
+| **Silent + MCP (권장)** | `setup.sh --silent --install-mcp` | 완전 자동화, MCP 서버 자동 설치 |
+| **Silent** | `setup.sh --silent` | 자동 감지, 기본값 적용 |
+| **Auto** | `setup.sh --auto` | 대화형 없이 전체 설정 |
+| **Quick** | `setup.sh --quick` | 토큰 최적화 파일만 생성 |
+| **Interactive** | `setup.sh` | 단계별 대화형 설정 |
+
+**환경 변수 옵션:**
+```bash
+# MCP 서버 자동 설치 비활성화
+INSTALL_MCP=false curl -fsSL ... | bash
+
+# 기존 폴더 백업 건너뛰기
+SKIP_BACKUP=true curl -fsSL ... | bash
+```
+
+</details>
+
+<details>
+<summary><strong>🔒 보안 중시 설치 (2단계)</strong></summary>
+
+스크립트를 먼저 확인한 후 실행하고 싶다면:
+
+```bash
+# 1. 스크립트 다운로드
+curl -fsSLO https://raw.githubusercontent.com/supercent-io/skills-template/main/install.sh
+
+# 2. 스크립트 내용 확인 (선택)
+cat install.sh
+
+# 3. 실행
+bash install.sh
+```
+
+</details>
+
+<details>
+<summary><strong>🔧 수동 설치 (개발자용)</strong></summary>
+
+```bash
+# 1. 저장소 클론
+git clone https://github.com/supercent-io/skills-template.git /tmp/skills-template
+
+# 2. .agent-skills 복사
+cp -rf /tmp/skills-template/.agent-skills .
+
+# 3. 설정 실행
+chmod +x .agent-skills/setup.sh && .agent-skills/setup.sh --silent
+
+# 4. 정리
+rm -rf /tmp/skills-template
+```
+
+</details>
+
+<details>
+<summary><strong>🤖 AI Agent별 설치 가이드</strong></summary>
+
+#### Claude Code
+```bash
+# 1. 프롬프트 입력 후 AI가 자동 설치
+# 2. 설치 완료 후 확인
+cd .agent-skills && ./setup.sh --diagnose
+```
+
+#### Gemini CLI
+```bash
+# Gemini에서 동일한 프롬프트 사용
+# Shell 도구로 자동 설치 수행
+```
+
+#### ChatGPT (Code Interpreter)
+```bash
+# 프롬프트 입력 → ChatGPT가 shell 명령 실행
+# Knowledge Base에 스킬 ZIP 업로드도 가능
+```
+
+</details>
+
+<details>
+<summary><strong>✅ 설치 후 검증</strong></summary>
+
+```bash
+# 시스템 진단
+.agent-skills/setup.sh --diagnose
+
+# 예상 출력:
+# ✅ Python3
+# ✅ Claude CLI
+# ✅ gemini-cli MCP Server
+# ✅ codex-cli MCP Server
+# Workflow Type: full-multiagent
+```
+
+</details>
+
+<details>
+<summary><strong>🔌 MCP 서버 연동 (Claude Code 전용)</strong></summary>
+
+```bash
+# Gemini-CLI MCP 추가 (대용량 분석)
+claude mcp add gemini-cli -s user -- npx -y @anthropic-ai/gemini-mcp
+
+# Codex-CLI MCP 추가 (명령 실행)
+claude mcp add codex-cli -s user -- npx -y @openai/codex-mcp
+
+# OpenContext MCP 추가 (영구 메모리)
+claude mcp add opencontext -s user -- oc mcp
+```
+
+</details>
+
+<details>
+<summary><strong>🆕 새로운 기능</strong></summary>
+
+| 기능 | 설명 |
+|------|------|
+| `--install-mcp` | MCP 서버 자동 설치 (OpenContext 필수, Gemini/Codex 선택) |
+| OpenContext 필수 | 영구 메모리 MCP가 기본 필수 설정으로 포함 |
+| ralph-loop 자동 적용 | 경량 모델(haiku, flash, mini)에서 프롬프트 반복 자동 적용 |
+| 설정 검증 | 설치 후 자동 검증 및 누락 설정 자동 적용 |
+
+> **참고: Shell RC 설정은 개발자 편의 기능**
+>
+> `.zshrc`/`.bashrc` 수정은 **개발자가 터미널에서 직접 사용**할 때만 필요합니다.
+> AI 에이전트는 MCP 등록 설정을 통해 도구에 접근하므로 Shell RC 수정이 불필요합니다.
+
+</details>
+
+---
+
+## LLM CLI 설치 가이드
+
+### Claude Code 설치
+
+```bash
+# macOS/Linux
+curl -fsSL https://claude.ai/install.sh | sh
+
+# npm (대안)
+npm install -g @anthropic-ai/claude-code
+
+# 설치 확인
+claude --version
+```
+
+### Gemini CLI 설치
+
+```bash
+# npm으로 설치 (Google 공식)
+npm install -g @google/gemini-cli
+
+# 설치 확인
+gemini --version
+
+# API 키 설정
+export GEMINI_API_KEY=your_api_key
+```
+
+### Codex CLI 설치
+
+```bash
+# npm으로 설치 (OpenAI 공식)
+npm install -g @openai/codex
+
+# 설치 확인
+codex --version
+
+# API 키 설정
+export OPENAI_API_KEY=your_api_key
+```
+
+### OpenContext CLI 설치 (AI 영구 메모리)
+
+```bash
+# npm으로 설치
+npm install -g @aicontextlab/cli
+
+# 프로젝트 초기화
+cd your-project && oc init
+```
+
+**OpenContext 핵심 명령어:**
+```bash
+/opencontext-context    # 작업 전 배경 로드 (권장)
+/opencontext-search     # 기존 문서 검색
+/opencontext-create     # 새 문서 작성
+/opencontext-iterate    # 결론 저장
+```
 
 ---
 
@@ -78,456 +288,366 @@ graph TB
     style TN fill:#fff3e0
 ```
 
-## Features
+### Agent Roles
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Multi-Agent Workflow** | Claude + Gemini + Codex 자동 오케스트레이션 | ✅ |
-| **41 Skills** | 8개 카테고리의 실전 스킬 | ✅ |
-| **Token Optimization** | 95% 토큰 절감 (toon 모드 기본) | ✅ |
-| **Auto Orchestration** | CLAUDE.md 기반 에이전트 역할 자동 분배 | ✅ |
-| **MCP Integration** | gemini-cli, codex-cli 원클릭 설정 | ✅ |
-| **Smart Query Matching** | 사용자 쿼리 기반 스킬 자동 매칭 | ✅ |
-| **Quick Setup** | `setup.sh` 7단계 통합 설정 | ✅ |
-| **Open Standard** | Agent Skills 오픈 표준 준수 | ✅ |
+| Agent | Role | Model | Best For |
+|-------|------|-------|----------|
+| **Claude Code** | Orchestrator | `claude-opus-4-5` | 계획 수립, 코드 생성, 스킬 해석 |
+| **Gemini CLI** | Analyst | `gemini-2.5-pro` | 대용량 분석 (2M+ 토큰), 리서치 |
+| **Codex CLI** | Executor | `gpt-5.2-codex` | 명령 실행, 빌드, 배포 |
 
-## Quick Start
+### Workflow Types (Auto-Detected)
 
-```mermaid
-flowchart LR
-    A["1. Clone"] --> B["2. setup.sh"]
-    B --> C["3. Reload shell"]
-    C --> D["Ready!"]
+| Type | 조건 | 설명 |
+|------|------|------|
+| `standalone` | CLI 없음 | 기본 스킬만 사용 |
+| `claude-only` | Claude만 있음 | 내장 Bash 사용 |
+| `claude-gemini` | +Gemini | 대용량 분석/리서치 |
+| `claude-codex` | +Codex | 실행/배포 자동화 |
+| `full-multiagent` | 모두 있음 | 풀 오케스트레이션 |
 
-    style A fill:#e3f2fd
-    style B fill:#fff3e0
-    style C fill:#a5d6a7
-    style D fill:#c8e6c9
-```
+---
 
-```bash
-git clone https://github.com/your-org/skills-template.git
-cd skills-template/.agent-skills && ./setup.sh  # Select option 1
-source ~/.zshrc && claude  # Test: "skill을 사용해서 REST API 설계해줘"
-```
-
-### Quick Setup 7 Steps / Quick Setup 7단계
-
-| Step | Action | Result |
-|--------|--------|--------|
-| 1 | Token optimization | Generate SKILL.toon (95% reduction) / SKILL.toon 생성 (95% 절감) |
-| 2 | Claude skills | Copy to .claude/skills/ / .claude/skills/ 복사 |
-| 3 | MCP shell config | Create gemini-skill, codex-skill functions / gemini-skill, codex-skill 함수 생성 |
-| 4 | Shell RC config | Auto-configure ~/.zshrc / ~/.zshrc 자동 설정 |
-| 5 | Multi-Agent orchestration | Generate CLAUDE.md / CLAUDE.md 생성 |
-| 6 | MCP servers | Register gemini-cli, codex-cli / gemini-cli, codex-cli 등록 |
-| 7 | Verification | Verify setup / 설정 확인 |
-
-## Skills Overview
-
-### Categories
+## Skills Overview (55 Total)
 
 ```mermaid
 pie showData
-    title Skills by Category (41 Total)
-    "Backend" : 5
-    "Frontend" : 4
-    "Code-Quality" : 5
-    "Infrastructure" : 5
+    title Skills by Category
+    "Backend" : 6
+    "Frontend" : 6
+    "Code-Quality" : 6
+    "Infrastructure" : 8
     "Documentation" : 4
-    "Project-Mgmt" : 6
+    "Project-Mgmt" : 7
     "Search-Analysis" : 4
-    "Utilities" : 8
-    "Templates" : 5
+    "Utilities" : 14
 ```
-
-### Detailed Skills
 
 | Category | Count | Skills |
 |:---------|:-----:|:-------|
-| **Backend** | 5 | `api-design` `database-schema-design` `authentication-setup` `backend-testing` `kling-ai` |
-| **Frontend** | 4 | `ui-component-patterns` `state-management` `responsive-design` `web-accessibility` |
-| **Code-Quality** | 5 | `code-review` `code-refactoring` `testing-strategies` `performance-optimization` `debugging` |
-| **Infrastructure** | 5 | `system-environment-setup` `deployment-automation` `monitoring-observability` `security-best-practices` `firebase-ai-logic` |
+| **Backend** | 6 | `api-design` `database-schema-design` `authentication-setup` `backend-testing` `kling-ai` `cs-tool-dashboard` |
+| **Frontend** | 6 | `ui-component-patterns` `state-management` `responsive-design` `web-accessibility` `web-design-guidelines` `react-best-practices` |
+| **Code-Quality** | 6 | `code-review` `code-refactoring` `testing-strategies` `performance-optimization` `debugging` `agent-evaluation` |
+| **Infrastructure** | 8 | `system-environment-setup` `deployment-automation` `monitoring-observability` `security-best-practices` `firebase-ai-logic` `looker-studio-bigquery` `agent-configuration` `vercel-deploy` |
 | **Documentation** | 4 | `technical-writing` `api-documentation` `user-guide-writing` `changelog-maintenance` |
-| **Project-Mgmt** | 6 | `task-planning` `task-estimation` `sprint-retrospective` `standup-meeting` `subagent-creation` `ultrathink-multiagent-workflow` |
+| **Project-Mgmt** | 7 | `task-planning` `task-estimation` `sprint-retrospective` `standup-meeting` `ultrathink-multiagent-workflow` `subagent-creation` `agentic-principles` |
 | **Search-Analysis** | 4 | `codebase-search` `log-analysis` `data-analysis` `pattern-detection` |
-| **Utilities** | 8 | `git-workflow` `environment-setup` `file-organization` `workflow-automation` `skill-standardization` `mcp-codex-integration` `git-submodule` `opencode-authentication` |
+| **Utilities** | 14 | `git-workflow` `git-submodule` `environment-setup` `file-organization` `workflow-automation` `skill-standardization` `mcp-codex-integration` `opencode-authentication` `npm-git-install` `project-init-memory` `agentic-workflow` `opencontext` `prompt-repetition` `agentic-development-principles` |
 
-> **Total: 41 Skills** (including 5 templates: `basic` `advanced` `multiplatform` `chatgpt` `toon`)
+---
 
 ## Token Optimization
 
-스킬 로딩 시 토큰 사용량을 최적화하는 3가지 모드를 제공합니다.
-
-```mermaid
-graph LR
-    A["SKILL.md<br/>~2000 tokens"] -->|generate_compact_skills.py| B["SKILL.compact.md<br/>~250 tokens"]
-    A -->|generate_compact_skills.py| C["SKILL.toon<br/>~110 tokens"]
-
-    B -->|88% 절감| D["Balanced"]
-    C -->|95% 절감| E["Minimal"]
-
-    style A fill:#ffcdd2
-    style B fill:#fff3e0
-    style C fill:#c8e6c9
-    style D fill:#e3f2fd
-    style E fill:#a5d6a7
-```
-
-### 모드 비교
+스킬 로딩 시 토큰 사용량을 최적화하는 3가지 모드:
 
 | Mode | File | Avg Tokens | Reduction | Use Case |
 |:-----|:-----|:-----------|:----------|:---------|
-| **full** | SKILL.md | ~2,000 | - | 상세 예시 필요 시 |
-| **compact** | SKILL.compact.md | ~250 | 88% | 일반 작업 (기본값) |
-| **toon** | SKILL.toon | ~110 | 95% | 빠른 참조, 간단한 쿼리 |
-
-### 토큰 최적화 실행
+| **full** | SKILL.md | ~2,198 | - | 상세 예시 필요 시 |
+| **compact** | SKILL.compact.md | ~270 | 87.7% | 일반 작업 |
+| **toon** | SKILL.toon | ~112 | 94.9% | 빠른 참조 (기본값) |
 
 ```bash
-# setup.sh 옵션 7 사용 (권장)
-cd .agent-skills && ./setup.sh  # 옵션 7 선택
+# 토큰 최적화 파일 생성
+python3 .agent-skills/scripts/generate_compact_skills.py
 
-# 또는 직접 실행
-python3 scripts/generate_compact_skills.py
-
-# 통계 확인
-python3 skill-query-handler.py stats
+# 토큰 통계 확인
+python3 .agent-skills/skill-query-handler.py stats
 ```
 
-### 모드별 사용
+---
+
+## Claude Code 정책
+
+> 70가지 팁 기반의 에이전틱 개발 정책 (ykdojo + Ado Kukic 검증)
+
+### 핵심 6대 원칙
+
+| 원칙 | 핵심 내용 | 적용 방법 |
+|------|----------|----------|
+| **1. 분해정복** | 큰 문제 → 작은 단계 | 각 단계 독립 검증 가능하게 분할 |
+| **2. 컨텍스트 관리** | 신선하게 유지 | 단일 목적 대화, HANDOFF.md, `/clear` |
+| **3. 추상화 선택** | 상황별 깊이 조절 | Vibe Coding ↔ Deep Dive |
+| **4. 자동화²** | 반복 → 자동화 | 3회 반복 시 자동화 방법 탐색 |
+| **5. 계획/YOLO** | 기본 계획 모드 | 계획 90%, YOLO는 컨테이너에서만 |
+| **6. 검증 회고** | 출력 검증 필수 | 테스트, Draft PR, 자기 검증 |
+
+### 필수 명령어
 
 ```bash
-# 기본: compact 모드 (88% 토큰 절감)
-gemini-skill "REST API 설계해줘"
+# 세션 시작 시
+/usage          # 토큰 한도 확인
 
-# full 모드: 상세 예시 포함
-gemini-skill "REST API 설계해줘" full
+# 작업 중
+/context        # 컨텍스트 상태 확인
+Esc Esc         # 잘못된 작업 즉시 취소
 
-# toon 모드: 최소 토큰 (95% 절감)
-gemini-skill "REST API 설계해줘" toon
-
-# skill-query-handler 직접 사용
-python3 skill-query-handler.py query "쿼리" --mode compact
-python3 skill-query-handler.py query "쿼리" --mode toon
+# 컨텍스트 관리 (50k 토큰 초과 시)
+/clear          # 컨텍스트 초기화
 ```
 
-### TOON 포맷 예시
+### 보안 정책
 
+#### ❌ 절대 금지
 ```
-N:api-design
-D:Design RESTful and GraphQL APIs following best practices...
-G:api-design REST GraphQL OpenAPI
-U[3]:
-  REST API 설계 시
-  GraphQL 스키마 작성 시
-  API 버저닝 결정 시
-S[4]{n,action}:
-  1,Define resources and endpoints
-  2,Design request/response schemas
-  3,Add authentication and authorization
-  4,Document with OpenAPI
-R[5]:
-  Use nouns for resources
-  HTTP methods correctly
-  Consistent error format
+- --dangerously-skip-permissions 사용
+- rm -rf /, sudo rm 등 위험 명령어
+- .env, credentials.json 시크릿 커밋
+- API 키 하드코딩
 ```
 
-## Adding New Skills
+#### ✅ 권장 사항
+```bash
+/sandbox "npm test"
+/sandbox "npm run lint"
+npx cc-safe .  # 정기적 보안 감사
+```
 
-### 자동 스킬 추가 (권장)
+---
+
+## Quick Reference
+
+### 필수 단축키
+
+```
+Esc Esc         작업 즉시 취소 (가장 중요!)
+Ctrl+R          히스토리 검색
+Shift+Tab ×2    계획 모드 토글
+Ctrl+B          백그라운드 실행
+```
+
+### CLI 플래그
 
 ```bash
-# 기본 템플릿
-./scripts/add_new_skill.sh <category> <skill-name>
-
-# 고급 템플릿 (REFERENCE.md, EXAMPLES.md 포함)
-./scripts/add_new_skill.sh <category> <skill-name> --template advanced
-
-# 예시
-./scripts/add_new_skill.sh backend graphql-api --description "Design GraphQL APIs"
+claude --continue       마지막 대화 이어가기
+claude --resume <name>  특정 세션 복구
+claude -p "prompt"      Headless 모드
 ```
 
-### 수동 스킬 추가
+### 별칭 설정
+
+```bash
+# ~/.zshrc 또는 ~/.bashrc
+alias c='claude'
+alias cc='claude --continue'
+alias cr='claude --resume'
+```
+
+---
+
+## Multi-Agent Workflow Guide
+
+멀티에이전트 조합으로 작업 효율을 극대화하세요.
+
+### Agent 역할 분담
+
+| Agent | 강점 | 맡길 작업 |
+|-------|------|----------|
+| **Claude** | 창의적 코드 생성, 아키텍처 설계 | 복잡한 로직 구현, 리팩토링, 설계 문서 |
+| **Gemini** | 대용량 분석, 빠른 검색 | 코드베이스 분석, API 조사, 프로토타이핑 |
+| **Codex** | 정형화된 실행, 명령 처리 | 빌드, 테스트, 배포, 스크립트 실행 |
+
+### 워크플로우 예시: API 개발
+
+```
+1. [Claude] "사용자 인증 API 설계해줘" → 아키텍처 + 스펙 생성
+2. [Gemini] "기존 auth 코드 패턴 분석해줘" → 대용량 코드 분석
+3. [Claude] 분석 결과 반영하여 코드 구현
+4. [Codex] "npm test && npm run build" → 테스트 및 빌드
+5. [Claude] 결과 종합 및 문서화
+```
+
+### 스킬 호출 예시
+
+```bash
+# 자연어로 스킬 쿼리
+python3 .agent-skills/skill-query-handler.py query "API 설계해줘"
+
+# 특정 스킬 직접 로드 (토큰 절약)
+python3 .agent-skills/skill-query-handler.py query "코드 리뷰" --mode toon
+
+# 스킬 매칭 확인
+python3 .agent-skills/skill-query-handler.py match "데이터베이스"
+```
+
+---
+
+## 실전 예제 시나리오 (Practical Scenarios)
+
+> 스킬을 조합하여 실제 프로젝트에 적용하는 3가지 워크플로우 예시
+
+### 시나리오 1: Full-Stack 프로젝트 구축
+
+**목표**: 디자인 레이아웃 → 백엔드 DB 스키마 → Docker 배포 → Git 관리까지 완전한 개발 파이프라인 구축
 
 ```mermaid
-flowchart TD
-    A["1. Copy Template"] --> B["2. Edit SKILL.md"]
-    B --> C["3. Test with skill_loader.py"]
-    C --> D{"Valid?"}
-    D -->|Yes| E["4. Run manifest builder"]
-    D -->|No| B
-    E --> F["5. Git Commit"]
-
-    style A fill:#e3f2fd
-    style B fill:#fff3e0
-    style C fill:#f3e5f5
-    style D fill:#ffebee
-    style E fill:#e8f5e9
-    style F fill:#a5d6a7
+flowchart LR
+    A["요구사항 분석"] --> B["UI/UX 설계"]
+    B --> C["DB 스키마"]
+    C --> D["API 개발"]
+    D --> E["Docker 배포"]
+    E --> F["Git 관리"]
 ```
 
+| 단계 | 스킬 | Agent | 핵심 산출물 |
+|------|------|-------|-------------|
+| **1. 디자인 레이아웃** | `frontend/design-system` `frontend/responsive-design` | Claude | 컴포넌트 구조도, 반응형 브레이크포인트 정의 |
+| **2. 구조 설계 원칙** | `frontend/ui-component-patterns` `frontend/web-design-guidelines` | Claude | Atomic Design 패턴, Vercel 디자인 가이드라인 준수 |
+| **3. DB 스키마 설계** | `backend/database-schema-design` `backend/api-design` | Claude | ERD, 테이블 정의서, REST/GraphQL 스펙 |
+| **4. Docker 연동** | `infrastructure/deployment-automation` `infrastructure/vercel-deploy` | Codex | Dockerfile, docker-compose.yml, CI/CD 파이프라인 |
+| **5. Git 관리** | `utilities/git-workflow` `utilities/git-submodule` | Codex | 브랜치 전략, PR 템플릿, 서브모듈 구성 |
+
+**실행 예시:**
 ```bash
-# 1. 템플릿 복사
-cp -r templates/basic-skill-template backend/my-skill
+# Step 1: 디자인 시스템 스킬 로드
+python3 .agent-skills/skill-query-handler.py query "디자인 시스템 설계해줘"
 
-# 2. SKILL.md 편집
-# name, description 정의 및 상세 지침 작성
+# Step 2: DB 스키마 설계
+python3 .agent-skills/skill-query-handler.py query "PostgreSQL 스키마 설계"
 
-# 3. 테스트
-python skill_loader.py show my-skill
-
-# 4. 매니페스트 갱신
-python scripts/skill_manifest_builder.py
-
-# 5. Git 커밋
-git add backend/my-skill && git commit -m "Add my-skill"
+# Step 3: Docker 배포 설정
+python3 .agent-skills/skill-query-handler.py query "Docker Compose 설정"
 ```
 
-## Multi-Agent Workflow
+---
 
-> **"skill을 사용해서 작업해줘"** 라고 요청하면 Claude Code가 오케스트레이터로서 Gemini-CLI와 Codex-CLI를 자동으로 활용하여 최적의 스킬을 매칭하고 작업을 수행합니다.
+### 시나리오 2: 마케팅 데이터 분석 및 보고서 작성
+
+**목표**: KPI 정의 → 데이터 시각화 → PPT 보고서 자동 생성
 
 ```mermaid
-sequenceDiagram
-    participant U as User
-    participant CC as Claude Code<br/>(Orchestrator)
-    participant GC as Gemini-CLI<br/>(Analyst)
-    participant CX as Codex-CLI<br/>(Executor)
-
-    U->>CC: "REST API 설계하고 테스트해줘"
-    CC->>CC: api-design 스킬 로드
-    CC->>CC: API 스펙 설계 및 코드 생성
-    CC->>GC: 대규모 코드 분석 요청 (ask-gemini)
-    GC-->>CC: 분석 결과 반환
-    CC->>CX: 테스트 실행 (shell "npm test")
-    CX-->>CC: 실행 결과 반환
-    CC-->>U: 완료 리포트 + 코드
+flowchart LR
+    A["KPI 정의"] --> B["데이터 수집"]
+    B --> C["시각화"]
+    C --> D["PPT 생성"]
 ```
 
-### Agent Roles
+| 단계 | 스킬 | Agent | 핵심 산출물 |
+|------|------|-------|-------------|
+| **1. 평가지표 설계** | `marketing/marketing-automation` | Gemini | KPI 프레임워크, 퍼널 분석 구조 |
+| **2. 데이터 분석** | `search-analysis/data-analysis` | Gemini | SQL 쿼리, 통계 분석 리포트 |
+| **3. 데이터 시각화** | `infrastructure/looker-studio-bigquery` | Claude | Looker Studio 대시보드, BigQuery 연동 |
+| **4. PPT 작성** | `documentation/presentation-builder` | Claude | 브랜드 가이드라인 준수 슬라이드 덱 |
 
-| Agent | Role | MCP Tool | Best For |
-|-------|------|----------|----------|
-| **Claude Code** | Orchestrator | Built-in | 계획 수립, 코드 생성, 스킬 해석 |
-| **Gemini-CLI** | Analyst | `ask-gemini` | 대용량 분석 (1M+ 토큰), 리서치 |
-| **Codex-CLI** | Executor | `shell` | 명령 실행, 빌드, 배포 |
+**실행 예시:**
+```bash
+# Step 1: 마케팅 KPI 분석 요청
+python3 .agent-skills/skill-query-handler.py query "마케팅 퍼널 분석"
 
-### Orchestration Examples
+# Step 2: BigQuery 데이터 시각화
+python3 .agent-skills/skill-query-handler.py query "Looker Studio 대시보드"
+
+# Step 3: PPT 보고서 생성
+python3 .agent-skills/skill-query-handler.py query "투자자 발표 PPT 만들어줘"
+```
+
+**Agent 조합 패턴:**
+```
+1. [Gemini] 대용량 마케팅 데이터 분석 (2M+ 토큰 처리)
+2. [Claude] 인사이트 도출 및 시각화 설계
+3. [Claude] PPT 스크립트 및 레이아웃 생성
+```
+
+---
+
+### 시나리오 3: AI 이미지/영상 프롬프트 및 디자인 가이드 문서화
+
+**목표**: 이미지 생성 프롬프트 작성 → 영상 프로덕션 가이드 → 디자인 시스템 문서화
+
+```mermaid
+flowchart LR
+    A["브랜드 정의"] --> B["이미지 프롬프트"]
+    B --> C["영상 가이드"]
+    C --> D["문서화"]
+```
+
+| 단계 | 스킬 | Agent | 핵심 산출물 |
+|------|------|-------|-------------|
+| **1. 이미지 생성 프롬프트** | `creative-media/image-generation` | Claude | Midjourney/DALL-E/Flux 최적화 프롬프트, 네거티브 프롬프트 |
+| **2. 영상 프로덕션 가이드** | `creative-media/video-production` | Claude | 스토리보드, 컷 구성, 모션 그래픽 지침 |
+| **3. 디자인 가이드 문서** | `frontend/web-design-guidelines` `documentation/technical-writing` | Claude | 브랜드 스타일 가이드, 컬러/타이포그래피 규격 |
+| **4. API 문서화** | `documentation/api-documentation` | Claude | 프롬프트 API 레퍼런스, 파라미터 가이드 |
+
+**실행 예시:**
+```bash
+# Step 1: 이미지 생성 프롬프트 작성
+python3 .agent-skills/skill-query-handler.py query "Midjourney 프롬프트 작성"
+
+# Step 2: 영상 프로덕션 가이드
+python3 .agent-skills/skill-query-handler.py query "영상 스토리보드 작성"
+
+# Step 3: 디자인 가이드 문서화
+python3 .agent-skills/skill-query-handler.py query "브랜드 스타일 가이드 문서"
+```
+
+**프롬프트 엔지니어링 팁:**
+```
+[이미지 생성 프롬프트 구조]
+1. 주제(Subject): 핵심 대상 명시
+2. 스타일(Style): 예술 사조, 렌더링 방식
+3. 조명(Lighting): 광원 방향, 분위기
+4. 카메라(Camera): 앵글, 렌즈 효과
+5. 품질(Quality): 해상도, 디테일 수준
+6. 네거티브(Negative): 제외할 요소
+```
+
+---
+
+## Troubleshooting
+
+### 시스템 진단
 
 ```bash
-# Example 1: API 설계 + 테스트
-"skill을 사용해서 REST API를 설계하고 테스트해줘"
-# → Claude: 스킬 로드 → API 설계 → Codex: npm test → Claude: 리포트
-
-# Example 2: 대규모 코드 리뷰
-"전체 코드베이스를 분석해줘"
-# → Claude: 파일 식별 → Gemini: 대용량 분석 → Claude: 개선점 도출
-
-# Example 3: 인프라 배포
-"Docker로 배포해줘"
-# → Claude: 스킬 기반 계획 → Codex: docker-compose up → Claude: 결과 확인
+cd .agent-skills && ./setup.sh --diagnose
 ```
 
-### CLAUDE.md (Orchestration File)
+> **참고**: `--diagnose`의 Configuration Files 섹션이 ❌로 표시되더라도, 설정 파일은 정상적으로 생성됩니다. 다음 명령으로 직접 확인하세요:
+> ```bash
+> ls -la .agent-skills/model-config.env .agent-skills/agent-routing.yaml
+> ```
 
-Quick Setup 실행 시 프로젝트 루트에 `CLAUDE.md`가 생성됩니다. 이 파일은 Claude Code가 자동으로 읽어 multi-agent 워크플로우를 이해합니다.
-
-## Platform Support
-
-### Platform Comparison
-
-| Platform | Setup | AI Response | Skill Loading | Shell Exec |
-|:---------|:------|:-----------:|:--------------|:----------:|
-| **Claude Code** | `setup.sh` → 1 | ✅ | Automatic | ✅ |
-| **ChatGPT** | `setup.sh` → 2 | ✅ | Knowledge Upload | ❌ |
-| **Gemini** | `setup.sh` → 3 | ✅ | Python API | ❌ |
-| **Gemini-CLI** | `setup.sh` → 6 | ✅ | @file syntax | ❌ |
-| **Codex-CLI** | `setup.sh` → 6 | ❌ | N/A | ✅ |
-
-### Claude Code
+### 스킬 쿼리 테스트
 
 ```bash
-# setup.sh 실행 후 자동 설정
-# 스킬이 ~/.claude/skills/ 또는 .claude/skills/에 복사됨
-claude  # Claude가 자동으로 스킬 감지
+# 스킬 매칭 테스트
+python3 .agent-skills/skill-query-handler.py match "API 설계"
+# 출력: [3] backend/api-design
+
+# 스킬 목록
+python3 .agent-skills/skill_loader.py list
+
+# 토큰 통계 확인
+python3 .agent-skills/skill-query-handler.py stats
 ```
 
-### ChatGPT
+### MCP 서버 문제
 
 ```bash
-# setup.sh에서 옵션 2 선택
-# 생성된 zip 파일을 Custom GPT Knowledge에 업로드
+claude mcp list            # 상태 확인
+claude mcp remove <name>   # 제거
+claude mcp add <name> ...  # 재설치
 ```
 
-### Gemini
-
-```python
-from skill_loader import SkillLoader
-import google.generativeai as genai
-
-loader = SkillLoader('.agent-skills')
-skill = loader.get_skill('api-design')
-
-genai.configure(api_key='YOUR_API_KEY')
-model = genai.GenerativeModel('gemini-2.0-flash')
-response = model.generate_content(f"{skill['body']}\n\nDesign a REST API")
-```
-
-### MCP Integration (gemini-cli / codex-cli)
+### 설정 파일 수동 확인
 
 ```bash
-# 1. setup.sh에서 옵션 6 선택하여 MCP 설정
-cd .agent-skills && ./setup.sh  # 옵션 6 선택
-
-# 2. 스킬 쿼리 핸들러 사용 (자동 스킬 매칭)
-python3 skill-query-handler.py list                    # 전체 스킬 목록
-python3 skill-query-handler.py match "REST API 설계"   # 스킬 매칭
-python3 skill-query-handler.py query "코드 리뷰해줘"   # 프롬프트 생성
-
-# 3. Claude Code에서 MCP 도구 사용
-# "gemini-cli를 사용해서 .agent-skills/backend/api-design/SKILL.md의
-#  가이드라인을 따라 사용자 관리 API를 설계해줘"
-
-# 4. Shell에서 직접 사용 (mcp-shell-config.sh 설정 후)
-gemini-skill "Design a REST API for users"
-codex-skill "Run tests and show results"
+# 생성된 설정 파일 확인
+cat .agent-skills/model-config.env    # 모델 설정
+cat .agent-skills/agent-routing.yaml  # 라우팅 규칙
+cat CLAUDE.md                         # 프로젝트 가이드
 ```
 
-### Skill Query Handler
-
-사용자 쿼리를 분석하여 자동으로 적합한 스킬을 매칭하고 MCP 도구용 프롬프트를 생성합니다.
-
-```bash
-# 사용 예시
-python3 skill-query-handler.py query "데이터베이스 스키마 설계해줘" --tool gemini
-# 출력: @/path/to/.agent-skills/backend/database-schema-design/SKILL.md
-#       데이터베이스 스키마 설계해줘
-
-python3 skill-query-handler.py match "보안 취약점"
-# 출력: [3] infrastructure/security-best-practices
-```
-
-## Project Structure
-
-```
-skills-template/
-├── .agent-skills/                  # 핵심 스킬 시스템
-│   ├── setup.sh                    # 플랫폼별 설정 스크립트
-│   ├── skill-query-handler.py      # 스킬 쿼리 핸들러 (MCP용)
-│   ├── skill_loader.py             # Python 스킬 로더
-│   ├── validate_claude_skills.py   # 스킬 검증 스크립트
-│   ├── mcp-skill-loader.sh         # MCP 스킬 로더 (Shell)
-│   ├── mcp-shell-config.sh         # Shell RC 설정 스니펫 (setup.sh로 생성)
-│   ├── skills.json                 # 스킬 메타데이터 (자동 생성)
-│   ├── skills.toon                 # TOON 포맷 스킬 인덱스
-│   ├── MCP_CONTEXT.md              # MCP 컨텍스트 문서
-│   ├── QUICKSTART.md               # 빠른 시작 가이드
-│   ├── CONTRIBUTING.md             # 기여 가이드
-│   ├── CLAUDE_CODEX_PROMPT.md      # Claude+Codex 프롬프트 가이드
-│   ├── README.md                   # .agent-skills 내부 문서
-│   ├── scripts/
-│   │   ├── add_new_skill.sh        # 스킬 자동 생성
-│   │   ├── generate_compact_skills.py  # 토큰 최적화 (compact/toon 생성)
-│   │   ├── convert_skills.py       # 스킬 표준화 스크립트
-│   │   ├── skill_manifest_builder.py   # 매니페스트 빌더
-│   │   ├── toon_converter.py       # TOON 포맷 변환기
-│   │   ├── codex_skill_executor.sh # Codex 스킬 실행기
-│   │   ├── remove_duplicates.py    # 중복 제거 유틸리티
-│   │   └── final_cleanup.py        # 정리 유틸리티
-│   ├── prompt/                     # 플랫폼별 설정 프롬프트
-│   │   ├── CHATGPT_SETUP_PROMPT.md
-│   │   ├── CLAUDE_MCP_GEMINI_CODEX_SETUP.md
-│   │   ├── CLAUDE_SETUP_GUIDE.md
-│   │   └── GEMINI_SETUP_PROMPT.md
-│   ├── backend/                    # 백엔드 스킬 (5)
-│   ├── frontend/                   # 프론트엔드 스킬 (4)
-│   ├── code-quality/               # 코드 품질 스킬 (5)
-│   ├── infrastructure/             # 인프라 스킬 (5)
-│   ├── documentation/              # 문서화 스킬 (4)
-│   ├── project-management/         # 프로젝트 관리 스킬 (6)
-│   ├── search-analysis/            # 검색/분석 스킬 (4)
-│   ├── utilities/                  # 유틸리티 스킬 (8)
-│   └── templates/                  # 스킬 템플릿 (5)
-│       ├── basic-skill-template/
-│       ├── advanced-skill-template/
-│       ├── multiplatform-skill-template/
-│       ├── chatgpt-skill-template/
-│       └── toon-skill-template/
-├── .claude/skills/                 # Claude Code 스킬 (setup.sh로 생성)
-├── prompt/                         # 추가 프롬프트
-│   └── add_new_skill_prompt.md
-├── work/                           # 작업 문서
-├── docs/                           # 문서
-├── CLAUDE.md                       # Multi-Agent 오케스트레이션 (setup.sh로 생성)
-└── README.md
-```
-
-## CLI Tools
-
-### skill_loader.py (스킬 로더)
-
-| Command | Description | Example |
-|:--------|:------------|:--------|
-| `list` | 모든 스킬 목록 | `python skill_loader.py list` |
-| `search` | 스킬 검색 | `python skill_loader.py search "api"` |
-| `show` | 스킬 상세 보기 | `python skill_loader.py show api-design` |
-| `prompt` | 프롬프트 생성 | `python skill_loader.py prompt --skills api-design` |
-
-### skill-query-handler.py (MCP 쿼리 핸들러)
-
-| Command | Description | Example |
-|:--------|:------------|:--------|
-| `list` | 인덱싱된 스킬 목록 | `python skill-query-handler.py list` |
-| `match` | 쿼리에 맞는 스킬 찾기 | `python skill-query-handler.py match "REST API"` |
-| `query` | MCP용 프롬프트 생성 | `python skill-query-handler.py query "API 설계"` |
-| `prompt` | 특정 스킬로 프롬프트 | `python skill-query-handler.py prompt "쿼리" --skill backend/api-design` |
-| `stats` | 토큰 사용량 통계 | `python skill-query-handler.py stats` |
-
-**옵션:**
-| Option | Description | Values |
-|:-------|:------------|:-------|
-| `--mode` | 토큰 최적화 모드 | `full`, `compact` (기본), `toon` |
-| `--tool` | MCP 도구 선택 | `gemini`, `codex` |
-| `--skill` | 특정 스킬 지정 | `backend/api-design` |
-
-### generate_compact_skills.py (토큰 최적화)
-
-| Command | Description | Example |
-|:--------|:------------|:--------|
-| (기본) | 전체 스킬 compact/toon 생성 | `python generate_compact_skills.py` |
-| `--skill` | 특정 스킬만 처리 | `--skill backend/api-design` |
-| `--stats` | 통계 표시 | `--stats` |
-| `--clean` | 생성 파일 삭제 | `--clean` |
-
-### Add New Skill
-
-| Option | Description | Example |
-|:-------|:------------|:--------|
-| `--template` | 템플릿 선택 | `--template advanced` |
-| `--description` | 스킬 설명 | `--description "API caching"` |
-| `--tools` | 허용 도구 | `--tools "Read,Write"` |
-
-## Contributing
-
-| Topic | Description |
-|:------|:------------|
-| **Guide** | `CONTRIBUTING.md` 참조 |
-| **Template** | `templates/basic-skill-template/` |
-| **Frontmatter** | `name`, `description` 필수 |
-| **Review** | PR 제출 후 코드 리뷰 |
+---
 
 ## References
 
 | Resource | Link |
 |:---------|:-----|
+| Claude Code 공식 | [docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code) |
+| Claude Code Best Practices | [Anthropic Engineering](https://www.anthropic.com/engineering/claude-code-best-practices) |
+| ykdojo claude-code-tips | [GitHub](https://github.com/ykdojo/claude-code-tips) |
 | Agent Skills 공식 | [agentskills.io](https://agentskills.io/) |
-| 사양 문서 | [Specification](https://agentskills.io/specification) |
-| Claude Code Skills | [Documentation](https://docs.anthropic.com/en/docs/claude-code) |
-| Quick Start | [QUICKSTART.md](.agent-skills/QUICKSTART.md) |
-| Contributing | [CONTRIBUTING.md](.agent-skills/CONTRIBUTING.md) |
-| Multi-Agent Test | [result.md](work/result.md) |
+
+---
 
 ## License
 
@@ -535,4 +655,37 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Version**: 2.5.0 | **Updated**: 2026-01-10 | **Skills**: 41 | **Workflow**: Multi-Agent | **Token**: 95% Reduction
+**Version**: 3.15.0 | **Updated**: 2026-01-22 | **Skills**: 55 | **Workflow**: Multi-Agent (Auto-Detect) | **Token**: 95% Reduction
+
+**Changelog v3.15.0**:
+- **신규 스킬 3종 추가**: agent-skills-main에서 검증된 스킬 병합
+  - `frontend/web-design-guidelines` - Vercel Web Interface Guidelines 준수 리뷰
+  - `frontend/react-best-practices` - React/Next.js 성능 최적화 45규칙 (Vercel)
+  - `infrastructure/vercel-deploy` - 인증 불필요 Vercel 즉시 배포
+- **스킬 총 수**: 52 → 55개
+
+**Changelog v3.14.0**:
+- **Shell RC 설정 문서화 개선**: `.zshrc`/`.bashrc` 수정이 개발자 편의 기능임을 명확히 문서화
+- **AI 에이전트 vs 개발자 구분 명확화**: `--silent` 모드가 AI 에이전트에 권장되는 이유 설명
+- **setup.sh 주석 개선**: Shell RC 설정이 MCP 워크플로우에 불필요함을 코드 주석에 명시
+- **2회 검증 기반 개선**: Gemini 분석을 통한 반대 논거 검토 후 결론 도출
+
+**Changelog v3.13.0**:
+- **원라이너 설치 스크립트 추가**: `curl -fsSL ... | bash` 형태로 완전 자동화 설치
+- **`--install-mcp` 플래그 추가**: MCP 서버 자동 설치 (OpenContext/Gemini/Codex)
+- **OpenContext 필수 설정**: 영구 메모리 MCP가 기본 필수 설정으로 포함
+- **ralph-loop (prompt-repetition) 기본 적용**: 경량 모델에서 자동으로 프롬프트 반복 적용
+- **설정 검증 기능 추가**: 설치 후 자동 검증 및 누락 설정 자동 적용
+- **agent-routing.yaml 개선**: performance_tweaks 섹션 추가
+
+**Changelog v3.12.0**:
+- **Multi-Agent Workflow Guide 추가**: Claude/Gemini/Codex 역할 분담 가이드
+- 워크플로우 예시 시나리오 추가 (API 개발)
+- `--diagnose` 버그 문서화 및 수동 확인 방법 안내
+- 스킬 호출 예시 보강
+- 설정 파일 수동 확인 섹션 추가
+
+**Changelog v3.11.0**:
+- **README 재구성**: AI Agent 설치 방법을 최상단으로 이동
+- 설치 모드별 옵션 테이블 추가 (Silent, Auto, Quick, Interactive)
+- 토큰 최적화 통계 실측값 반영 (87.7% / 94.9%)

@@ -1,0 +1,16 @@
+# web-design-guidelines
+
+UI코드→Web Interface Guidelines 준수 리뷰
+
+## 흐름
+1. WebFetch: github.com/vercel-labs/web-interface-guidelines/main/command.md
+2. 파일 읽기
+3. 규칙 적용
+4. file:line 형식 출력
+
+## 입력
+파일/패턴: src/**/*.tsx
+
+## 출력
+src/Button.tsx:15 - aria-label 필요
+src/Modal.tsx:42 - focus trap 필요
