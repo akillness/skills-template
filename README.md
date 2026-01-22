@@ -20,7 +20,7 @@
 ### 🚀 One-Liner 설치 (권장)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/supercent-io/skills-template/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/akillness/skills-template/main/install.sh | bash
 ```
 
 ### 🤖 AI 에이전트용 프롬프트
@@ -29,7 +29,7 @@ Claude Code, Gemini, ChatGPT 등에게 아래 프롬프트를 **복사-붙여넣
 
 #### 기본 설치 프롬프트
 ```
-https://github.com/supercent-io/skills-template 저장소를 임시로 클론하고, .agent-skills 폴더를 현재 디렉토리로 복사해. 그 후 setup.sh를 --silent --install-mcp 모드로 실행하고, 임시 클론 폴더는 삭제해.
+https://github.com/akillness/skills-template 저장소를 임시로 클론하고, .agent-skills 폴더를 현재 디렉토리로 복사해. 그 후 setup.sh를 --silent --install-mcp 모드로 실행하고, 임시 클론 폴더는 삭제해.
 ```
 
 #### 사용 예제 프롬프트
@@ -84,7 +84,7 @@ SKIP_BACKUP=true curl -fsSL ... | bash
 
 ```bash
 # 1. 스크립트 다운로드
-curl -fsSLO https://raw.githubusercontent.com/supercent-io/skills-template/main/install.sh
+curl -fsSLO https://raw.githubusercontent.com/akillness/skills-template/main/install.sh
 
 # 2. 스크립트 내용 확인 (선택)
 cat install.sh
@@ -100,7 +100,7 @@ bash install.sh
 
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/supercent-io/skills-template.git /tmp/skills-template
+git clone https://github.com/akillness/skills-template.git /tmp/skills-template
 
 # 2. .agent-skills 복사
 cp -rf /tmp/skills-template/.agent-skills .
