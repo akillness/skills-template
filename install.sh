@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Agent Skills One-Liner Installer v1.3.0
+# Agent Skills One-Liner Installer v1.3.1
 # Usage: curl -fsSL https://raw.githubusercontent.com/supercent-io/skills-template/main/install.sh | bash
 #
 # Options (via environment variables):
+#   INSTALL_GLOBAL=true   - Install to ~/.agent-skills (global) instead of current directory
 #   INSTALL_MCP=true      - Auto-install MCP servers (opencontext required, gemini/codex optional)
 #   SKIP_BACKUP=true      - Skip backup of existing .agent-skills
 #   INSTALL_MODE=silent   - silent, auto, quick, interactive (default: silent)
@@ -24,13 +25,21 @@ set -euo pipefail
 # --- Configuration ---
 REPO_URL="https://github.com/supercent-io/skills-template.git"
 TEMP_DIR="/tmp/_skills_setup_temp_$$"
-AGENT_SKILLS_DIR=".agent-skills"
-VERSION="1.3.0"
+AGENT_SKILLS_DIR_NAME=".agent-skills"
+VERSION="1.3.1"
 
 # Environment variable defaults
+INSTALL_GLOBAL="${INSTALL_GLOBAL:-true}"  # Default: global installation to ~/.agent-skills
 INSTALL_MCP="${INSTALL_MCP:-true}"
 SKIP_BACKUP="${SKIP_BACKUP:-false}"
 INSTALL_MODE="${INSTALL_MODE:-silent}"
+
+# Determine installation path
+if [ "$INSTALL_GLOBAL" = "true" ]; then
+    AGENT_SKILLS_DIR="$HOME/$AGENT_SKILLS_DIR_NAME"
+else
+    AGENT_SKILLS_DIR="./$AGENT_SKILLS_DIR_NAME"
+fi
 
 # --- Colors ---
 GREEN='\033[0;32m'
@@ -154,12 +163,16 @@ main() {
     fi
 
     # 3. Copy .agent-skills directory
-    print_info "Installing agent skills..."
-    if ! cp -r "$TEMP_DIR/$AGENT_SKILLS_DIR" .; then
+    if [ "$INSTALL_GLOBAL" = "true" ]; then
+        print_info "Installing agent skills to $AGENT_SKILLS_DIR (global)..."
+    else
+        print_info "Installing agent skills to current directory..."
+    fi
+    if ! cp -r "$TEMP_DIR/$AGENT_SKILLS_DIR_NAME" "$AGENT_SKILLS_DIR"; then
         print_fatal "Failed to copy agent skills. Check directory permissions."
     fi
     chmod +x "$AGENT_SKILLS_DIR/setup.sh"
-    print_success "Agent skills installed"
+    print_success "Agent skills installed at $AGENT_SKILLS_DIR"
 
     # 4. Run setup.sh with appropriate flags
     echo ""
@@ -181,7 +194,11 @@ main() {
     if [ "$INSTALL_MODE" = "silent" ]; then
         # Silent mode: minimal output for AI agents
         echo ""
-        print_success "Installation complete. Agent Skills ready."
+        print_success "Installation complete. Agent Skills ready at $AGENT_SKILLS_DIR"
+        if [ "$INSTALL_GLOBAL" = "true" ]; then
+            print_info "For shell convenience, add to ~/.zshrc or ~/.bashrc:"
+            echo "  source $AGENT_SKILLS_DIR/mcp-shell-config.sh"
+        fi
     else
         # Interactive/auto/quick mode: show full guide for developers
         echo ""
@@ -194,8 +211,14 @@ main() {
         echo "  AI agents access MCP tools through registered configs (not shell environment)."
         echo ""
         echo -e "${BOLD}For Developers (optional):${NC}"
-        echo "  To enable shell aliases (gemini-skill, mcp-status, etc.):"
-        echo "    source ~/.zshrc   # or ~/.bashrc"
+        if [ "$INSTALL_GLOBAL" = "true" ]; then
+            echo "  Global installation at: $AGENT_SKILLS_DIR"
+            echo "  To enable shell aliases, add to ~/.zshrc or ~/.bashrc:"
+            echo "    source $AGENT_SKILLS_DIR/mcp-shell-config.sh"
+        else
+            echo "  To enable shell aliases (gemini-skill, mcp-status, etc.):"
+            echo "    source ~/.zshrc   # or ~/.bashrc"
+        fi
         echo "  Note: This is for terminal convenience only, not required for agent workflows."
         echo ""
         echo -e "${BOLD}Verification:${NC}"

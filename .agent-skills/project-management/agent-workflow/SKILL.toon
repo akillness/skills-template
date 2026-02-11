@@ -1,9 +1,0 @@
-N:agent-workflow
-D:Design principles for multi-agent workflows with validation gates using the Ralph Wiggum techniqu...
-G:agent-workflow multi-agent ralph-wiggum orchestration autonomous
-U[6]:
-  **대규모 코드베이스 분석**: 500+ 파일의 소스 코드 분석 필요 시
-  **복잡한 구현 작업**: 아키텍처 결정, 디버깅, 리팩토링이 필요한 작업
-  **자율 개발 루프**: 사람의 개입 없이 장시간 실행되는 개발 작업
-  **멀티 모델 협업**: Opus, Sonnet, Gemini, Codex를 함께 활용할 때
-  **Implementation Plan 기반 개발**: 우선순위 기반 점진적 구현

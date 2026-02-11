@@ -1,0 +1,18 @@
+N:agent-browser
+D:Fast headless browser CLI for AI agents. Supports deterministic element selection via accessibility tree snapshots and refs (@e1, @e2).
+G:agent-browser browser-automation headless-browser ai-agent playwright web-scraping
+U[4]:
+  Web automation and E2E testing
+  Scraping modern web apps
+  Deterministic ref-based interaction
+  Isolated browser sessions
+S[4]{n,action,details}:
+  1,Open,Navigate to URL with agent-browser open
+  2,Snapshot,Get interactive elements with agent-browser snapshot -i
+  3,Identify,Select target @eN ref from snapshot
+  4,Interact,Execute action using ref (click/fill)
+R[2]:
+  Use refs (@e1) for deterministic selection
+  Snapshot again after page changes
+E[1]{desc,in,out}:
+  "Click button","agent-browser click @e2","Element @e2 clicked"

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generated": true,
-  "skill_count": 52,
+  "skill_count": 53,
   "categories": {
     "documentation": [
       "technical-writing",
@@ -46,7 +46,8 @@
       "prompt-repetition",
       "skill-standardization",
       "file-organization",
-      "agentic-development-principles"
+      "agentic-development-principles",
+      "bmad"
     ],
     "code-quality": [
       "testing-strategies",
@@ -2213,6 +2214,50 @@
       ],
       "allowed_tools": [],
       "commands": []
+    },
+    {
+      "name": "bmad",
+      "description": "AI-driven agile development framework with 26+ specialized agents, 68+ guided workflows, and scale-adaptive intelligence. Transforms \"vibe coding\" into structured, multi-agent orchestrated development through four-phase methodology.",
+      "category": "utilities",
+      "path": "bmad/SKILL.md",
+      "tags": [
+        "bmad",
+        "agile-ai",
+        "multi-agent",
+        "orchestration",
+        "workflow-automation"
+      ],
+      "platforms": [
+        "Claude",
+        "Gemini",
+        "ChatGPT",
+        "Codex",
+        "Cursor",
+        "Opencode"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Bash",
+        "Grep",
+        "Glob",
+        "LSP"
+      ],
+      "commands": [
+        {
+          "command": "npx bmad-method install",
+          "source": "bmad/SKILL.md"
+        },
+        {
+          "command": "/bmad-help",
+          "source": "bmad/SKILL.md"
+        },
+        {
+          "command": "/prd",
+          "source": "bmad/SKILL.md"
+        }
+      ]
     }
   ],
   "codex_integration": {

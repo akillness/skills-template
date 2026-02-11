@@ -1,9 +1,0 @@
-N:agentic-principles
-D:AI 에이전트 협업 개발의 핵심 원칙. 분해정복, 컨텍스트 관리, 추상화 수준 선택, 자동화 철학, 검증 회고를 정의. 모든 AI 에이전트 사용 시 최적의 협업 패턴 적용.
-G:agentic-development principles context-management automation multi-agent
-U[6]:
-  AI 에이전트 세션 시작 시 기본 원칙 확인
-  복잡한 작업 시작 전 접근 방식 결정
-  컨텍스트 관리 전략 수립
-  생산성 향상을 위한 워크플로우 점검
-  팀원에게 AI 에이전트 사용법 온보딩

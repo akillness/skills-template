@@ -1,9 +1,0 @@
-N:agentic-development-principles
-D:AI 에이전트와 협업하는 에이전틱 개발의 범용 원칙. 분해정복, 컨텍스트 관리, 추상화 수준 선택, 자동화 철학을 정의. 모든 AI 코딩 도구에 적용 가능.
-G:agentic-development principles context-management automation ai-collaboration
-U[7]:
-  AI 에이전트와 협업 세션 시작 시
-  복잡한 작업 시작 전 접근 방식 결정
-  컨텍스트 관리 전략 수립
-  생산성 향상을 위한 워크플로우 점검
-  팀원에게 AI 협업 사용법 온보딩

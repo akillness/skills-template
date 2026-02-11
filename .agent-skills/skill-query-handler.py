@@ -27,98 +27,150 @@ from typing import Optional, List, Dict, Tuple
 
 # Skill keywords mapping for automatic matching
 SKILL_KEYWORDS = {
-    "backend/api-design": [
-        "api", "rest", "restful", "endpoint", "openapi", "swagger",
-        "api design", "api 설계", "엔드포인트", "rest api"
+    "api-design": [
+        "api",
+        "rest",
+        "restful",
+        "endpoint",
+        "openapi",
+        "swagger",
+        "api design",
+        "api 설계",
+        "엔드포인트",
+        "rest api",
     ],
-    "backend/database-schema-design": [
-        "database", "schema", "db", "table", "sql", "postgresql", "mysql",
-        "데이터베이스", "스키마", "테이블", "db 설계"
+    "database-schema-design": [
+        "database",
+        "schema",
+        "db",
+        "table",
+        "sql",
+        "postgresql",
+        "mysql",
+        "데이터베이스",
+        "스키마",
+        "테이블",
+        "db 설계",
     ],
-    "backend/authentication-setup": [
-        "auth", "authentication", "login", "jwt", "oauth", "session",
-        "인증", "로그인", "세션"
+    "authentication-setup": [
+        "auth",
+        "authentication",
+        "login",
+        "jwt",
+        "oauth",
+        "session",
+        "인증",
+        "로그인",
+        "세션",
     ],
-    "backend/backend-testing": [
-        "backend test", "unit test", "integration test", "pytest",
-        "백엔드 테스트", "단위 테스트"
+    "backend-testing": [
+        "backend test",
+        "unit test",
+        "integration test",
+        "pytest",
+        "백엔드 테스트",
+        "단위 테스트",
     ],
-    "frontend/react-components": [
-        "react", "component", "컴포넌트", "리액트"
+    "ui-component-patterns": ["ui", "component pattern", "design pattern", "ui 패턴"],
+    "state-management": ["state", "redux", "zustand", "context", "상태 관리", "상태"],
+    "responsive-design": ["responsive", "mobile", "반응형", "모바일"],
+    "web-accessibility": ["accessibility", "a11y", "wcag", "접근성"],
+    "code-review": ["review", "code review", "리뷰", "코드 리뷰", "코드리뷰"],
+    "code-refactoring": ["refactor", "리팩토링", "리팩터링", "개선"],
+    "debugging": [
+        "debug",
+        "error",
+        "bug",
+        "exception",
+        "traceback",
+        "디버그",
+        "디버깅",
+        "에러",
+        "버그",
+        "오류",
     ],
-    "frontend/ui-component-patterns": [
-        "ui", "component pattern", "design pattern", "ui 패턴"
+    "testing-strategies": ["test strategy", "testing", "tdd", "테스트 전략", "테스팅"],
+    "performance-optimization": [
+        "performance",
+        "optimize",
+        "slow",
+        "memory",
+        "성능",
+        "최적화",
+        "느림",
     ],
-    "frontend/state-management": [
-        "state", "redux", "zustand", "context", "상태 관리", "상태"
+    "deployment-automation": ["deploy", "ci/cd", "pipeline", "배포", "파이프라인"],
+    "monitoring-observability": [
+        "monitor",
+        "log",
+        "metric",
+        "alert",
+        "모니터링",
+        "로그",
     ],
-    "frontend/responsive-design": [
-        "responsive", "mobile", "반응형", "모바일"
+    "security-best-practices": [
+        "security",
+        "vulnerability",
+        "xss",
+        "sql injection",
+        "csrf",
+        "보안",
+        "취약점",
+        "인젝션",
     ],
-    "frontend/web-accessibility": [
-        "accessibility", "a11y", "wcag", "접근성"
+    "technical-writing": [
+        "document",
+        "documentation",
+        "technical doc",
+        "문서",
+        "기술 문서",
     ],
-    "code-quality/code-review": [
-        "review", "code review", "리뷰", "코드 리뷰", "코드리뷰"
+    "api-documentation": ["api doc", "api documentation", "api 문서"],
+    "changelog-maintenance": ["changelog", "release note", "변경 로그", "릴리즈 노트"],
+    "task-estimation": [
+        "estimate",
+        "estimation",
+        "story point",
+        "추정",
+        "스토리 포인트",
     ],
-    "code-quality/code-refactoring": [
-        "refactor", "리팩토링", "리팩터링", "개선"
+    "task-planning": ["plan", "planning", "task", "계획", "태스크"],
+    "sprint-retrospective": ["retrospective", "retro", "sprint", "회고"],
+    "log-analysis": ["log analysis", "log", "로그 분석"],
+    "data-analysis": ["data analysis", "analyze data", "데이터 분석"],
+    "pattern-detection": ["pattern", "detect", "패턴"],
+    "git-workflow": ["git", "commit", "branch", "merge", "깃", "커밋", "브랜치"],
+    "skill-standardization": ["skill", "standardize", "convert skill", "스킬 변환"],
+    "bmad": [
+        "bmad",
+        "bmad-method",
+        "agile ai",
+        "multi-agent orchestration",
+        "vibe coding",
+        "spec-driven development",
+        "sdd",
+        "phase based development",
     ],
-    "code-quality/debugging": [
-        "debug", "error", "bug", "exception", "traceback",
-        "디버그", "디버깅", "에러", "버그", "오류"
+    "ohmg": [
+        "ohmg",
+        "multi-agent",
+        "orchestration",
+        "antigravity",
+        "spawn agent",
+        "PM agent",
+        "frontend agent",
+        "backend agent",
+        "serena",
     ],
-    "code-quality/testing-strategies": [
-        "test strategy", "testing", "tdd", "테스트 전략", "테스팅"
-    ],
-    "code-quality/performance-optimization": [
-        "performance", "optimize", "slow", "memory", "성능", "최적화", "느림"
-    ],
-    "infrastructure/docker-containerization": [
-        "docker", "container", "dockerfile", "도커", "컨테이너"
-    ],
-    "infrastructure/deployment-automation": [
-        "deploy", "ci/cd", "pipeline", "배포", "파이프라인"
-    ],
-    "infrastructure/monitoring-observability": [
-        "monitor", "log", "metric", "alert", "모니터링", "로그"
-    ],
-    "infrastructure/security-best-practices": [
-        "security", "vulnerability", "xss", "sql injection", "csrf",
-        "보안", "취약점", "인젝션"
-    ],
-    "documentation/technical-writing": [
-        "document", "documentation", "technical doc", "문서", "기술 문서"
-    ],
-    "documentation/api-documentation": [
-        "api doc", "api documentation", "api 문서"
-    ],
-    "documentation/changelog-maintenance": [
-        "changelog", "release note", "변경 로그", "릴리즈 노트"
-    ],
-    "project-management/task-estimation": [
-        "estimate", "estimation", "story point", "추정", "스토리 포인트"
-    ],
-    "project-management/task-planning": [
-        "plan", "planning", "task", "계획", "태스크"
-    ],
-    "project-management/sprint-retrospective": [
-        "retrospective", "retro", "sprint", "회고"
-    ],
-    "search-analysis/log-analysis": [
-        "log analysis", "log", "로그 분석"
-    ],
-    "search-analysis/data-analysis": [
-        "data analysis", "analyze data", "데이터 분석"
-    ],
-    "search-analysis/pattern-detection": [
-        "pattern", "detect", "패턴"
-    ],
-    "utilities/git-workflow": [
-        "git", "commit", "branch", "merge", "깃", "커밋", "브랜치"
-    ],
-    "utilities/skill-standardization": [
-        "skill", "standardize", "convert skill", "스킬 변환"
+    "agent-browser": [
+        "browser",
+        "headless browser",
+        "automation",
+        "playwright",
+        "accessibility tree",
+        "refs",
+        "screenshot",
+        "web automation",
     ],
 }
 
@@ -167,7 +219,7 @@ class SkillQueryHandler:
         """Load skill content with the specified mode."""
         skill_file = self.find_skill_file(skill_path, mode)
         if skill_file:
-            return skill_file.read_text(encoding='utf-8')
+            return skill_file.read_text(encoding="utf-8")
         return None
 
     def match_query_to_skills(self, query: str) -> List[Tuple[str, int]]:
@@ -202,45 +254,52 @@ class SkillQueryHandler:
         for skill_path in SKILL_KEYWORDS.keys():
             skill_file = self.find_skill_file(skill_path, mode)
             if skill_file:
-                content = skill_file.read_text(encoding='utf-8')
+                content = skill_file.read_text(encoding="utf-8")
                 description = self._extract_description(content)
                 tokens = self.estimate_tokens(content)
-                skills.append({
-                    "path": skill_path,
-                    "description": description,
-                    "keywords": SKILL_KEYWORDS[skill_path][:3],
-                    "mode": skill_file.suffix.replace('.', '').replace('md', 'full' if 'compact' not in skill_file.name else 'compact'),
-                    "tokens": tokens,
-                    "file": skill_file.name,
-                })
+                skills.append(
+                    {
+                        "path": skill_path,
+                        "description": description,
+                        "keywords": SKILL_KEYWORDS[skill_path][:3],
+                        "mode": skill_file.suffix.replace(".", "").replace(
+                            "md",
+                            "full" if "compact" not in skill_file.name else "compact",
+                        ),
+                        "tokens": tokens,
+                        "file": skill_file.name,
+                    }
+                )
         return skills
 
     def _extract_description(self, content: str) -> str:
         """Extract description from SKILL.md frontmatter or TOON format."""
-        lines = content.split('\n')
+        lines = content.split("\n")
 
         # Check for TOON format (starts with N:)
         for line in lines[:5]:
-            if line.startswith('D:'):
+            if line.startswith("D:"):
                 return line[2:].strip()
 
         # Check YAML frontmatter
         in_frontmatter = False
         for line in lines:
-            if line.strip() == '---':
+            if line.strip() == "---":
                 in_frontmatter = not in_frontmatter
                 continue
-            if in_frontmatter and line.startswith('description:'):
-                return line.replace('description:', '').strip()
+            if in_frontmatter and line.startswith("description:"):
+                return line.replace("description:", "").strip()
 
         # Check for > blockquote (compact format)
         for line in lines[:10]:
-            if line.startswith('> '):
+            if line.startswith("> "):
                 return line[2:].strip()
 
         return ""
 
-    def generate_prompt(self, query: str, tool: str = "gemini", mode: str = "compact") -> Tuple[str, int]:
+    def generate_prompt(
+        self, query: str, tool: str = "gemini", mode: str = "compact"
+    ) -> Tuple[str, int]:
         """Generate a prompt for the given query with matched skill.
         Returns (prompt, estimated_tokens)."""
         best_skill = self.get_best_skill(query)
@@ -256,7 +315,7 @@ class SkillQueryHandler:
         if not skill_file:
             return (f"Skill file not found: {best_skill}", 0)
 
-        skill_content = skill_file.read_text(encoding='utf-8')
+        skill_content = skill_file.read_text(encoding="utf-8")
         tokens = self.estimate_tokens(skill_content + query)
 
         if tool == "gemini":
@@ -280,7 +339,7 @@ class SkillQueryHandler:
             for mode in ["full", "compact", "toon"]:
                 skill_file = self.find_skill_file(skill_path, mode)
                 if skill_file and skill_file.name == MODE_FILES.get(mode):
-                    content = skill_file.read_text(encoding='utf-8')
+                    content = skill_file.read_text(encoding="utf-8")
                     tokens = self.estimate_tokens(content)
                     stats[mode]["total"] += tokens
                     stats[mode]["count"] += 1
@@ -304,7 +363,7 @@ Examples:
   python skill-query-handler.py list --mode compact
   python skill-query-handler.py match "database schema"
   python skill-query-handler.py stats
-        """
+        """,
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -312,30 +371,52 @@ Examples:
     # query command
     query_parser = subparsers.add_parser("query", help="Generate prompt for a query")
     query_parser.add_argument("text", help="User query text")
-    query_parser.add_argument("--tool", choices=["gemini", "codex"], default="gemini",
-                             help="MCP tool to use (default: gemini)")
-    query_parser.add_argument("--mode", choices=["full", "compact", "toon"], default="compact",
-                             help="Token optimization mode (default: compact)")
+    query_parser.add_argument(
+        "--tool",
+        choices=["gemini", "codex"],
+        default="gemini",
+        help="MCP tool to use (default: gemini)",
+    )
+    query_parser.add_argument(
+        "--mode",
+        choices=["full", "compact", "toon"],
+        default="compact",
+        help="Token optimization mode (default: compact)",
+    )
     query_parser.add_argument("--skill", help="Force specific skill path")
-    query_parser.add_argument("--show-tokens", action="store_true", help="Show token estimate")
+    query_parser.add_argument(
+        "--show-tokens", action="store_true", help="Show token estimate"
+    )
 
     # list command
     list_parser = subparsers.add_parser("list", help="List all available skills")
     list_parser.add_argument("--json", action="store_true", help="Output as JSON")
-    list_parser.add_argument("--mode", choices=["full", "compact", "toon"], default="compact",
-                            help="Token optimization mode (default: compact)")
+    list_parser.add_argument(
+        "--mode",
+        choices=["full", "compact", "toon"],
+        default="compact",
+        help="Token optimization mode (default: compact)",
+    )
 
     # match command
-    match_parser = subparsers.add_parser("match", help="Find matching skills for a query")
+    match_parser = subparsers.add_parser(
+        "match", help="Find matching skills for a query"
+    )
     match_parser.add_argument("text", help="Query text to match")
 
     # prompt command
-    prompt_parser = subparsers.add_parser("prompt", help="Generate prompt with specific skill")
+    prompt_parser = subparsers.add_parser(
+        "prompt", help="Generate prompt with specific skill"
+    )
     prompt_parser.add_argument("text", help="User query text")
     prompt_parser.add_argument("--skill", required=True, help="Skill path to use")
     prompt_parser.add_argument("--tool", choices=["gemini", "codex"], default="gemini")
-    prompt_parser.add_argument("--mode", choices=["full", "compact", "toon"], default="compact",
-                              help="Token optimization mode (default: compact)")
+    prompt_parser.add_argument(
+        "--mode",
+        choices=["full", "compact", "toon"],
+        default="compact",
+        help="Token optimization mode (default: compact)",
+    )
 
     # stats command
     stats_parser = subparsers.add_parser("stats", help="Show token statistics")
@@ -373,11 +454,11 @@ Examples:
         if args.tool == "gemini":
             prompt = f"@{skill_file}\n\n{args.text}"
         else:
-            content = skill_file.read_text(encoding='utf-8')
+            content = skill_file.read_text(encoding="utf-8")
             prompt = f"{content}\n\n---\n\n{args.text}"
 
         if args.show_tokens:
-            content = skill_file.read_text(encoding='utf-8')
+            content = skill_file.read_text(encoding="utf-8")
             tokens = handler.estimate_tokens(content + args.text)
             print(f"# Mode: {args.mode}, Tokens: ~{tokens}", file=sys.stderr)
 
@@ -392,12 +473,16 @@ Examples:
             print("=" * 70)
             total_tokens = 0
             for skill in skills:
-                total_tokens += skill['tokens']
+                total_tokens += skill["tokens"]
                 print(f"\n{skill['path']} [{skill['file']}]")
                 print(f"  Description: {skill['description'][:55]}...")
-                print(f"  Keywords: {', '.join(skill['keywords'])} | Tokens: ~{skill['tokens']}")
+                print(
+                    f"  Keywords: {', '.join(skill['keywords'])} | Tokens: ~{skill['tokens']}"
+                )
             print(f"\n{'=' * 70}")
-            print(f"Total: {len(skills)} skills, ~{total_tokens} tokens (avg: {total_tokens//len(skills) if skills else 0})")
+            print(
+                f"Total: {len(skills)} skills, ~{total_tokens} tokens (avg: {total_tokens // len(skills) if skills else 0})"
+            )
 
     elif args.command == "match":
         matches = handler.match_query_to_skills(args.text)
@@ -418,7 +503,7 @@ Examples:
             print(f"Skill not found: {args.skill}", file=sys.stderr)
             sys.exit(1)
 
-        content = skill_file.read_text(encoding='utf-8')
+        content = skill_file.read_text(encoding="utf-8")
         tokens = handler.estimate_tokens(content + args.text)
 
         print(f"# Mode: {args.mode}, Tokens: ~{tokens}", file=sys.stderr)
@@ -442,7 +527,9 @@ Examples:
             print(f"{mode:<12} {s['count']:<10} {s['total']:<15,} {avg:<10,}")
 
         if stats["full"]["total"] > 0 and stats["compact"]["total"] > 0:
-            compact_reduction = (1 - stats["compact"]["total"] / stats["full"]["total"]) * 100
+            compact_reduction = (
+                1 - stats["compact"]["total"] / stats["full"]["total"]
+            ) * 100
             print(f"\nCompact reduction: {compact_reduction:.1f}%")
 
         if stats["full"]["total"] > 0 and stats["toon"]["total"] > 0:

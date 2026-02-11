@@ -518,6 +518,8 @@ def main():
         print("=" * 50)
         for name in loader.list_skills():
             skill = loader.get_skill(name)
+            if not skill:
+                continue
             print(f"\n{name} ({skill['type']})")
             print(f"  {skill['description']}")
 
@@ -564,6 +566,8 @@ def main():
 
         has_errors = False
         for skill in skills_to_validate:
+            if not skill:
+                continue
             problems = loader.validate_skill(skill)
             if problems:
                 has_errors = True
