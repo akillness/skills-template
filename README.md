@@ -1,13 +1,11 @@
 # Agent Skills
 
 > Modular skill system for AI agents
-> **56 Skills** | **95% Token Reduction** | **TOON Format by Default**
+> **57 Skills** | **95% Token Reduction** | **TOON Format by Default**
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-56-green.svg)](.agent-skills/)
+[![Skills](https://img.shields.io/badge/Skills-57-green.svg)](.agent-skills/)
 [![Token](https://img.shields.io/badge/Token%20Savings-95%25-success.svg)](.agent-skills/)
-
-![Agent Skills](AgentSkills.png)
 
 ---
 
@@ -16,8 +14,8 @@
 ### Quick Install (All Skills)
 
 ```bash
-# Install all 56 core skills at once
-npx skills add https://github.com/supercent-io/skills-template
+# Install all 57 core skills at once
+npx skills add https://github.com/akillness/skills-template
 ```
 
 ### Specialized Installation Tables
@@ -25,15 +23,16 @@ npx skills add https://github.com/supercent-io/skills-template
 #### Core Agent Skills
 | Skill Category | Command |
 |----------------|---------|
-| All Core Skills | `npx skills add https://github.com/supercent-io/skills-template` |
-| Basic Template | `npx skills add https://github.com/supercent-io/skills-template --skill basic-skill-template` |
-| Agentic Workflow | `npx skills add https://github.com/supercent-io/skills-template --skill agentic-workflow` |
+| All Core Skills | `npx skills add https://github.com/akillness/skills-template` |
+| Basic Template | `npx skills add https://github.com/akillness/skills-template --skill basic-skill-template` |
+| Agentic Workflow | `npx skills add https://github.com/akillness/skills-template --skill agentic-workflow` |
 
 #### Special & Community Skills
 | Skill Name | Provider | Installation Command |
 |------------|----------|----------------------|
 | `awesome-skills` | Composio | `npx skills add https://github.com/ComposioHQ/awesome-claude-skills` |
-| `ohmg` | first-fluke | `npx skills add https://github.com/supercent-io/skills-template --skill ohmg` |
+| `ohmg` | first-fluke | `npx skills add https://github.com/akillness/skills-template --skill ohmg` |
+| `oh-my-codex` | akillness | `npx skills add https://github.com/akillness/skills-template --skill oh-my-codex` |
 
 #### Browser Macro Skills
 | Skill Name | source | Installation Command |
@@ -60,7 +59,7 @@ npx skills add https://github.com/ComposioHQ/awesome-claude-skills --skill slack
 
 ---
 
-## Skills Overview (56 Total - Flat Structure)
+## Skills Overview (57 Total - Flat Structure)
 
 All skills are now at the root level (no category folders).
 
@@ -130,13 +129,14 @@ All skills are now at the root level (no category folders).
 - `bmad` - AI-driven agile development framework with multi-agent orchestration
 - `prompt-repetition` - Prompt repetition techniques for LLM accuracy
 
-### Utilities (10 skills)
+### Utilities (11 skills)
 - `agent-browser` - Headless browser for AI agents
 - `environment-setup` - Development environment setup
 - `file-organization` - File & folder organization
 - `git-submodule` - Git submodule management
 - `git-workflow` - Git workflow management
 - `npm-git-install` - Install npm packages from GitHub
+- `oh-my-codex` - Multi-agent orchestration layer for OpenAI Codex CLI
 - `ohmg` - Multi-agent orchestration for Antigravity workflows
 - `opencontext` - AI agent persistent memory with OpenContext
 - `skill-standardization` - SKILL.md standardization
@@ -231,7 +231,12 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Version**: 4.3.0 | **Updated**: 2026-02-11 | **Skills**: 56 | **Format**: TOON (Default) | **Structure**: Flat
+**Version**: 4.4.0 | **Updated**: 2026-02-18 | **Skills**: 57 | **Format**: TOON (Default) | **Structure**: Flat
+
+**Changelog v4.4.0**:
+- **oh-my-codex skill added**: Multi-agent orchestration layer for OpenAI Codex CLI
+- **Repository URL update**: Changed from supercent-io to akillness/skills-template
+- **Skills count**: 56 → 57
 
 **Changelog v4.3.0**:
 - **Flat structure**: Removed category folders, all 56 skills at root level

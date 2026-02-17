@@ -16,6 +16,7 @@ npx skills add https://github.com/supercent-io/skills-template
 npx skills add https://github.com/supercent-io/skills-template --skill api-design
 npx skills add https://github.com/supercent-io/skills-template --skill code-review
 npx skills add https://github.com/supercent-io/skills-template --skill ohmg
+npx skills add https://github.com/supercent-io/skills-template --skill oh-my-codex
 ```
 
 ### oh-my-ag MCP Setup
@@ -51,7 +52,7 @@ repository to the current project.
 ├── skills.json                    # Skill manifest (auto-generated)
 ├── skills.toon                    # TOON summary (auto-generated)
 │
-├── agent-configuration/           # All 56 skill folders at root level
+├── agent-configuration/           # All 59 skill folders at root level
 ├── api-design/
 ├── authentication-setup/
 ├── ... (all skills at same level)
@@ -66,9 +67,9 @@ repository to the current project.
 
 ---
 
-## Skills List (56 Total)
+## Skills List (60 Total)
 
-### Agent Development (7)
+### Agent Development (6)
 | Skill | Description |
 |-------|-------------|
 | `agent-configuration` | AI agent configuration & security policies |
@@ -76,7 +77,6 @@ repository to the current project.
 | `agentic-development-principles` | Universal agentic development principles |
 | `agentic-principles` | Core AI agent collaboration principles |
 | `agentic-workflow` | Practical AI agent workflows & productivity |
-| `bmad` | AI-driven agile development framework with multi-agent orchestration |
 | `prompt-repetition` | Prompt repetition for LLM accuracy |
 
 ### Backend (5)
@@ -154,7 +154,7 @@ repository to the current project.
 |-------|-------------|
 | `marketing-automation` | Marketing automation |
 
-### Utilities (10)
+### Utilities (13)
 | Skill | Description |
 |-------|-------------|
 | `agent-browser` | Fast headless browser CLI for AI agents |
@@ -162,10 +162,14 @@ repository to the current project.
 | `file-organization` | File & folder organization |
 | `git-submodule` | Git submodule management |
 | `git-workflow` | Git workflow management |
-| `npm-git-install` | Install npm from GitHub |
+| `kling-ai` | Kling AI video generation |
 | `ohmg` | Multi-agent orchestration for Antigravity workflows |
+| `oh-my-codex` | Multi-agent orchestration for OpenAI Codex CLI |
+| `mcp-codex` | MCP Codex integration |
+| `npm-git-install` | Install npm from GitHub |
 | `opencontext` | AI agent persistent memory |
 | `skill-standardization` | SKILL.md standardization |
+| `vercel-deploy` | Vercel deployment |
 | `workflow-automation` | Workflow automation |
 
 ---
@@ -279,4 +283,4 @@ npx skills add <skill-name>
 
 ---
 
-**Version**: 4.3.0 | **Updated**: 2026-02-11 | **Format**: TOON (Default) | **Structure**: Flat
+**Version**: 4.3.5 | **Updated**: 2026-02-18 | **Format**: TOON (Default) | **Structure**: Flat
