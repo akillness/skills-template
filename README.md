@@ -31,6 +31,7 @@ npx skills add https://github.com/akillness/skills-template
 | Skill Name | Provider | Installation Command |
 |------------|----------|----------------------|
 | `awesome-skills` | Composio | `npx skills add https://github.com/ComposioHQ/awesome-claude-skills` |
+| `bmad` | bmad-code-org | `npx skills add https://github.com/akillness/skills-template --skill bmad` |
 | `ohmg` | first-fluke | `npx skills add https://github.com/akillness/skills-template --skill ohmg` |
 | `oh-my-codex` | akillness | `npx skills add https://github.com/akillness/skills-template --skill oh-my-codex` |
 
