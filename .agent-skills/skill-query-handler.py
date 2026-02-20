@@ -22,6 +22,7 @@ import os
 import sys
 import json
 import argparse
+import re
 from pathlib import Path
 from typing import Optional, List, Dict, Tuple
 
@@ -135,6 +136,18 @@ SKILL_KEYWORDS = {
         "스토리 포인트",
     ],
     "task-planning": ["plan", "planning", "task", "계획", "태스크"],
+    "plannotator": [
+        "plannotator",
+        "plannotator",
+        "plan review",
+        "review plan",
+        "diff review",
+        "/plannotator-review",
+        "annotate plan",
+        "visual plan",
+        "계획 검토",
+        "플랜뷰",
+    ],
     "sprint-retrospective": ["retrospective", "retro", "sprint", "회고"],
     "log-analysis": ["log analysis", "log", "로그 분석"],
     "data-analysis": ["data analysis", "analyze data", "데이터 분석"],
@@ -229,10 +242,28 @@ class SkillQueryHandler:
 
         for skill_path, keywords in SKILL_KEYWORDS.items():
             score = 0
+
+            # Strongly prefer explicit skill-name invocation (e.g. "plannotator ...")
+            if re.search(
+                rf"(?<![A-Za-z0-9_-]){re.escape(skill_path.lower())}(?![A-Za-z0-9_-])",
+                query_lower,
+            ):
+                score += 100
+
             for keyword in keywords:
-                if keyword.lower() in query_lower:
-                    # Longer keywords get higher scores
-                    score += len(keyword.split())
+                keyword_lower = keyword.lower()
+
+                # Single-token keywords should match as whole words only
+                if " " not in keyword_lower and "/" not in keyword_lower:
+                    if re.search(
+                        rf"(?<![A-Za-z0-9_-]){re.escape(keyword_lower)}(?![A-Za-z0-9_-])",
+                        query_lower,
+                    ):
+                        score += len(keyword.split())
+                else:
+                    if keyword_lower in query_lower:
+                        # Longer keywords get higher scores
+                        score += len(keyword.split())
 
             if score > 0:
                 matches.append((skill_path, score))

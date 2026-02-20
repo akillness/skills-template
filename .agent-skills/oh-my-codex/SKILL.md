@@ -1,8 +1,9 @@
 ---
 name: oh-my-codex
+keyword: omx
 description: Multi-agent orchestration layer for OpenAI Codex CLI. Provides 30 specialized agents, 40+ workflow skills, team orchestration in tmux, persistent MCP servers, and staged pipeline execution.
 allowed-tools: [Read, Write, Bash, Grep, Glob]
-tags: [multi-agent, orchestration, codex, openai, team-mode, mcp-servers, workflow]
+tags: [omx, multi-agent, orchestration, codex, openai, team-mode, mcp-servers, workflow]
 platforms: [Codex, Claude, Gemini]
 version: 0.4.1
 source: Yeachan-Heo/oh-my-codex

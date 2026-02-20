@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generated": true,
-  "skill_count": 53,
+  "skill_count": 62,
   "categories": {
     "documentation": [
       "technical-writing",
@@ -33,21 +33,24 @@
       "cs-tool-dashboard"
     ],
     "utilities": [
-      "opencode-authentication",
-      "agentic-workflow",
-      "mcp-codex-integration",
-      "environment-setup",
-      "opencontext",
-      "git-workflow",
-      "workflow-automation",
-      "git-submodule",
-      "project-init-memory",
-      "npm-git-install",
-      "prompt-repetition",
-      "skill-standardization",
-      "file-organization",
       "agentic-development-principles",
-      "bmad"
+      "agentic-workflow",
+      "bmad",
+      "environment-setup",
+      "file-organization",
+      "git-submodule",
+      "git-workflow",
+      "mcp-codex-integration",
+      "npm-git-install",
+      "opencode-authentication",
+      "opencontext",
+      "plannotator",
+      "project-init-memory",
+      "prompt-repetition",
+      "omc",
+      "ralph",
+      "skill-standardization",
+      "workflow-automation"
     ],
     "code-quality": [
       "testing-strategies",
@@ -359,15 +362,15 @@
           "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
         },
         {
-          "command": "ralph-loop --max-iterations 50 --task \"Implement feature X\"",
+          "command": "ralph \"Implement feature X\" --max-iterations 50",
           "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
         },
         {
-          "command": "ralph-loop --max-cost $10 --task \"Refactor module Y\"",
+          "command": "ralph \"Refactor module Y\" --completion-promise=\"DONE\"",
           "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
         },
         {
-          "command": "ralph-loop --timeout 2h --task \"Debug issue Z\"",
+          "command": "ralph \"Debug issue Z\" --max-iterations 30",
           "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
         },
         {
@@ -379,7 +382,7 @@
           "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
         },
         {
-          "command": "ralph-loop --max-iterations 100 \\",
+          "command": "ralph \"Complete task\" --max-iterations 100",
           "source": "project-management/ultrathink-multiagent-workflow/SKILL.md"
         }
       ]
@@ -2256,6 +2259,124 @@
         {
           "command": "/prd",
           "source": "bmad/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "plannotator",
+      "description": "Review AI agent plans and git diffs visually with Plannotator. Systematic scripts for install, hook setup, status check, remote config, and diff review. Annotate plans before coding, review diffs after.",
+      "category": "utilities",
+      "path": "plannotator/SKILL.md",
+      "tags": [
+        "plannotator",
+        "plannotator",
+        "plan-review",
+        "diff-review",
+        "code-review",
+        "claude-code",
+        "opencode",
+        "scripts"
+      ],
+      "platforms": [
+        "Claude",
+        "OpenCode",
+        "Codex",
+        "Gemini"
+      ],
+      "allowed_tools": [
+        "Read",
+        "Bash",
+        "Write"
+      ],
+      "scripts": [
+        {
+          "file": "scripts/install.sh",
+          "description": "Install plannotator CLI (OS auto-detect, --with-plugin option)"
+        },
+        {
+          "file": "scripts/setup-hook.sh",
+          "description": "Add ExitPlanMode hook to ~/.claude/settings.json"
+        },
+        {
+          "file": "scripts/check-status.sh",
+          "description": "Verify CLI, hook, env vars and git state"
+        },
+        {
+          "file": "scripts/configure-remote.sh",
+          "description": "Configure SSH/devcontainer/WSL env vars interactively"
+        },
+        {
+          "file": "scripts/review.sh",
+          "description": "Launch plannotator diff review UI"
+        }
+      ],
+      "commands": [
+        {
+          "command": "bash scripts/install.sh",
+          "source": "plannotator/scripts/install.sh"
+        },
+        {
+          "command": "bash scripts/install.sh --with-plugin",
+          "source": "plannotator/scripts/install.sh"
+        },
+        {
+          "command": "bash scripts/setup-hook.sh",
+          "source": "plannotator/scripts/setup-hook.sh"
+        },
+        {
+          "command": "bash scripts/check-status.sh",
+          "source": "plannotator/scripts/check-status.sh"
+        },
+        {
+          "command": "bash scripts/configure-remote.sh",
+          "source": "plannotator/scripts/configure-remote.sh"
+        },
+        {
+          "command": "bash scripts/review.sh",
+          "source": "plannotator/scripts/review.sh"
+        },
+        {
+          "command": "/plugin marketplace add backnotprop/plannotator",
+          "source": "plannotator/SKILL.md"
+        },
+        {
+          "command": "/plugin install plannotator@plannotator",
+          "source": "plannotator/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "omc",
+      "description": "oh-my-claudecode — Teams-first multi-agent orchestration layer for Claude Code. 32 specialized agents, smart model routing, persistent execution loops, and real-time HUD visibility. Activate with `omc` keyword.",
+      "category": "utilities",
+      "tags": [
+        "omc",
+        "oh-my-claudecode",
+        "claude-code",
+        "multi-agent",
+        "orchestration",
+        "team",
+        "autopilot",
+        "ralph",
+        "ultrawork"
+      ],
+      "platforms": [
+        "Claude Code"
+      ],
+      "keyword": "omc",
+      "path": "utilities/omc/SKILL.md",
+      "install_commands": [
+        {
+          "command": "/plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode",
+          "source": "utilities/omc/SKILL.md"
+        },
+        {
+          "command": "/plugin install oh-my-claudecode",
+          "source": "utilities/omc/SKILL.md"
+        },
+        {
+          "command": "/omc:omc-setup",
+          "source": "utilities/omc/SKILL.md"
         }
       ]
     }

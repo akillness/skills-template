@@ -1,52 +1,73 @@
 # Agent Skills
 
-> Modular skill system for AI agents
-> **66 Skills** | **TOON format default**
+> Modular skill system for AI agents.
+> **66 Skills** · **TOON Format** · **Flat Skill Layout**
 
 ---
 
 ## Quick install
 
 ```bash
-# Install all skills in this repo format
+# Install all skills
 npx skills add https://github.com/supercent-io/skills-template
 
-# Install one skill only
+# Install one skill
 npx skills add https://github.com/supercent-io/skills-template --skill conductor-pattern
 npx skills add https://github.com/supercent-io/skills-template --skill oh-my-codex
 ```
 
 ---
 
-## Core usage for this repository
+## Repository summary
 
-### 1) Installation check
+This repository stores the `agentskills` package used by this workspace.
+
+- `66` skills under `.agent-skills/`
+- TOON format is the default output mode
+- Flat skill layout (`.agent-skills/<skill-name>/`)
+- Orchestration + workflow tooling in `scripts/`
+
+---
+
+## Scripts in this project
+
+| Script | Purpose |
+| --- | --- |
+| `scripts/pipeline-check.sh` | Pre-flight check for conductor requirements (agent binaries, git worktree, tmux, etc.) |
+| `scripts/conductor.sh` | Launch AI agents in parallel using git worktree |
+| `scripts/conductor-pr.sh` | Create branch/commit/push and open PR for each agent result |
+| `scripts/conductor-cleanup.sh` | Remove worktrees, tmux sessions, and local branches |
+| `scripts/pipeline.sh` | End-to-end pipeline: `check -> conductor -> pr` (with optional `plan`, `copilot`) |
+| `scripts/copilot-setup-workflow.sh` | Configure Copilot coding-agent workflow and required GitHub labels/secrets |
+| `scripts/copilot-assign-issue.sh` | Assign an existing issue to Copilot coding agent |
+| `scripts/vibe-kanban-start.sh` | Start Vibe Kanban UI |
+| `scripts/hooks/pre-conductor.sh` | Pre-hook example (defaults to blocking on failure) |
+| `scripts/hooks/post-conductor.sh` | Post-hook example (warn-only on failure) |
+
+---
+
+## Core command set
 
 ```bash
-python3 .agent-skills/skill_loader.py list
-python3 .agent-skills/skill_query_handler.py query "REST API"
-```
-
-### 2) Parallel workflow (Conductor Pattern)
-
-```bash
+# 1) Pre-check
 bash scripts/pipeline-check.sh --agents=claude,codex
+
+# 2) Conductor workflow
 bash scripts/conductor.sh <feature-name> <base-branch> <agent-list>
+# ex) bash scripts/conductor.sh auth-refactor main claude,codex
+
 bash scripts/conductor-pr.sh <feature-name> <base-branch>
+# ex) bash scripts/conductor-pr.sh auth-refactor main
+
 bash scripts/conductor-cleanup.sh <feature-name>
-```
+# ex) bash scripts/conductor-cleanup.sh auth-refactor
 
-### 3) Full pipeline
-
-```bash
+# 3) Full pipeline
 bash scripts/pipeline.sh <feature-name> --stages check,conductor,pr
 bash scripts/pipeline.sh <feature-name> --stages check,plan,conductor,pr --no-attach
 bash scripts/pipeline.sh <feature-name> --dry-run
-```
 
-### 4) Copilot and Kanban integration
-
-```bash
+# 4) Copilot + Kanban
 bash scripts/copilot-setup-workflow.sh
 bash scripts/copilot-assign-issue.sh <issue-number>
 bash scripts/vibe-kanban-start.sh --port 3001
@@ -54,37 +75,10 @@ bash scripts/vibe-kanban-start.sh --port 3001
 
 ---
 
-## Repository focus
-
-This repository is the local mirror of the `supercent-io/skills-template` skill collection with:
-
-- `66` skills in `.agent-skills/`
-- Flat skill layout (no category folders under `.agent-skills/`)
-- Default TOON format for compact prompt output
-- Helper docs and scripts for orchestration, planning, and PR workflow
-
----
-
-## Orchestration keywords in this repo
-
-| Keyword | Skill | Use case |
-|---|---|---|
-| `omc` | `omc` | oh-my-claudecode (Claude Code) |
-| `ohmg` | `ohmg` | Gemini/Antigravity multi-agent orchestration |
-| `omx` | `oh-my-codex` | Codex CLI multi-agent orchestration |
-| `bmad` | `bmad-orchestrator` | Cross-platform BMAD phase workflow |
-| `ralph` | `ralph` | Completion-loop for long tasks |
-| `planno` | `plannotator` | Plan/diff review and approval workflow |
-| `kanbanview` | `vibe-kanban` | Visual Kanban + conductor hooks |
-| `copilotview` | `copilot-coding-agent` | GitHub Copilot issue-to-Draft-PR flow |
-
----
-
-## Skills (66 total)
+## Skills list (66 total)
 
 ### Orchestration & Workflow
-`agent-browser`, `agent-configuration`, `agent-evaluation`, `agentic-development-principles`, `agentic-principles`, `agentic-workflow`, `bmad`, `bmad-orchestrator`, `changelog-maintenance`, `conductor-pattern`, `copilot-coding-agent`, `environment-setup`, `file-organization`, `github-skill`, `git-submodule`, `git-workflow`, `opencontext`, `oh-my-codex`, `ohmg`, `omc`, `plannotator`, `prompt-repetition`, `ralph`, `skill-standardization`, `vibe-kanban`, `workflow-automation`
-`agent-browser`, `agent-configuration`, `agent-evaluation`, `agentic-development-principles`, `agentic-principles`, `agentic-workflow`, `bmad`, `bmad-orchestrator`, `changelog-maintenance`, `conductor-pattern`, `copilot-coding-agent`, `environment-setup`, `file-organization`, `git-submodule`, `git-workflow`, `opencontext`, `oh-my-codex`, `ohmg`, `omc`, `plannotator`, `prompt-repetition`, `ralph`, `skill-standardization`, `vibe-kanban`, `workflow-automation`
+`agent-browser`, `agent-configuration`, `agent-evaluation`, `agentic-development-principles`, `agentic-principles`, `agentic-workflow`, `bmad`, `bmad-orchestrator`, `changelog-maintenance`, `conductor-pattern`, `copilot-coding-agent`, `environment-setup`, `file-organization`, `git-submodule`, `git-workflow`, `npm-git-install`, `opencontext`, `oh-my-codex`, `ohmg`, `omc`, `plannotator`, `prompt-repetition`, `ralph`, `skill-standardization`, `workflow-automation`
 
 ### API / Backend
 `api-design`, `api-documentation`, `authentication-setup`, `backend-testing`, `database-schema-design`
@@ -92,50 +86,32 @@ This repository is the local mirror of the `supercent-io/skills-template` skill 
 ### Frontend
 `design-system`, `react-best-practices`, `responsive-design`, `state-management`, `ui-component-patterns`, `web-accessibility`, `web-design-guidelines`
 
-### Code Quality
+### Code quality
 `code-refactoring`, `code-review`, `debugging`, `performance-optimization`, `testing-strategies`
 
-### Search & Analysis
+### Search & analysis
 `codebase-search`, `data-analysis`, `log-analysis`, `pattern-detection`
 
 ### Documentation
-`presentation-builder`, `technical-writing`, `user-guide-writing`
+`changelog-maintenance`, `presentation-builder`, `technical-writing`, `user-guide-writing`
 
-### Project management / operations
+### Project management
 `sprint-retrospective`, `standup-meeting`, `task-estimation`, `task-planning`
 
 ### Infrastructure
 `deployment-automation`, `firebase-ai-logic`, `genkit`, `looker-studio-bigquery`, `monitoring-observability`, `security-best-practices`, `system-environment-setup`, `vercel-deploy`
 
 ### Creative
-`image-generation`, `pollinations-ai`, `video-production`, `marketing-automation`
+`image-generation`, `pollinations-ai`, `video-production`
 
-> Full list and descriptions are available in `https://github.com/akillness/skills-template` and the individual skill READMEs under `.agent-skills/`.
+### Marketing
+`marketing-automation`
 
----
-
-## TOON format
-
-All skills are authored in TOON format as default to reduce prompt cost:
-
-```text
-N:skill-name
-D:Description
-G:keyword1 keyword2
-U[5]:Use cases
-S[4]{n,action,details}:Steps
-R[5]:Rules
-E[2]{desc,in,out}:Examples
-```
-
-| File | Avg tokens | Reduction |
-|---|---|---|
-| `SKILL.md` | ~2,100 | - |
-| `SKILL.toon` | ~111 | ~95% |
+> Full manifest + descriptions are in `.agent-skills/skills.json` and each folder’s `SKILL.md`.
 
 ---
 
-## Architecture
+## Structure
 
 ```text
 .
@@ -145,14 +121,25 @@ E[2]{desc,in,out}:Examples
 │   ├── skill-query-handler.py
 │   ├── skills.json
 │   ├── skills.toon
-│   └── [66 skill folders]
+│   ├── [66 skill folders]
+│   └── react-best-practices/AGENTS.md
 ├── docs/
 │   ├── installation.md
+│   ├── script-reference.md
 │   ├── usage-guide.md
-│   └── script-reference.md
+│   ├── bmad/
+│   ├── conductor-pattern/
+│   ├── copilot-coding-agent/
+│   ├── harness/
+│   ├── omc/
+│   ├── plannotator/
+│   ├── ralph/
+│   └── vibe-kanban/
 ├── scripts/
-├── .agent-skills (templates / docs / manifest)
-└── README.md (this file)
+│   ├── hooks/
+│   └── *.sh
+├── install.sh / flatten_skills.py
+└── README.md
 ```
 
 ---
@@ -169,4 +156,4 @@ E[2]{desc,in,out}:Examples
 
 ---
 
-**Version**: Local repository sync | **Updated**: 2026-02-20 | **Format**: TOON default
+**Version**: Local repository sync | **Updated**: 2026-02-20
