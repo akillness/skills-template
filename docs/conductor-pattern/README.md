@@ -23,7 +23,10 @@ Each agent works independently in its own worktree, producing a branch that can 
 # 1. Pre-flight check
 bash scripts/pipeline-check.sh --agents=claude,codex
 
-# 2. Run directly
+# 2. Optional: run planno review first (independent step)
+bash scripts/conductor-planno.sh my-feature main claude,codex
+
+# 3. Or run directly
 bash scripts/conductor.sh my-feature main claude,codex
 
 # 4. Create PRs after agents finish
@@ -61,16 +64,15 @@ bash scripts/pipeline.sh --resume
 | `--agents <list>` | Comma-separated agents (default: claude,codex) |
 | `--stages <list>` | Stages to run: check,plan,conductor,pr,copilot |
 | `--no-attach` | Don't attach to tmux (CI/non-interactive) |
+| `--skip-hooks` | Bypass all hooks |
 | `--dry-run` | Print stages without executing |
 | `--resume` | Resume from last failed stage |
-
-훅 스킵은 `--skip-hooks` 플래그가 아닌 환경 변수로 제어합니다.
 
 ---
 
 ## Hooks System
 
-Hooks in `scripts/hooks/` run automatically at each stage. Executable scripts are optional; set `CONDUCTOR_SKIP_HOOKS=1` to disable all hooks, or `CONDUCTOR_HOOKS_DIR` to use another directory.
+Hooks in `scripts/hooks/` run automatically at each stage. Place executable shell scripts at the paths below to extend pipeline behavior.
 
 | Event | File | Abort on Fail |
 |-------|------|---------------|
@@ -78,6 +80,8 @@ Hooks in `scripts/hooks/` run automatically at each stage. Executable scripts ar
 | `post-conductor` | `hooks/post-conductor.sh` | No (warning) |
 | `pre-pr` | `hooks/pre-pr.sh` | Yes |
 | `post-pr` | `hooks/post-pr.sh` | No |
+| `pre-copilot` | `hooks/pre-copilot.sh` | Yes |
+| `post-copilot` | `hooks/post-copilot.sh` | No |
 
 Skip all hooks:
 
@@ -98,9 +102,12 @@ CONDUCTOR_HOOKS_DIR=/path/to/hooks bash scripts/pipeline.sh ...
 planno (plannotator) is a separate, independent skill for reviewing implementation plans visually before agents start coding. It can be used alongside Conductor, but each operates independently.
 
 ```bash
-# Optional: planno은 독립 툴이며, 스크립트 호출은 필요하지 않습니다.
-# 1) planno로 계획 리뷰: planno로 구현 계획 검토해줘
-# 2) 이후 conductor를 별도로 실행:
+# Optional: review plan with planno first, then run conductor
+bash scripts/conductor-planno.sh my-feature main claude,codex
+
+# Or use them independently:
+# 1. Use planno skill to review your plan:  planno로 구현 계획 검토해줘
+# 2. Then run conductor separately:
 bash scripts/conductor.sh my-feature main claude,codex
 ```
 
