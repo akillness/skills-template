@@ -3,9 +3,9 @@ name: vibe-kanban
 keyword: kanbanview
 description: AI 코딩 에이전트를 시각적 Kanban 보드에서 관리. To Do→In Progress→Review→Done 흐름으로 병렬 에이전트 실행, git worktree 자동 격리, GitHub PR 자동 생성.
 allowed-tools: [Read, Write, Bash, Grep, Glob]
-tags: [vibe-kanban, kanban, kanbanview, multi-agent, git-worktree, github-pr, task-management, claude-code, codex, gemini]
+tags: [vibe-kanban, kanban, kanbanview, multi-agent, git-worktree, github-pr, task-management, claude-code, codex, gemini, mcp]
 platforms: [Claude, Codex, Gemini]
-version: 1.0.0
+version: 1.1.0
 source: https://github.com/BloopAI/vibe-kanban
 ---
 
@@ -45,11 +45,11 @@ claude --version    # ANTHROPIC_API_KEY 설정
 # 즉시 실행 (설치 불필요)
 npx vibe-kanban
 
-# 또는 래퍼 스크립트 사용
-bash scripts/vibe-kanban-start.sh
-
 # 포트 지정
-bash scripts/vibe-kanban-start.sh --port 3001
+npx vibe-kanban --port 3001
+
+# 래퍼 스크립트 사용
+bash scripts/vibe-kanban-start.sh
 ```
 
 브라우저에서 `http://localhost:3000` 자동 오픈.
@@ -69,12 +69,50 @@ pnpm run dev
 
 | 변수 | 설명 | 기본값 |
 |------|------|--------|
-| `VIBE_KANBAN_PORT` | 서버 포트 | `3000` |
+| `PORT` | 서버 포트 | 자동할당 |
+| `HOST` | 서버 호스트 | `127.0.0.1` |
 | `VIBE_KANBAN_REMOTE` | 원격 연결 허용 | `false` |
+| `VK_ALLOWED_ORIGINS` | CORS 허용 출처 | 미설정 |
+| `DISABLE_WORKTREE_CLEANUP` | worktree 정리 비활성화 | 미설정 |
 | `ANTHROPIC_API_KEY` | Claude 에이전트용 | — |
 | `OPENAI_API_KEY` | Codex/GPT 에이전트용 | — |
 
 `.env` 파일에 설정 후 서버 시작.
+
+---
+
+## MCP 설정
+
+Vibe Kanban은 MCP(Model Context Protocol) 서버로 동작하여 에이전트가 직접 보드를 제어할 수 있습니다.
+
+### Claude Code MCP 설정
+
+`~/.claude/settings.json` 또는 프로젝트의 `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "vibe-kanban": {
+      "command": "npx",
+      "args": ["vibe-kanban", "--mcp"],
+      "env": {
+        "MCP_HOST": "127.0.0.1",
+        "MCP_PORT": "3001"
+      }
+    }
+  }
+}
+```
+
+### MCP 도구 목록
+
+| 도구 | 설명 |
+|------|------|
+| `vk_list_tasks` | 모든 태스크 조회 |
+| `vk_create_task` | 새 태스크 생성 |
+| `vk_move_task` | 태스크 상태 변경 |
+| `vk_get_diff` | 태스크 diff 조회 |
+| `vk_retry_task` | 태스크 재실행 |
 
 ---
 
@@ -139,6 +177,93 @@ git worktree add .vk/trees/<task-slug> -b vk/<hash>-<task-slug> main
 
 ---
 
+## 원격 배포
+
+### Docker
+
+```bash
+# 공식 이미지
+docker run -p 3000:3000 vibekanban/vibe-kanban
+
+# 환경 변수 전달
+docker run -p 3000:3000 \
+  -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY \
+  -e VK_ALLOWED_ORIGINS=https://vk.example.com \
+  vibekanban/vibe-kanban
+```
+
+### 리버스 프록시 (Nginx/Caddy)
+
+```bash
+# CORS 허용 필수
+VK_ALLOWED_ORIGINS=https://vk.example.com
+
+# 또는 다중 출처
+VK_ALLOWED_ORIGINS=https://a.example.com,https://b.example.com
+```
+
+### SSH 원격 열기
+
+VSCode Remote-SSH와 통합:
+```
+vscode://vscode-remote/ssh-remote+user@host/path/to/.vk/trees/<task-slug>
+```
+
+---
+
+## 트러블슈팅
+
+### Worktree 충돌 / 고아 worktree
+
+```bash
+# 고아 worktree 정리
+git worktree prune
+
+# 현재 worktree 목록 확인
+git worktree list
+
+# 특정 worktree 강제 삭제
+git worktree remove .vk/trees/<slug> --force
+```
+
+### 403 Forbidden (CORS 오류)
+
+```bash
+# 원격 접속 시 CORS 설정 필요
+VK_ALLOWED_ORIGINS=https://your-domain.com npx vibe-kanban
+```
+
+### 에이전트가 시작되지 않음
+
+```bash
+# CLI 직접 테스트
+claude --version
+codex --version
+
+# API 키 확인
+echo $ANTHROPIC_API_KEY
+echo $OPENAI_API_KEY
+```
+
+### 포트 충돌
+
+```bash
+# 다른 포트 사용
+npx vibe-kanban --port 3001
+
+# 또는 환경 변수
+PORT=3001 npx vibe-kanban
+```
+
+### SQLite 락 오류
+
+```bash
+# worktree 정리 비활성화 후 재시작
+DISABLE_WORKTREE_CLEANUP=1 npx vibe-kanban
+```
+
+---
+
 ## UI vs CLI 선택 기준
 
 | 상황 | 모드 |
@@ -199,6 +324,37 @@ VIBE_KANBAN_REMOTE=true 설정
 
 ---
 
+## 아키텍처 개요
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Vibe Kanban UI                       │
+│   ┌──────────┬──────────┬──────────┬──────────┐        │
+│   │  To Do   │In Progress│  Review  │   Done   │        │
+│   └──────────┴──────────┴──────────┴──────────┘        │
+└───────────────────────────┬─────────────────────────────┘
+                            │ REST API
+┌───────────────────────────▼─────────────────────────────┐
+│                    Rust Backend                         │
+│  ┌─────────┐  ┌──────────┐  ┌─────────┐  ┌──────────┐  │
+│  │ server  │  │executors │  │   git   │  │ services │  │
+│  └─────────┘  └──────────┘  └─────────┘  └──────────┘  │
+│                   │                                     │
+│             ┌─────▼─────┐                               │
+│             │  SQLite   │                               │
+│             └───────────┘                               │
+└─────────────────────────────────────────────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+   ┌────▼────┐        ┌─────▼─────┐       ┌────▼────┐
+   │ Claude  │        │   Codex   │       │ Gemini  │
+   │worktree1│        │ worktree2 │       │worktree3│
+   └─────────┘        └───────────┘       └─────────┘
+```
+
+---
+
 ## 참고 레퍼런스
 
 - [GitHub 리포: BloopAI/vibe-kanban](https://github.com/BloopAI/vibe-kanban)
@@ -210,18 +366,65 @@ VIBE_KANBAN_REMOTE=true 설정
 
 ---
 
+## 스킬 파일 구조
+
+```
+.agent-skills/vibe-kanban/
+├── SKILL.md              # 메인 스킬 문서
+├── SKILL.toon            # TOON 형식 (압축)
+├── scripts/
+│   ├── start.sh          # 서버 시작 래퍼
+│   ├── cleanup.sh        # Worktree 정리
+│   ├── mcp-setup.sh      # MCP 설정 자동화
+│   └── health-check.sh   # 서버 상태 확인
+├── references/
+│   ├── environment-variables.md  # 환경 변수 레퍼런스
+│   └── mcp-api.md                # MCP API 레퍼런스
+└── templates/
+    ├── claude-mcp-config.json    # Claude Code MCP 설정
+    ├── docker-compose.yml        # Docker 배포 템플릿
+    └── .env.example              # 환경 변수 예시
+```
+
+### 스크립트 사용법
+
+```bash
+# 서버 시작
+bash scripts/start.sh --port 3001
+
+# Worktree 정리
+bash scripts/cleanup.sh --dry-run  # 미리보기
+bash scripts/cleanup.sh --all       # 모든 VK worktree 삭제
+
+# MCP 설정
+bash scripts/mcp-setup.sh --claude  # Claude Code 설정
+bash scripts/mcp-setup.sh --all     # 모든 에이전트 설정
+
+# 상태 확인
+bash scripts/health-check.sh
+bash scripts/health-check.sh --json  # JSON 출력
+```
+
+---
+
 ## Quick Reference
 
 ```
 === 서버 실행 ===
 npx vibe-kanban                  즉시 실행
-bash scripts/vibe-kanban-start.sh 래퍼 스크립트
+npx vibe-kanban --port 3001      포트 지정
 http://localhost:3000             보드 UI
 
 === 환경 변수 ===
-VIBE_KANBAN_PORT=3001            포트 변경
-VIBE_KANBAN_REMOTE=true          원격 허용
+PORT=3001                        포트 변경
+VK_ALLOWED_ORIGINS=https://...   CORS 허용
 ANTHROPIC_API_KEY=...            Claude 인증
+
+=== MCP 연동 ===
+npx vibe-kanban --mcp            MCP 모드
+vk_list_tasks                    태스크 조회
+vk_create_task                   태스크 생성
+vk_move_task                     상태 변경
 
 === 카드 흐름 ===
 To Do → In Progress → Review → Done
@@ -232,4 +435,5 @@ Done: PR merge 완료
 === worktree 정리 ===
 git worktree prune               고아 정리
 git worktree list                목록 확인
+git worktree remove <path>       강제 삭제
 ```

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide documents the standard installation flow for `agentskills` and community/community-contributed skill sources used by this repository.
+This guide documents the standard installation flow for `agentskills` and community-contributed skill sources used by this repository.
 
 ---
 
@@ -11,14 +11,16 @@ This guide documents the standard installation flow for `agentskills` and commun
 Install all skills from this template:
 
 ```bash
-npx skills add https://github.com/supercent-io/skills-template
+npx skills add https://github.com/akillness/skills-template
 ```
 
 Install only one skill:
 
 ```bash
-npx skills add https://github.com/supercent-io/skills-template --skill conductor-pattern
-npx skills add https://github.com/supercent-io/skills-template --skill copilot-coding-agent
+npx skills add https://github.com/akillness/skills-template --skill omc
+npx skills add https://github.com/akillness/skills-template --skill oh-my-codex
+npx skills add https://github.com/akillness/skills-template --skill plannotator
+npx skills add https://github.com/akillness/skills-template --skill vibe-kanban
 ```
 
 ---
@@ -55,7 +57,7 @@ python3 .agent-skills/skill_loader.py list
 python3 .agent-skills/skill_loader.py search "rest api"
 
 # Query skill index
-python3 .agent-skills/skill_query_handler.py query "conductor"
+python3 .agent-skills/skill-query-handler.py query "api design"
 ```
 
 ---
@@ -65,3 +67,7 @@ python3 .agent-skills/skill_query_handler.py query "conductor"
 - Confirm `agentskills/.agent-skills/README.md` metadata (category/count/version) matches your installation result.
 - If `npx` is unavailable, install Node.js and retry.
 - `skills.json` is a manifest file; avoid manual editing unless necessary.
+
+---
+
+**Updated**: 2026-02-21

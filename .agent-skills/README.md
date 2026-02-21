@@ -10,14 +10,14 @@ Modular skill collection for AI agents. Works with Claude, Gemini, ChatGPT, and 
 
 ```bash
 # Install all skills
-npx skills add https://github.com/supercent-io/skills-template
+npx skills add https://github.com/akillness/skills-template
 
 # Install specific skills
-npx skills add https://github.com/supercent-io/skills-template --skill api-design
-npx skills add https://github.com/supercent-io/skills-template --skill code-review
-npx skills add https://github.com/supercent-io/skills-template --skill ohmg
-npx skills add https://github.com/supercent-io/skills-template --skill oh-my-codex
-npx skills add https://github.com/supercent-io/skills-template --skill plannotator
+npx skills add https://github.com/akillness/skills-template --skill api-design
+npx skills add https://github.com/akillness/skills-template --skill code-review
+npx skills add https://github.com/akillness/skills-template --skill ohmg
+npx skills add https://github.com/akillness/skills-template --skill oh-my-codex
+npx skills add https://github.com/akillness/skills-template --skill plannotator
 ```
 
 ### oh-my-ag MCP Setup
@@ -37,7 +37,7 @@ npx skills add https://github.com/ComposioHQ/awesome-claude-skills --skill slack
 ### AI Agent Prompt
 
 ```
-Copy the .agent-skills folder from the https://github.com/supercent-io/skills-template
+Copy the .agent-skills folder from the https://github.com/akillness/skills-template
 repository to the current project.
 ```
 
@@ -53,7 +53,7 @@ repository to the current project.
 ├── skills.json                    # Skill manifest (auto-generated)
 ├── skills.toon                    # TOON summary (auto-generated)
 │
-├── agent-configuration/           # All 67 skill folders at root level
+├── agent-configuration/           # All 63 skill folders at root level
 ├── api-design/
 ├── authentication-setup/
 ├── ... (all skills at same level)
@@ -64,11 +64,11 @@ repository to the current project.
     └── advanced-skill-template/
 ```
 
-> **v4.3.0 Changes**: Category folders removed, all skills flattened to root level
+> **v4.5.0 Changes**: Removed bmad and conductor-pattern skills, simplified structure
 
 ---
 
-## Skills List (67 Total)
+## Skills List (63 Total)
 
 ### Agent Development (7)
 | Skill | Description |
@@ -158,26 +158,23 @@ repository to the current project.
 |-------|-------------|
 | `marketing-automation` | Marketing automation |
 
-### Utilities (19)
+### Utilities (15)
 | Skill | Description |
 |-------|-------------|
 | `agent-browser` | Fast headless browser CLI for AI agents |
-| `conductor-pattern` | Run AI agents in parallel git worktrees, compare PRs |
 | `copilot-coding-agent` | GitHub Copilot Coding Agent — Issue → Draft PR automation |
 | `environment-setup` | Environment setup |
 | `file-organization` | File & folder organization |
 | `git-submodule` | Git submodule management |
 | `git-workflow` | Git workflow management |
-| `mcp-codex` | MCP Codex integration |
 | `npm-git-install` | Install npm from GitHub |
 | `ohmg` | Multi-agent orchestration for Antigravity workflows |
 | `oh-my-codex` | Multi-agent orchestration for OpenAI Codex CLI |
 | `omc` | oh-my-claudecode — Teams-first multi-agent orchestration |
 | `opencontext` | AI agent persistent memory |
-| `planno` | Visual plan and diff review with Plannotator — annotate, approve, or request changes |
+| `plannotator` | Visual plan and diff review — annotate, approve, or request changes |
 | `ralph` | Self-referential completion loop for multi-turn agents |
 | `skill-standardization` | SKILL.md standardization |
-| `vercel-deploy` | Vercel deployment |
 | `vibe-kanban` | Kanban board for AI coding agents with git worktree automation |
 | `workflow-automation` | Workflow automation |
 
@@ -292,4 +289,4 @@ npx skills add <skill-name>
 
 ---
 
-**Version**: 4.4.0 | **Updated**: 2026-02-20 | **Format**: TOON (Default) | **Structure**: Flat
+**Version**: 4.5.0 | **Updated**: 2026-02-21 | **Format**: TOON (Default) | **Structure**: Flat

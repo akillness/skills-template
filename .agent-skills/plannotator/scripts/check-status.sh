@@ -1,6 +1,6 @@
 #!/bin/bash
 # plannotator - Status Check Script
-# Verifies CLI install, hook configuration, and environment variables
+# Verifies CLI install, hook configuration for all AI tools, and environment variables
 #
 # Usage: ./check-status.sh
 
@@ -124,7 +124,104 @@ fi
 
 echo ""
 
-# ── 5. Git Status ──────────────────────────────────
+# ── 3b. Gemini CLI Hook ─────────────────────────────────────
+echo -e "${BLUE}Gemini CLI Hook${NC}"
+
+GEMINI_SETTINGS="$HOME/.gemini/settings.json"
+if [ -f "$GEMINI_SETTINGS" ]; then
+  if grep -q "plannotator" "$GEMINI_SETTINGS" 2>/dev/null; then
+    check_pass "plannotator hook found in ~/.gemini/settings.json"
+    if grep -q "ExitPlanMode" "$GEMINI_SETTINGS" 2>/dev/null; then
+      check_pass "Hook bound to ExitPlanMode"
+    else
+      check_warn "Hook found but not bound to ExitPlanMode"
+    fi
+  else
+    check_warn "No plannotator hook in ~/.gemini/settings.json"
+    echo -e "    ${GRAY}Fix: run ./setup-gemini-hook.sh${NC}"
+  fi
+else
+  echo -e "  ${GRAY}-${NC} ~/.gemini/settings.json not found (run ./setup-gemini-hook.sh to configure)"
+fi
+
+GEMINI_MD="$HOME/.gemini/GEMINI.md"
+if [ -f "$GEMINI_MD" ] && grep -q "plannotator" "$GEMINI_MD" 2>/dev/null; then
+  check_pass "plannotator instructions found in ~/.gemini/GEMINI.md"
+else
+  echo -e "  ${GRAY}-${NC} No plannotator instructions in GEMINI.md (run ./setup-gemini-hook.sh)"
+fi
+
+echo ""
+
+# ── 3c. Codex CLI Configuration ────────────────────────────
+echo -e "${BLUE}Codex CLI Configuration${NC}"
+
+CODEX_CONFIG="$HOME/.codex/config.toml"
+if [ -f "$CODEX_CONFIG" ]; then
+  if grep -q "plannotator" "$CODEX_CONFIG" 2>/dev/null; then
+    check_pass "plannotator found in ~/.codex/config.toml developer_instructions"
+  else
+    check_warn "No plannotator reference in ~/.codex/config.toml"
+    echo -e "    ${GRAY}Fix: run ./setup-codex-hook.sh${NC}"
+  fi
+else
+  echo -e "  ${GRAY}-${NC} ~/.codex/config.toml not found (run ./setup-codex-hook.sh to configure)"
+fi
+
+CODEX_PROMPT="$HOME/.codex/prompts/plannotator.md"
+if [ -f "$CODEX_PROMPT" ]; then
+  check_pass "plannotator prompt file found at ~/.codex/prompts/plannotator.md"
+else
+  echo -e "  ${GRAY}-${NC} No plannotator prompt at ~/.codex/prompts/ (run ./setup-codex-hook.sh)"
+fi
+
+echo ""
+
+# ── 3d. OpenCode Plugin ─────────────────────────────────────
+echo -e "${BLUE}OpenCode Plugin${NC}"
+
+OPENCODE_COMMAND_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/opencode/command"
+OPENCODE_JSON_FOUND=false
+
+for candidate in "${PWD}/opencode.json" "$HOME/.config/opencode/opencode.json" "$HOME/opencode.json"; do
+  if [ -f "$candidate" ] && grep -q "plannotator" "$candidate" 2>/dev/null; then
+    check_pass "plannotator plugin found in ${candidate}"
+    OPENCODE_JSON_FOUND=true
+    break
+  fi
+done
+
+if [ "$OPENCODE_JSON_FOUND" = false ]; then
+  echo -e "  ${GRAY}-${NC} No plannotator plugin in opencode.json (run ./setup-opencode-plugin.sh)"
+fi
+
+if [ -f "${OPENCODE_COMMAND_DIR}/plannotator-review.md" ]; then
+  check_pass "/plannotator-review slash command registered"
+else
+  echo -e "  ${GRAY}-${NC} /plannotator-review not found (run ./setup-opencode-plugin.sh)"
+fi
+
+if [ -f "${OPENCODE_COMMAND_DIR}/plannotator-annotate.md" ]; then
+  check_pass "/plannotator-annotate slash command registered"
+else
+  echo -e "  ${GRAY}-${NC} /plannotator-annotate not found (run ./setup-opencode-plugin.sh)"
+fi
+
+echo ""
+
+# ── 3e. Obsidian ────────────────────────────────────────────
+echo -e "${BLUE}Obsidian (Optional — for plan auto-save)${NC}"
+
+if command -v obsidian &>/dev/null 2>&1 || [ -d "/Applications/Obsidian.app" ] || [ -d "$HOME/Applications/Obsidian.app" ]; then
+  check_pass "Obsidian detected"
+else
+  echo -e "  ${GRAY}-${NC} Obsidian not found (install: ${BLUE}https://obsidian.md/download${NC})"
+  echo -e "  ${GRAY}   Enable vault sync in plannotator UI → gear icon → Obsidian Integration${NC}"
+fi
+
+echo ""
+
+# ── 5. Git Status ──────────────────────────────────────────
 echo -e "${BLUE}Git Repository${NC}"
 
 if git rev-parse --git-dir &>/dev/null 2>&1; then
@@ -159,4 +256,11 @@ else
   echo -e "${RED}Setup incomplete — fix the failures above before using plannotator${NC}"
 fi
 
+echo ""
+echo -e "${BLUE}Setup scripts available:${NC}"
+echo -e "  ${GREEN}./setup-hook.sh${NC}            Claude Code hook"
+echo -e "  ${GREEN}./setup-gemini-hook.sh${NC}     Gemini CLI hook"
+echo -e "  ${GREEN}./setup-codex-hook.sh${NC}      Codex CLI"
+echo -e "  ${GREEN}./setup-opencode-plugin.sh${NC} OpenCode plugin"
+echo -e "  ${GREEN}./install.sh --all${NC}         All integrations at once"
 echo ""

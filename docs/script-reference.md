@@ -1,63 +1,74 @@
-# Script Reference
+# CLI Reference
 
 ## Overview
 
-Below is a compact reference for scripts under `agentskills/scripts`.
+Below is a compact reference for CLI tools under `.agent-skills/`.
 
 ---
 
-## Core Scripts
+## Skill Loader (`skill_loader.py`)
 
-| File | Purpose | Usage |
+| Command | Purpose | Usage |
 |---|---|---|
-| `scripts/pipeline-check.sh` | Preflight environment check | `bash scripts/pipeline-check.sh --agents=claude,codex` |
-| `scripts/conductor.sh` | Create/run parallel agent worktrees | `bash scripts/conductor.sh <feature-name> [base-branch] [agents]` |
-| `scripts/conductor-pr.sh` | Commit/push PRs from each worktree | `bash scripts/conductor-pr.sh <feature-name> [base-branch]` |
-| `scripts/conductor-cleanup.sh` | Remove worktrees and tmux sessions | `bash scripts/conductor-cleanup.sh <feature-name>` |
-| `scripts/pipeline.sh` | Run full pipeline (`check -> conductor -> pr`) | `bash scripts/pipeline.sh <feature-name> [options]` |
-| `scripts/copilot-setup-workflow.sh` | Initialize Copilot workflow/secret/labels | `bash scripts/copilot-setup-workflow.sh` |
-| `scripts/copilot-assign-issue.sh` | Assign a GitHub issue to Copilot | `bash scripts/copilot-assign-issue.sh <issue-number>` |
-| `scripts/vibe-kanban-start.sh` | Start Vibe Kanban UI | `bash scripts/vibe-kanban-start.sh [--port 3000] [--remote]` |
-| `scripts/conductor-planno.sh` | Optional planno plan review step | `bash scripts/conductor-planno.sh <feature-name> <base-branch> <agents>` |
+| `list` | List all available skills | `python3 skill_loader.py list` |
+| `search` | Search skills by keyword | `python3 skill_loader.py search "api"` |
+| `show` | Show details of a specific skill | `python3 skill_loader.py show api-design` |
 
 ---
 
-## Pipeline Options (`scripts/pipeline.sh`)
+## Skill Query Handler (`skill-query-handler.py`)
+
+| Command | Purpose | Usage |
+|---|---|---|
+| `list` | List all skills | `python3 skill-query-handler.py list` |
+| `match` | Find skills matching a query | `python3 skill-query-handler.py match "REST API"` |
+| `query` | Generate skill prompt (TOON format default) | `python3 skill-query-handler.py query "API design"` |
+| `stats` | View skill statistics | `python3 skill-query-handler.py stats` |
+
+### Query Options
 
 | Option | Description |
 |---|---|
-| `--base <branch>` | Base branch (default `main`) |
-| `--agents <list>` | Agent list (comma-separated) |
-| `--stages <list>` | Execution stages: `check,plan,conductor,pr,copilot` |
-| `--no-attach` | Do not automatically attach tmux |
-| `--dry-run` | Show command plan only |
-| `--resume` | Resume from last failed stage |
+| `--mode toon` | Use TOON format (default, 95% token reduction) |
+| `--mode full` | Use full SKILL.md content |
 
 ---
 
-## Hooks
+## Output Formats
 
-Default hook path: `scripts/hooks/`
+### TOON Format
 
-- `pre-conductor.sh`: fails pipeline before execution
-- `post-conductor.sh`: warning only if fails
+Compact representation with ~95% token reduction:
 
-You can disable all hooks with:
+```
+N:skill-name
+D:Skill description
+G:keyword1 keyword2
 
-```bash
-CONDUCTOR_SKIP_HOOKS=1
+U[N]: Use cases
+S[N]: Steps
+R[N]: Rules/Best practices
 ```
 
-Use a custom directory with:
+### Full Format
+
+Complete SKILL.md content with all sections and examples.
+
+---
+
+## Common Usage Patterns
 
 ```bash
-CONDUCTOR_HOOKS_DIR=<custom-dir>
+# Quick skill discovery
+python3 .agent-skills/skill_loader.py search "testing"
+
+# Get skill prompt for AI agent
+python3 .agent-skills/skill-query-handler.py query "code review"
+
+# Full documentation when needed
+python3 .agent-skills/skill-query-handler.py query "authentication" --mode full
 ```
 
 ---
 
-## Common Outputs
-
-- Worktree: `trees/feat-<name>-<agent>`
-- Branch: `feat/<name>-<agent>`
-- Pipeline state: `.conductor-pipeline-state.json`
+**Updated**: 2026-02-21
